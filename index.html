@@ -215,6 +215,23 @@ a{color:inherit;text-decoration:none}
 .combo-ex .res-eq{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:18px 22px;background:rgba(255,255,255,.04);min-width:120px}
 .combo-ex .res-eq .demo-btn{background:#8b5cf6;color:#fff;border:0;border-radius:9px;padding:9px 16px;font-weight:700;font-size:.85rem;cursor:default;box-shadow:0 4px 14px rgba(139,92,246,.45)}
 .combo-ex .res-eq small{color:#9aa2cf;font-size:.7rem;margin-top:9px;text-align:center;font-family:"JetBrains Mono",monospace}
+.combo-ex .hl{background:#3a2740;color:#ffb3c8;border:1px solid #ff8fb0;border-radius:4px;padding:0 4px;font-weight:700}
+.note-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:18px}
+.note-soft{background:#f7f8fc;border:1.5px solid var(--line);border-radius:13px;padding:16px 18px}
+.note-soft b{font-weight:800}
+.note-soft p{font-size:.9rem;color:var(--ink-2);line-height:1.6;margin-top:4px}
+.note-soft code,.note-soft .kbd{font-family:"JetBrains Mono",monospace;background:#fff;border:1px solid var(--line);border-radius:5px;padding:1px 6px;font-size:.85em;color:var(--indigo-d)}
+/* 저장·실행 가이드 카드 */
+.save-card{background:var(--paper-2);border:1.5px solid var(--line);border-radius:16px;padding:24px 26px;box-shadow:var(--shadow-sm);margin-top:8px}
+/* 용어 사전 */
+.glossary{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:22px}
+.term{background:var(--paper-2);border:1.5px solid var(--line);border-radius:13px;padding:15px 18px;box-shadow:var(--shadow-sm)}
+.term b{display:block;font-size:1rem;font-weight:800;color:var(--ink);margin-bottom:4px}
+.term b .em{margin-right:6px}
+.term p{font-size:.87rem;color:var(--ink-2);line-height:1.55}
+.term code{font-family:"JetBrains Mono",monospace;background:#f1f2f8;border:1px solid var(--line);border-radius:5px;padding:0 5px;font-size:.85em;color:var(--indigo-d)}
+.glossary-intro{margin-top:6px;background:#eef0fb;border:1px solid #dde0f3;border-left:4px solid var(--indigo);border-radius:12px;padding:15px 18px;font-size:.9rem;color:var(--ink-2);line-height:1.6}
+.glossary-intro b{color:var(--indigo-d)}
 .divider{display:flex;align-items:center;gap:16px;margin:50px 0 8px;color:var(--ink-3)}
 .divider::before,.divider::after{content:"";flex:1;height:1px;background:var(--line)}
 .divider span{font-family:"JetBrains Mono",monospace;font-size:.78rem;letter-spacing:.1em;font-weight:700}
@@ -408,6 +425,7 @@ footer .mono{color:#9aa2cf}
   .combo-ex{grid-template-columns:1fr}
   .combo-ex .cx{border-right:0;border-bottom:1px solid rgba(255,255,255,.08)}
   .methods{grid-template-columns:1fr}
+  .note-row,.glossary{grid-template-columns:1fr}
   .submit-grid{grid-template-columns:1fr 1fr}
 }
 @media(max-width:760px){
@@ -512,6 +530,7 @@ footer .mono{color:#9aa2cf}
       <div class="howto-card"><div class="hn">02</div><h4>과제 4개 완성</h4><p>홀로그램 · 나만의 프로그램 · 발표 자료 · AI 홍보물을 하나씩 만들어요.</p></div>
       <div class="howto-card"><div class="hn">03</div><h4>길 잃으면 🗺️</h4><p>오른쪽 아래 <b>길찾기</b> 버튼을 누르면 지금 할 일을 알려줘요.</p></div>
     </div>
+    <div class="glossary-intro" style="margin-top:18px">💡 <b>바이브코딩</b>이란? AI에게 <b>우리말로</b> 원하는 걸 설명해 코드를 만들고, "이렇게 바꿔줘"를 반복해 완성하는 방식이에요. 코딩을 몰라도 괜찮아요! (다른 용어는 <b style="cursor:pointer;text-decoration:underline" data-view="coding">'코딩 기초' 탭의 사전</b>에서)</div>
 
     <!-- 로그인 -->
     <div class="login-box" id="loginBox">
@@ -553,7 +572,7 @@ footer .mono{color:#9aa2cf}
     <div class="page-head">
       <span class="eyebrow">STEP 02 · 제출 목록</span>
       <h2 class="h2">내가 완성해야 할 <span style="color:var(--indigo)">4가지</span></h2>
-      <p class="lead">각 항목을 끝낼 때마다 오른쪽 동그라미를 눌러 체크하세요. 네 개를 모두 채우면 제출 준비 완료!</p>
+      <p class="lead">각 항목을 끝낼 때마다 오른쪽 동그라미를 눌러 체크하세요. 네 개를 모두 채우면 제출 준비 완료! 방법이 막히면 각 과제의 <b>📖 자세한 방법 보기</b>를, 모르는 말이 나오면 <b style="cursor:pointer;text-decoration:underline" data-view="coding">'코딩 기초' 탭의 용어 사전</b>을 보세요.</p>
     </div>
 
     <div class="slim-prog" id="slimProg">
@@ -658,17 +677,28 @@ footer .mono{color:#9aa2cf}
 
     <div class="divider"><span>셋이 합쳐지면 — 같은 버튼을 이렇게 만들어요</span></div>
     <div class="combo-ex">
-      <div class="cx h"><div class="cl">🦴 HTML</div><pre>&lt;button id="hi"&gt;
+      <div class="cx h"><div class="cl">🦴 HTML</div><pre>&lt;button <b class="hl">id="hi"</b>&gt;
   눌러줘
 &lt;/button&gt;</pre></div>
-      <div class="cx c"><div class="cl">🎨 CSS</div><pre>#hi {
+      <div class="cx c"><div class="cl">🎨 CSS</div><pre><b class="hl">#hi</b> {
   background: violet;
   color: white;
 }</pre></div>
-      <div class="cx j"><div class="cl">⚡ JavaScript</div><pre>hi.onclick = () =&gt; {
+      <div class="cx j"><div class="cl">⚡ JavaScript</div><pre><b class="hl">hi</b>.onclick = () =&gt; {
   alert('안녕!');
 }</pre></div>
       <div class="res-eq"><button class="demo-btn">눌러줘</button><small>= 완성된 버튼</small></div>
+    </div>
+
+    <div class="note-row">
+      <div class="note-soft">
+        <b>🏷️ 분홍색 <code>hi</code>가 뭐예요?</b>
+        <p>셋 다 <b>같은 버튼의 '이름표(id)'</b>예요. HTML에서 <code>id="hi"</code>로 이름을 붙이면, CSS는 <code>#hi</code>로, JavaScript는 <code>hi</code>로 그 버튼을 불러와요. 이름은 <code>hi</code> 말고 다른 걸로 바꿔도 돼요 — 단, <b>세 곳을 똑같이!</b></p>
+      </div>
+      <div class="note-soft">
+        <b>🤔 <code>() =&gt; { }</code> 랑 <code>alert</code> 는?</b>
+        <p><code>() =&gt; { ... }</code> 는 <b>"버튼을 눌렀을 때 할 일"</b>을 적는 부분이고, <code>alert('안녕!')</code> 는 <b>'안녕!'이라고 알림 창을 띄워라</b>는 뜻이에요.</p>
+      </div>
     </div>
 
     <div class="divider"><span>내 코드에서 HTML · CSS · JS 찾기 (발표 5·6·7번)</span></div>
@@ -721,6 +751,37 @@ footer .mono{color:#9aa2cf}
 [여기에 내 .html 파일 내용을 전부 붙여넣기]</pre>
         </div>
       </div>
+    </div>
+
+    <div class="divider"><span>AI가 준 코드, 파일로 저장하고 실행하기</span></div>
+    <p class="lead" style="margin-top:0">AI가 코드를 만들어줬는데 어떻게 실행하는지 모르겠다고요? 여기서 제일 많이 막히니까 천천히 따라와요.</p>
+    <div class="save-card">
+      <div class="steps-list">
+        <div class="step-line"><div class="si">1</div><div class="sb"><b>코드 전체 복사</b><span>AI가 준 코드 박스의 '복사' 버튼을 누르거나, 코드를 전부 드래그해서 복사해요.</span></div></div>
+        <div class="step-line"><div class="si">2</div><div class="sb"><b>메모장에 붙여넣기</b><span>윈도우 <span class="kbd">메모장</span>(또는 코드 편집기)을 열고 붙여넣어요. (맥은 '텍스트 편집기')</span></div></div>
+        <div class="step-line"><div class="si">3</div><div class="sb"><b>다른 이름으로 저장</b><span><span class="kbd">파일 → 다른 이름으로 저장</span>을 눌러요.</span></div></div>
+        <div class="step-line"><div class="si">4</div><div class="sb"><b>이름을 <code>.html</code>로 끝내기</b><span>파일 이름을 <code>내프로그램.html</code> 처럼 <b>.html로 끝나게</b> 적어요.</span></div></div>
+        <div class="step-line"><div class="si">5</div><div class="sb"><b>더블클릭해서 실행</b><span>저장한 파일을 <b>더블클릭</b>하면 인터넷 브라우저에서 내 프로그램이 열려요! 🎉</span></div></div>
+      </div>
+      <div class="mline">⚠️ <b>제일 흔한 실수!</b> 메모장에서 저장할 때 <b>'파일 형식'을 '모든 파일'</b>로 바꾸지 않으면, 이름을 <code>내프로그램.html</code>로 적어도 실제로는 <code>내프로그램.html.txt</code>로 저장돼서 <b>실행이 안 돼요.</b> 저장 창에서 '파일 형식 → 모든 파일'을 꼭 확인하세요.</div>
+      <div class="minfo">✏️ <b>다시 고치고 싶을 땐?</b> 파일을 더블클릭하면 '실행'만 돼요. 코드를 고치려면 파일을 <b>우클릭 → 연결 프로그램 → 메모장</b>으로 열어서 고친 뒤 다시 저장하면 돼요.</div>
+    </div>
+
+    <div class="divider"><span>헷갈리는 말 사전 📖</span></div>
+    <div class="glossary-intro">모르는 말이 나오면 ① 여기서 찾아보거나 ② AI에게 <b>"○○가 뭐야? 쉽게 알려줘"</b>라고 물어보면 돼요. 혼자 막히지 말기!</div>
+    <div class="glossary">
+      <div class="term"><b><span class="em">🤖</span>바이브코딩</b><p>AI에게 <b>우리말로</b> 원하는 걸 설명해 코드를 만들고, "이렇게 바꿔줘"를 반복해 완성하는 방식이에요.</p></div>
+      <div class="term"><b><span class="em">💬</span>프롬프트</b><p>AI에게 보내는 <b>명령(부탁하는 말)</b>이에요. 자세하게 적을수록 결과가 좋아져요.</p></div>
+      <div class="term"><b><span class="em">🦴</span>HTML</b><p>화면에 <b>무엇이 있는지</b>(제목·버튼·그림) 정하는 뼈대예요.</p></div>
+      <div class="term"><b><span class="em">🎨</span>CSS</b><p><b>어떻게 보이는지</b>(색·크기·위치) 꾸미는 부분이에요.</p></div>
+      <div class="term"><b><span class="em">⚡</span>JavaScript</b><p>누르면 <b>무슨 일이 일어나는지</b>(움직임·기능) 정하는 부분이에요.</p></div>
+      <div class="term"><b><span class="em">🏷️</span>id</b><p>요소(버튼 등)에 붙이는 <b>이름표</b>예요. CSS·JS가 같은 걸 가리킬 때 써요. (예: <code>id="hi"</code>)</p></div>
+      <div class="term"><b><span class="em">📄</span>.html 파일</b><p>웹앱이 담기는 파일이에요. <b>더블클릭</b>하면 브라우저에서 실행돼요.</p></div>
+      <div class="term"><b><span class="em">🌐</span>배포</b><p>내가 만든 걸 <b>인터넷 주소</b>로 만들어 남들도 볼 수 있게 올리는 거예요.</p></div>
+      <div class="term"><b><span class="em">🐙</span>GitHub Pages</b><p>내 웹앱을 <b>무료로 인터넷에 올려주는 곳</b>이에요. 배포할 때 써요.</p></div>
+      <div class="term"><b><span class="em">📸</span>캡처</b><p>화면을 그림으로 찍는 거예요. 윈도우는 <span class="kbd">Win + Shift + S</span>, 맥은 <span class="kbd">⌘ + Shift + 4</span>.</p></div>
+      <div class="term"><b><span class="em">🔮</span>페퍼스 고스트 / 허상</b><p>빛이 반사돼 <b>허공에 떠 보이는 가짜 상</b>이에요. 플로팅 홀로그램의 원리예요.</p></div>
+      <div class="term"><b><span class="em">🗺️</span>길찾기</b><p>오른쪽 아래 버튼이에요. 누르면 <b>지금 내가 할 일</b>을 알려줘요.</p></div>
     </div>
 
     <div class="after-cta"><button class="btn btn-indigo" data-view="present">이제 발표 가이드 보러 가기 →</button></div>
@@ -780,6 +841,18 @@ footer .mono{color:#9aa2cf}
       <div class="step"><div class="n">03</div><h4>발표 자료 점검</h4><p>HTML·CSS·JavaScript 코드 3장과 어려웠던 점이 빠지지 않았는지 다시 봐요.</p></div>
       <div class="step"><div class="n">04</div><h4>제출하기</h4><p>선생님이 안내한 방법(과제방·구글 클래스룸 등)으로 결과물과 링크를 제출해요.</p></div>
     </div>
+
+    <div class="note-row">
+      <div class="note-soft">
+        <b>📦 무엇을 내나요? (예시)</b>
+        <p>① 홀로그램 활동 보고서(PDF) · ② 나만의 프로그램(<code>.html</code> 파일 또는 배포 링크) · ③ 발표 자료 · ④ AI 홍보물 이미지(PNG). <b>정확한 방법은 선생님 안내를 우선</b>해요.</p>
+      </div>
+      <div class="note-soft">
+        <b>📍 어디에 제출해요?</b>
+        <p><b>홀로그램 보고서</b>는 활동 페이지 안에서 <code>📄 보고서 제출</code>로 내요. <b>나머지·전체</b>는 아래 <b>제출하기</b> 버튼(선생님이 정한 곳)으로 내요.</p>
+      </div>
+    </div>
+
     <div class="submit-go">
       <div class="sg-txt"><b>준비가 끝났나요? 📤</b><span>4가지를 모두 확인했다면 아래 버튼으로 제출하세요.</span></div>
       <a class="btn submit-big" id="btnSubmitLink" href="#" target="_blank" rel="noopener">제출하기 →</a>
