@@ -1,0 +1,1319 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>인공지능 융합 첨단과학 탐구반 2기 · 최종 과제 허브</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+
+<style>
+:root{
+  --void:#090d24; --void-2:#10163a; --void-3:#1b2350;
+  --paper:#f5f6fb; --paper-2:#ffffff;
+  --ink:#151931; --ink-2:#454c6b; --ink-3:#717896;
+  --line:#e6e8f3; --line-2:#eef0f8;
+  --indigo:#5b5bf0; --indigo-d:#4444d6;
+  --mint:#1fc596; --mint-d:#0fa178; --amber:#f5a524;
+  --cyan:#22d3ee; --violet:#8b7cff; --magenta:#e879f9; --sky:#38bdf8;
+  --holo:linear-gradient(100deg,#22d3ee,#8b7cff,#e879f9,#38bdf8,#22d3ee);
+  --shadow-sm:0 1px 2px rgba(20,24,55,.06),0 2px 8px rgba(20,24,55,.05);
+  --shadow:0 6px 18px rgba(20,24,55,.08),0 18px 40px rgba(20,24,55,.07);
+  --shadow-lg:0 24px 70px rgba(12,16,45,.28);
+  --radius:18px; --radius-sm:12px; --maxw:1080px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{font-family:"Pretendard Variable",Pretendard,system-ui,sans-serif;background:var(--paper);color:var(--ink);line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+.mono{font-family:"JetBrains Mono",monospace}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 22px}
+
+/* ===== 상단 바 + 데스크탑 네비 ===== */
+.topbar{position:sticky;top:0;z-index:50;background:rgba(9,13,36,.86);backdrop-filter:blur(14px) saturate(140%);border-bottom:1px solid rgba(255,255,255,.07);color:#fff}
+.topbar .wrap{display:flex;align-items:center;gap:18px;height:62px}
+.brand{display:flex;align-items:center;gap:11px;cursor:pointer;flex-shrink:0}
+.brand-mark{width:30px;height:30px;border-radius:9px;background:var(--holo);background-size:200% 200%;animation:holoMove 6s linear infinite;box-shadow:0 0 16px rgba(139,124,255,.55)}
+.brand small{display:block;font-size:.62rem;font-weight:500;color:#9aa2cf;letter-spacing:.05em;font-family:"JetBrains Mono",monospace}
+.brand b{display:block;font-size:.96rem;font-weight:800;line-height:1.1;letter-spacing:-.01em}
+.nav-desktop{display:flex;gap:4px;margin-left:8px}
+.nav-desktop a{font-size:.88rem;font-weight:600;color:#aab1d6;padding:8px 13px;border-radius:9px;transition:.16s;white-space:nowrap}
+.nav-desktop a:hover{color:#fff;background:rgba(255,255,255,.07)}
+.nav-desktop a.active{color:#fff;background:rgba(139,124,255,.22)}
+.topbar-status{margin-left:auto;display:flex;align-items:center;gap:12px;flex-shrink:0}
+.topbar-progress{display:none;align-items:center;gap:8px;font-size:.82rem;color:#c3c9ec}
+.topbar-progress .mini-track{width:64px;height:6px;border-radius:6px;background:rgba(255,255,255,.13);overflow:hidden}
+.topbar-progress .mini-fill{height:100%;width:0;background:var(--holo);background-size:200%;animation:holoMove 4s linear infinite;border-radius:6px;transition:width .5s cubic-bezier(.2,.8,.2,1)}
+.topbar-name{color:#fff;font-weight:700;font-size:.85rem;display:none}
+.btn-ghost{font-size:.8rem;font-weight:600;color:#c3c9ec;border:1px solid rgba(255,255,255,.18);border-radius:9px;padding:6px 12px;background:transparent;cursor:pointer;transition:.18s}
+.btn-ghost:hover{background:rgba(255,255,255,.1);color:#fff}
+
+/* ===== 하단 탭바(모바일) ===== */
+.nav-mobile{display:none;position:fixed;left:0;right:0;bottom:0;z-index:48;background:rgba(255,255,255,.96);backdrop-filter:blur(12px);border-top:1px solid var(--line);padding:7px 4px calc(7px + env(safe-area-inset-bottom))}
+.nav-mobile-inner{display:flex;justify-content:space-around;max-width:560px;margin:0 auto}
+.nav-mobile a{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:.64rem;font-weight:600;color:var(--ink-3);padding:4px 3px;border-radius:10px;flex:1;text-align:center}
+.nav-mobile a svg{width:20px;height:20px;stroke:var(--ink-3);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.nav-mobile a.active{color:var(--indigo)}
+.nav-mobile a.active svg{stroke:var(--indigo)}
+
+/* ===== 뷰(SPA 화면) ===== */
+.view{display:none;animation:viewIn .4s cubic-bezier(.2,.8,.2,1)}
+.view.active{display:block}
+@keyframes viewIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.page{padding:64px 0 96px}
+.page-head{margin-bottom:8px}
+.eyebrow{font-family:"JetBrains Mono",monospace;font-size:.74rem;letter-spacing:.16em;text-transform:uppercase;color:var(--indigo);font-weight:700;display:inline-flex;align-items:center;gap:9px;margin-bottom:14px}
+.eyebrow::before{content:"";width:24px;height:2px;background:var(--indigo);border-radius:2px}
+.h2{font-size:clamp(1.6rem,4.2vw,2.4rem);font-weight:800;letter-spacing:-.02em;line-height:1.2}
+.lead{font-size:clamp(1rem,2.3vw,1.1rem);color:var(--ink-2);margin-top:13px;max-width:62ch}
+
+/* ===== HERO (홈) ===== */
+.hero{position:relative;background:var(--void);color:#fff;overflow:hidden;border-radius:0 0 30px 30px;padding:64px 0 84px}
+.hero-grid{position:absolute;inset:0;opacity:.5;background-image:linear-gradient(rgba(120,130,220,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(120,130,220,.07) 1px,transparent 1px);background-size:46px 46px;-webkit-mask-image:radial-gradient(ellipse 80% 70% at 50% 25%,#000,transparent 75%);mask-image:radial-gradient(ellipse 80% 70% at 50% 25%,#000,transparent 75%)}
+.hero-glow{position:absolute;border-radius:50%;filter:blur(90px);pointer-events:none}
+.hero-glow.a{width:420px;height:420px;background:radial-gradient(circle,#5b5bf0,transparent 70%);top:-120px;left:-90px;opacity:.5}
+.hero-glow.b{width:360px;height:360px;background:radial-gradient(circle,#e879f9,transparent 70%);bottom:-100px;right:-60px;opacity:.32}
+.hero .wrap{position:relative;display:grid;grid-template-columns:1.15fr .85fr;gap:36px;align-items:center}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;font-family:"JetBrains Mono",monospace;font-size:.72rem;letter-spacing:.08em;color:#bfc6f0;border:1px solid rgba(255,255,255,.16);border-radius:100px;padding:7px 14px;margin-bottom:20px;background:rgba(255,255,255,.04)}
+.hero-badge .dot{width:7px;height:7px;border-radius:50%;background:var(--mint);box-shadow:0 0 10px var(--mint);animation:pulse 2s infinite}
+.hero h1{font-size:clamp(2rem,6vw,3.4rem);font-weight:800;line-height:1.1;letter-spacing:-.03em}
+.holo-text{background:var(--holo);background-size:220% auto;-webkit-background-clip:text;background-clip:text;color:transparent;animation:holoMove 5.5s linear infinite}
+.hero p.sub{margin-top:18px;font-size:clamp(1rem,2.5vw,1.14rem);color:#b9c0e6;max-width:46ch;line-height:1.7}
+.hero-cta{margin-top:28px;display:flex;flex-wrap:wrap;gap:12px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;font-weight:700;font-size:.96rem;padding:13px 22px;border-radius:13px;border:0;cursor:pointer;transition:transform .16s,box-shadow .16s,background .16s;font-family:inherit}
+.btn-primary{background:#fff;color:var(--void);box-shadow:0 10px 30px rgba(255,255,255,.16)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 16px 38px rgba(255,255,255,.24)}
+.btn-line{background:transparent;color:#dfe3f5;border:1px solid rgba(255,255,255,.22)}
+.btn-line:hover{background:rgba(255,255,255,.08);transform:translateY(-2px)}
+.holo-stage{display:flex;justify-content:center;align-items:center;min-height:320px}
+.holo-stage svg{width:100%;max-width:340px;height:auto;overflow:visible}
+.floaty{animation:floaty 5s ease-in-out infinite}
+.spin-slow{animation:spin 22s linear infinite;transform-origin:200px 158px}
+.spin-rev{animation:spinRev 16s linear infinite;transform-origin:200px 158px}
+
+/* 홈 사용법 스트립 */
+.howto{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:46px}
+.howto-card{background:var(--paper-2);border:1.5px solid var(--line);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow-sm)}
+.howto-card .hn{font-family:"JetBrains Mono",monospace;font-weight:700;color:var(--indigo);font-size:.8rem;margin-bottom:9px}
+.howto-card h4{font-size:1.02rem;font-weight:800;margin-bottom:6px}
+.howto-card p{font-size:.88rem;color:var(--ink-2);line-height:1.55}
+
+/* ===== 로그인 / 환영 ===== */
+.panel{background:var(--paper-2);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:32px;max-width:520px;margin:44px auto 0}
+.panel h3{font-size:1.3rem;font-weight:800;letter-spacing:-.01em;margin-bottom:6px}
+.panel .hint{color:var(--ink-3);font-size:.92rem;margin-bottom:22px}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.field{display:flex;flex-direction:column;gap:7px}
+.field.full{grid-column:1/-1}
+.field label{font-size:.82rem;font-weight:700;color:var(--ink-2)}
+.field input{font-family:inherit;font-size:1rem;padding:13px 15px;border:1.5px solid var(--line);border-radius:var(--radius-sm);background:#fbfbfe;color:var(--ink);transition:.16s}
+.field input:focus{outline:none;border-color:var(--indigo);background:#fff;box-shadow:0 0 0 4px rgba(91,91,240,.12)}
+.btn-block{width:100%;background:var(--indigo);color:#fff;margin-top:8px;padding:14px}
+.btn-block:hover{background:var(--indigo-d);transform:translateY(-1px)}
+.note-warn{display:none;margin-top:14px;font-size:.84rem;color:#a36a00;background:#fff7e8;border:1px solid #f6e0b0;border-radius:10px;padding:11px 13px}
+
+.welcome-card{display:none;max-width:560px;margin:44px auto 0;background:linear-gradient(135deg,var(--void) 0%,#1a1f4d 100%);color:#fff;border-radius:var(--radius);padding:30px 32px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.welcome-card.on{display:block}
+.welcome-card::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 88% 10%,rgba(139,124,255,.35),transparent 55%);pointer-events:none}
+.welcome-card .who{position:relative;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.avatar{width:54px;height:54px;border-radius:14px;background:var(--holo);background-size:200%;animation:holoMove 6s linear infinite;display:grid;place-items:center;font-weight:800;font-size:1.3rem;color:#101231;flex-shrink:0}
+.welcome-card .who h3{font-size:1.4rem;font-weight:800}
+.welcome-card .who .meta{font-family:"JetBrains Mono",monospace;font-size:.82rem;color:#b6bdec}
+.progress-wrap{position:relative;margin-top:24px}
+.progress-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px}
+.progress-top .label{font-size:.86rem;color:#c3c9ec;font-weight:600}
+.progress-top .pct{font-family:"JetBrains Mono",monospace;font-weight:700;font-size:1.5rem}
+.track{height:13px;border-radius:10px;background:rgba(255,255,255,.12);overflow:hidden}
+.fill{height:100%;width:0;border-radius:10px;background:var(--holo);background-size:200%;animation:holoMove 4s linear infinite;transition:width .6s cubic-bezier(.2,.85,.25,1);box-shadow:0 0 14px rgba(139,124,255,.5)}
+.progress-msg{margin-top:12px;font-size:.9rem;color:#c8cdef;min-height:1.4em}
+.welcome-actions{margin-top:20px;display:flex;gap:10px;flex-wrap:wrap}
+.welcome-actions .btn{font-size:.9rem;padding:11px 18px}
+
+/* ===== 과제 ===== */
+.tasks{display:grid;gap:16px;margin-top:30px}
+.task{display:grid;grid-template-columns:auto 1fr auto;gap:18px;align-items:flex-start;background:var(--paper-2);border:1.5px solid var(--line);border-radius:var(--radius);padding:22px 24px;box-shadow:var(--shadow-sm);transition:border-color .2s,box-shadow .2s,transform .2s;position:relative;overflow:hidden}
+.task::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--line-2);transition:background .25s}
+.task:hover{transform:translateY(-2px);box-shadow:var(--shadow);border-color:#d7daee}
+.task.done{border-color:#bfeede;background:#f4fdf9}
+.task.done::before{background:var(--mint)}
+.task-num{font-family:"JetBrains Mono",monospace;font-weight:700;font-size:.92rem;width:40px;height:40px;border-radius:11px;background:#eef0fb;color:var(--indigo);display:grid;place-items:center;flex-shrink:0;transition:.25s}
+.task.done .task-num{background:var(--mint);color:#fff}
+.task-body h4{font-size:1.08rem;font-weight:800;letter-spacing:-.01em;margin-bottom:5px}
+.task-body p{font-size:.92rem;color:var(--ink-2);line-height:1.6}
+.task-tag{display:inline-block;font-family:"JetBrains Mono",monospace;font-size:.68rem;font-weight:600;letter-spacing:.04em;color:#fff;background:var(--indigo);border-radius:6px;padding:3px 8px;margin-top:9px}
+.task-tag.tool{background:var(--magenta)}
+.check{width:30px;height:30px;border-radius:50%;border:2.5px solid var(--line);background:#fff;cursor:pointer;flex-shrink:0;display:grid;place-items:center;transition:.2s;margin-top:4px}
+.check:hover{border-color:var(--mint)}
+.check svg{width:16px;height:16px;stroke:#fff;stroke-width:3.5;fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:24;stroke-dashoffset:24;transition:stroke-dashoffset .3s}
+.task.done .check{background:var(--mint);border-color:var(--mint)}
+.task.done .check svg{stroke-dashoffset:0}
+.slim-prog{display:none;align-items:center;gap:14px;background:var(--paper-2);border:1.5px solid var(--line);border-radius:var(--radius);padding:16px 20px;box-shadow:var(--shadow-sm);margin-top:26px}
+.slim-prog.on{display:flex}
+.slim-prog .st{flex:1;height:11px;border-radius:8px;background:var(--line-2);overflow:hidden}
+.slim-prog .sf{height:100%;width:0;border-radius:8px;background:var(--holo);background-size:200%;animation:holoMove 4s linear infinite;transition:width .5s cubic-bezier(.2,.8,.2,1)}
+.slim-prog .sp{font-family:"JetBrains Mono",monospace;font-weight:700;color:var(--indigo);font-size:1rem}
+.slim-prog .sl{font-size:.85rem;font-weight:700;color:var(--ink-2)}
+.locked-hint{display:none;margin-top:22px;font-size:.92rem;color:var(--ink-3);background:#f0f1f9;border:1px dashed #cdd2e8;border-radius:12px;padding:15px 16px;text-align:center}
+.locked-hint.on{display:block}
+.locked-hint b{color:var(--indigo)}
+.after-cta{margin-top:28px;text-align:center}
+
+/* ===== 자료 카드 ===== */
+.res-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:30px}
+.res{display:flex;flex-direction:column;background:var(--void);border:1px solid var(--void-3);border-radius:var(--radius);padding:26px;color:#fff;transition:transform .2s,box-shadow .2s;position:relative;overflow:hidden;box-shadow:var(--shadow-sm)}
+.res::after{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--accent,var(--cyan))}
+.res:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+.res-icon{width:48px;height:48px;border-radius:13px;display:grid;place-items:center;margin-bottom:18px;background:rgba(255,255,255,.07)}
+.res-icon svg{width:25px;height:25px}
+.res .kicker{font-family:"JetBrains Mono",monospace;font-size:.7rem;letter-spacing:.06em;color:#8b93c4;margin-bottom:6px}
+.res h4{font-size:1.12rem;font-weight:800;letter-spacing:-.01em;margin-bottom:9px}
+.res p{font-size:.9rem;color:#a9b0d8;line-height:1.6;flex-grow:1}
+.res .go{margin-top:18px;display:inline-flex;align-items:center;gap:7px;font-size:.9rem;font-weight:700}
+.res .go svg{width:16px;height:16px;transition:transform .2s}
+.res:hover .go svg{transform:translate(3px,-3px)}
+.res.c1{--accent:var(--amber)} .res.c2{--accent:var(--cyan)} .res.c3{--accent:var(--violet)}
+
+/* ===== 언어 설명 ===== */
+.lang-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:28px}
+.lang{background:var(--paper-2);border:1.5px solid var(--line);border-radius:var(--radius);padding:26px;box-shadow:var(--shadow-sm);transition:transform .2s,box-shadow .2s}
+.lang:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+.lang-top{display:flex;align-items:center;gap:13px;margin-bottom:16px}
+.lang-emoji{width:46px;height:46px;border-radius:13px;display:grid;place-items:center;font-size:1.5rem;flex-shrink:0}
+.lang.html .lang-emoji{background:#ffeede} .lang.css .lang-emoji{background:#e0f2ff} .lang.js .lang-emoji{background:#fff6d6}
+.lang-top h4{font-size:1.16rem;font-weight:800}
+.lang-top .tag{font-family:"JetBrains Mono",monospace;font-size:.7rem;color:var(--ink-3);display:block}
+.lang p{font-size:.93rem;color:var(--ink-2);line-height:1.65;margin-bottom:16px}
+.lang p b{color:var(--ink)}
+.code{font-family:"JetBrains Mono",monospace;font-size:.8rem;line-height:1.7;background:#11152f;border-radius:11px;padding:14px 16px;color:#cdd3f0;overflow-x:auto}
+.code .tag-c{color:#ff8fb0} .code .atr{color:#7dd3fc} .code .val{color:#fcd34d} .code .fn{color:#c4b5fd}
+.lang-result{margin-top:13px;font-size:.86rem;color:var(--ink-2);display:flex;align-items:center;gap:8px}
+.lang-result .arrow{color:var(--indigo);font-weight:800}
+.combo{margin-top:26px;background:linear-gradient(120deg,#11152f,#1c2150);color:#fff;border-radius:var(--radius);padding:26px 30px;text-align:center;position:relative;overflow:hidden}
+.combo::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 20% 0%,rgba(34,211,238,.25),transparent 50%),radial-gradient(circle at 90% 100%,rgba(232,121,249,.22),transparent 50%)}
+.combo span{position:relative;font-size:clamp(1.05rem,2.6vw,1.3rem);font-weight:700;line-height:1.55}
+.tip-box{margin-top:22px;background:#eef0fb;border:1px solid #dde0f3;border-left:4px solid var(--indigo);border-radius:12px;padding:18px 20px}
+.tip-box .t{font-weight:800;font-size:.95rem;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.tip-box p{font-size:.9rem;color:var(--ink-2);line-height:1.65}
+.tip-box code{font-family:"JetBrains Mono",monospace;background:#fff;border:1px solid var(--line);border-radius:6px;padding:1px 7px;font-size:.85em;color:var(--indigo-d)}
+.warn-box{margin-top:28px;background:#fff5f5;border:1.5px solid #fbcdd2;border-left:5px solid #e0395a;border-radius:14px;padding:20px 22px;display:flex;gap:15px;align-items:flex-start}
+.warn-box .wi{font-size:1.7rem;line-height:1;flex-shrink:0}
+.warn-box .wt{font-weight:800;font-size:1.02rem;color:#c01a3a;margin-bottom:6px}
+.warn-box p{font-size:.92rem;color:#7a2230;line-height:1.62}
+.warn-box p b{color:#a01530;font-weight:800}
+.present-note{margin-top:8px;background:#eef0fb;border:1px solid #dde0f3;border-radius:14px;padding:18px 22px;display:flex;gap:14px;align-items:flex-start}
+.present-note .pi{font-size:1.5rem;line-height:1;flex-shrink:0}
+.present-note b{font-weight:800;color:var(--indigo-d)}
+.present-note p{font-size:.92rem;color:var(--ink-2);line-height:1.6}
+.combo-ex{margin-top:26px;display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:0;align-items:stretch;background:#11152f;border-radius:16px;overflow:hidden}
+.combo-ex .cx{padding:18px;border-right:1px solid rgba(255,255,255,.08)}
+.combo-ex .cx .cl{font-family:"JetBrains Mono",monospace;font-size:.7rem;font-weight:700;letter-spacing:.05em;margin-bottom:9px;display:flex;align-items:center;gap:6px}
+.combo-ex .cx.h .cl{color:#ff8fb0} .combo-ex .cx.c .cl{color:#7dd3fc} .combo-ex .cx.j .cl{color:#fcd34d}
+.combo-ex .cx pre{font-family:"JetBrains Mono",monospace;font-size:.74rem;line-height:1.6;color:#cdd3f0;white-space:pre-wrap;margin:0}
+.combo-ex .res-eq{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:18px 22px;background:rgba(255,255,255,.04);min-width:120px}
+.combo-ex .res-eq .demo-btn{background:#8b5cf6;color:#fff;border:0;border-radius:9px;padding:9px 16px;font-weight:700;font-size:.85rem;cursor:default;box-shadow:0 4px 14px rgba(139,92,246,.45)}
+.combo-ex .res-eq small{color:#9aa2cf;font-size:.7rem;margin-top:9px;text-align:center;font-family:"JetBrains Mono",monospace}
+.divider{display:flex;align-items:center;gap:16px;margin:50px 0 8px;color:var(--ink-3)}
+.divider::before,.divider::after{content:"";flex:1;height:1px;background:var(--line)}
+.divider span{font-family:"JetBrains Mono",monospace;font-size:.78rem;letter-spacing:.1em;font-weight:700}
+
+/* ===== 발표 슬라이드 가이드 ===== */
+.slide-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:28px}
+.slide{background:var(--paper-2);border:1.5px solid var(--line);border-radius:var(--radius);padding:24px 26px;box-shadow:var(--shadow-sm);position:relative;transition:transform .2s,box-shadow .2s,border-color .2s}
+.slide:hover{transform:translateY(-3px);box-shadow:var(--shadow);border-color:#d7daee}
+.slide-head{display:flex;align-items:center;gap:13px;margin-bottom:11px}
+.slide-no{font-family:"JetBrains Mono",monospace;font-weight:700;font-size:.95rem;color:#fff;width:38px;height:38px;border-radius:11px;background:var(--ink);display:grid;place-items:center;flex-shrink:0}
+.slide-head h4{font-size:1.06rem;font-weight:800;letter-spacing:-.01em}
+.slide p{font-size:.91rem;color:var(--ink-2);line-height:1.62}
+.slide-must{position:absolute;top:18px;right:18px;font-family:"JetBrains Mono",monospace;font-size:.62rem;font-weight:700;letter-spacing:.05em;padding:4px 9px;border-radius:7px}
+.slide-must.req{background:#ffe4e6;color:#c01a3a}
+.slide-must.code{background:#e0e7ff;color:#3730c9}
+.slide.is-code{border-color:#c7cdf5;background:#fafaff}
+.slide.is-code .slide-no{background:var(--indigo)}
+.slide.is-req .slide-no{background:#e0395a}
+
+/* ===== 제출 ===== */
+.submit-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:28px}
+.step{background:var(--void);border:1px solid var(--void-3);border-radius:var(--radius-sm);padding:22px 20px;color:#fff;box-shadow:var(--shadow-sm)}
+.step .n{font-family:"JetBrains Mono",monospace;color:var(--cyan);font-size:.82rem;font-weight:700;margin-bottom:10px}
+.step h4{font-size:1rem;font-weight:800;margin-bottom:7px}
+.step p{font-size:.85rem;color:#a9b0d8;line-height:1.55}
+.final{margin-top:30px;text-align:center;background:linear-gradient(135deg,var(--void),#1a1f4d);color:#fff;border-radius:var(--radius);padding:44px 28px;position:relative;overflow:hidden;box-shadow:var(--shadow)}
+.submit-go{margin-top:26px;display:flex;align-items:center;gap:20px;flex-wrap:wrap;justify-content:space-between;background:var(--paper-2);border:2px solid var(--indigo);border-radius:var(--radius);padding:24px 28px;box-shadow:var(--shadow)}
+.submit-go .sg-txt b{display:block;font-size:1.12rem;font-weight:800;margin-bottom:3px}
+.submit-go .sg-txt span{font-size:.92rem;color:var(--ink-2)}
+.submit-big{background:var(--indigo);color:#fff;font-size:1.05rem;padding:16px 30px;box-shadow:0 10px 26px rgba(91,91,240,.35);flex-shrink:0}
+.submit-big:hover{background:var(--indigo-d);transform:translateY(-2px);box-shadow:0 16px 34px rgba(91,91,240,.45)}
+.final::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 15% 0%,rgba(34,211,238,.22),transparent 50%),radial-gradient(circle at 85% 100%,rgba(232,121,249,.2),transparent 50%)}
+.final h3{position:relative;font-size:clamp(1.3rem,3.6vw,1.85rem);font-weight:800;margin-bottom:12px}
+.final p{position:relative;color:#aab1d6;max-width:48ch;margin:0 auto}
+
+/* ===== 길찾기 FAB ===== */
+.fab{position:fixed;right:24px;bottom:26px;z-index:46;display:flex;align-items:center;gap:11px;background:linear-gradient(135deg,var(--indigo),#7a5bf0);color:#fff;border:0;border-radius:100px;padding:14px 20px 14px 16px;font-family:inherit;font-weight:800;font-size:.92rem;cursor:pointer;box-shadow:0 12px 30px rgba(91,91,240,.42);transition:transform .18s,box-shadow .18s}
+.fab:hover{transform:translateY(-3px) scale(1.03);box-shadow:0 18px 40px rgba(91,91,240,.5)}
+.fab .map-ic{width:26px;height:26px;flex-shrink:0}
+.fab .map-ic svg{width:26px;height:26px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.fab::before{content:"";position:absolute;inset:-5px;border-radius:100px;border:2px solid rgba(139,124,255,.6);animation:ripple 2.2s ease-out infinite;pointer-events:none}
+.fab-badge{position:absolute;top:-6px;right:-4px;min-width:20px;height:20px;padding:0 5px;border-radius:11px;background:var(--magenta);color:#fff;font-size:.68rem;font-weight:800;display:grid;place-items:center;box-shadow:0 2px 8px rgba(232,121,249,.6)}
+
+/* ===== 모달 ===== */
+.overlay{position:fixed;inset:0;z-index:90;background:rgba(8,11,30,.62);backdrop-filter:blur(5px);display:none;align-items:center;justify-content:center;padding:20px;opacity:0;transition:opacity .25s}
+.overlay.on{display:flex;opacity:1}
+.modal{background:var(--paper-2);border-radius:24px;max-width:540px;width:100%;max-height:88vh;overflow-y:auto;box-shadow:var(--shadow-lg);transform:translateY(18px) scale(.97);transition:transform .3s cubic-bezier(.2,.9,.3,1);position:relative}
+.overlay.on .modal{transform:none}
+.modal-x{position:absolute;top:14px;right:14px;width:34px;height:34px;border-radius:10px;border:0;background:#f0f1f8;color:var(--ink-3);cursor:pointer;font-size:1.1rem;display:grid;place-items:center;transition:.16s;z-index:2}
+.modal-x:hover{background:#e6e8f3;color:var(--ink)}
+.modal-hero{background:linear-gradient(135deg,var(--void),#1c2150);color:#fff;padding:34px 32px 28px;border-radius:24px 24px 0 0;position:relative;overflow:hidden}
+.modal-hero::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 85% 5%,rgba(139,124,255,.4),transparent 55%);pointer-events:none}
+.modal-hero .emoji{font-size:2.4rem;line-height:1;margin-bottom:14px;position:relative}
+.modal-hero h3{position:relative;font-size:1.45rem;font-weight:800;letter-spacing:-.01em;line-height:1.25}
+.modal-hero p{position:relative;margin-top:9px;color:#c3c9ec;font-size:.95rem;line-height:1.6}
+.modal-body{padding:26px 32px 30px}
+.modal-body p.intro{color:var(--ink-2);font-size:.96rem;line-height:1.7;margin-bottom:20px}
+.steps-list{display:flex;flex-direction:column;gap:12px;margin-bottom:8px}
+.step-line{display:flex;gap:13px;align-items:flex-start}
+.step-line .si{width:30px;height:30px;border-radius:9px;background:#eef0fb;color:var(--indigo);font-weight:800;font-size:.85rem;display:grid;place-items:center;flex-shrink:0;font-family:"JetBrains Mono",monospace}
+.step-line .sb b{font-size:.96rem;font-weight:700;display:block;margin-bottom:2px}
+.step-line .sb span{font-size:.86rem;color:var(--ink-2);line-height:1.5}
+/* 과제 카드 '자세한 방법' 버튼 */
+.task-more{margin-top:12px;display:inline-flex;align-items:center;gap:6px;font-family:inherit;font-size:.82rem;font-weight:700;color:var(--indigo);background:#eef0fb;border:1px solid #dde0f3;border-radius:9px;padding:7px 13px;cursor:pointer;transition:.15s}
+.task-more:hover{background:#e3e6f7;transform:translateY(-1px)}
+/* 모달 안 서브 헤딩 / 경고줄 */
+.msub{font-size:.95rem;font-weight:800;margin:22px 0 12px;display:flex;align-items:center;gap:8px}
+.mline{margin-top:18px;background:#fff5f5;border:1.5px solid #fbcdd2;border-left:4px solid #e0395a;border-radius:12px;padding:13px 15px;font-size:.88rem;color:#7a2230;line-height:1.55}
+.mline b{color:#a01530}
+.minfo{margin-top:16px;background:#eef0fb;border:1px solid #dde0f3;border-radius:12px;padding:13px 15px;font-size:.88rem;color:var(--ink-2);line-height:1.55}
+.minfo b{color:var(--indigo-d)}
+/* AI 프롬프트 복사 박스 */
+.prompt-box{margin:14px 0 4px;background:#11152f;border-radius:13px;overflow:hidden;border:1px solid #262c52}
+.pb-head{display:flex;align-items:center;justify-content:space-between;padding:11px 14px;background:rgba(255,255,255,.04);border-bottom:1px solid rgba(255,255,255,.08)}
+.pb-head span{font-family:"JetBrains Mono",monospace;font-size:.76rem;font-weight:700;color:#a5b4fc;display:flex;align-items:center;gap:7px}
+.pb-copy{font-family:inherit;font-size:.78rem;font-weight:700;color:#fff;background:var(--indigo);border:0;border-radius:8px;padding:6px 13px;cursor:pointer;transition:.15s;flex-shrink:0}
+.pb-copy:hover{background:#6d6df3}
+.pb-text{font-family:"JetBrains Mono",monospace;font-size:.82rem;line-height:1.65;color:#dfe3f7;padding:14px;white-space:pre-wrap;margin:0;word-break:break-word}
+.pb-text .ph{color:#fcd34d}
+/* 파일 구조 비주얼 (코딩 기초) */
+.filemap{margin-top:24px;border-radius:16px;overflow:hidden;border:1px solid var(--line);box-shadow:var(--shadow-sm);background:#fff}
+.fm-bar{display:flex;align-items:center;gap:7px;padding:11px 16px;background:#f1f2f8;border-bottom:1px solid var(--line)}
+.fm-bar .dot{width:11px;height:11px;border-radius:50%}
+.fm-bar .d1{background:#ff5f57}.fm-bar .d2{background:#febc2e}.fm-bar .d3{background:#28c840}
+.fm-bar .fn{margin-left:8px;font-family:"JetBrains Mono",monospace;font-size:.8rem;color:var(--ink-2);font-weight:600}
+.fm-body{font-family:"JetBrains Mono",monospace;font-size:.82rem;line-height:1.9;padding:6px 0}
+.fm-row{display:flex;align-items:center;gap:0;padding:0 16px}
+.fm-zone{position:relative;padding:10px 16px;margin:6px 14px;border-radius:10px}
+.fm-zone .zlabel{position:absolute;top:-9px;left:12px;font-family:"Pretendard Variable",Pretendard,sans-serif;font-size:.7rem;font-weight:800;padding:2px 9px;border-radius:7px;color:#fff}
+.fm-zone pre{font-family:"JetBrains Mono",monospace;font-size:.78rem;line-height:1.7;margin:0;white-space:pre-wrap;color:#3a4060}
+.fm-zone.h{background:#fff1e8;border:1.5px solid #ffd5b8}.fm-zone.h .zlabel{background:#f97316;left:12px}
+.fm-zone.c{background:#e8f4ff;border:1.5px solid #bcdcff}.fm-zone.c .zlabel{background:#3b82f6}
+.fm-zone.j{background:#fff8e0;border:1.5px solid #ffe9a8}.fm-zone.j .zlabel{background:#eab308}
+.fm-tag{color:#9aa0bd}
+.methods{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:22px}
+.method{background:var(--paper-2);border:1.5px solid var(--line);border-radius:16px;padding:22px;box-shadow:var(--shadow-sm)}
+.method .mh{display:flex;align-items:center;gap:11px;margin-bottom:13px}
+.method .mh .mi{width:40px;height:40px;border-radius:11px;display:grid;place-items:center;font-size:1.3rem;flex-shrink:0;background:#eef0fb}
+.method .mh b{font-size:1.04rem;font-weight:800}
+.method .mh small{display:block;font-size:.76rem;color:var(--ink-3);font-family:"JetBrains Mono",monospace}
+.method ol{margin:0 0 0 18px;padding:0}
+.method ol li{font-size:.9rem;color:var(--ink-2);line-height:1.6;margin-bottom:6px}
+.method code{font-family:"JetBrains Mono",monospace;background:#f1f2f8;border:1px solid var(--line);border-radius:5px;padding:1px 6px;font-size:.85em;color:var(--indigo-d)}
+.modal-actions .btn-link-out{background:#1f2440;color:#fff}
+.modal-actions .btn-link-out:hover{background:#2a3056}
+.modal{scrollbar-width:thin}
+.modal::-webkit-scrollbar{width:8px}.modal::-webkit-scrollbar-thumb{background:#d6dae8;border-radius:8px}
+.modal-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px}
+.modal-actions .btn{flex:1;min-width:130px;font-size:.94rem;padding:13px}
+.btn-indigo{background:var(--indigo);color:#fff}
+.btn-indigo:hover{background:var(--indigo-d);transform:translateY(-1px)}
+.btn-soft{background:#eef0f8;color:var(--ink-2)}
+.btn-soft:hover{background:#e3e6f2}
+
+/* ===== 길찾기(지도) 가이드 모달 내부 ===== */
+.guide-now{background:linear-gradient(135deg,#eef0fe,#f6f0ff);border:1.5px solid #d9ddfb;border-radius:16px;padding:20px;margin-bottom:22px}
+.guide-now .pin{display:inline-flex;align-items:center;gap:7px;font-size:.78rem;font-weight:800;color:var(--indigo);font-family:"JetBrains Mono",monospace;margin-bottom:8px}
+.guide-now h4{font-size:1.2rem;font-weight:800;margin-bottom:6px}
+.guide-now .desc{font-size:.92rem;color:var(--ink-2);line-height:1.6;margin-bottom:14px}
+.micro{display:flex;flex-direction:column;gap:9px;margin-bottom:16px}
+.micro-item{display:flex;gap:11px;align-items:flex-start;cursor:pointer;padding:9px 11px;border-radius:11px;background:#fff;border:1.5px solid #e6e8f3;transition:.15s}
+.micro-item:hover{border-color:#c9cef0}
+.micro-item.on{background:#f0fdf8;border-color:#bfeede}
+.micro-box{width:22px;height:22px;border-radius:7px;border:2px solid var(--line);background:#fff;flex-shrink:0;display:grid;place-items:center;margin-top:1px;transition:.15s}
+.micro-box svg{width:13px;height:13px;stroke:#fff;stroke-width:3.5;fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:20;stroke-dashoffset:20;transition:stroke-dashoffset .25s}
+.micro-item.on .micro-box{background:var(--mint);border-color:var(--mint)}
+.micro-item.on .micro-box svg{stroke-dashoffset:0}
+.micro-item span{font-size:.9rem;color:var(--ink);line-height:1.45;padding-top:1px}
+.micro-item.on span{color:var(--ink-3);text-decoration:line-through}
+.guide-tip{font-size:.85rem;color:var(--indigo-d);background:#fff;border:1px dashed #c9cef0;border-radius:10px;padding:11px 13px;margin-bottom:16px;line-height:1.55}
+.guide-tip b{font-weight:800}
+.guide-cta{width:100%;background:var(--indigo);color:#fff;padding:14px;font-size:.96rem}
+.guide-cta:hover{background:var(--indigo-d)}
+.unlock-note{margin-top:12px;text-align:center;font-size:.86rem;color:var(--mint-d);font-weight:700}
+.unlock-note button{margin-top:8px;width:100%;background:var(--mint);color:#fff;padding:12px;font-size:.92rem;border:0;border-radius:11px;font-family:inherit;font-weight:700;cursor:pointer}
+.unlock-note button:hover{background:var(--mint-d)}
+
+/* 로드맵 */
+.roadmap-title{font-size:.78rem;font-weight:800;color:var(--ink-3);letter-spacing:.04em;margin-bottom:14px;font-family:"JetBrains Mono",monospace}
+.roadmap{position:relative;padding-left:8px}
+.rm-stop{display:flex;gap:14px;align-items:flex-start;padding:0 0 4px;cursor:pointer;position:relative}
+.rm-line{position:relative;display:flex;flex-direction:column;align-items:center;flex-shrink:0}
+.rm-dot{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-size:.8rem;font-weight:800;font-family:"JetBrains Mono",monospace;border:2.5px solid var(--line);background:#fff;color:var(--ink-3);z-index:2;transition:.2s}
+.rm-bar{width:2.5px;flex:1;min-height:22px;background:var(--line)}
+.rm-stop:last-child .rm-bar{display:none}
+.rm-body{padding-bottom:18px;padding-top:3px}
+.rm-body b{font-size:.96rem;font-weight:700;display:block;color:var(--ink)}
+.rm-body small{font-size:.8rem;color:var(--ink-3)}
+.rm-stop.done .rm-dot{background:var(--mint);border-color:var(--mint);color:#fff}
+.rm-stop.done .rm-bar{background:var(--mint)}
+.rm-stop.current .rm-dot{background:var(--indigo);border-color:var(--indigo);color:#fff;box-shadow:0 0 0 5px rgba(91,91,240,.18)}
+.rm-stop.current .rm-body b{color:var(--indigo)}
+.rm-stop.upcoming{opacity:.6}
+
+/* ===== 토스트 ===== */
+.toast-wrap{position:fixed;left:50%;transform:translateX(-50%);bottom:96px;z-index:95;display:flex;flex-direction:column;gap:10px;width:calc(100% - 40px);max-width:420px;pointer-events:none}
+.toast{pointer-events:auto;background:var(--void);color:#fff;border-radius:16px;padding:15px 18px;box-shadow:var(--shadow-lg);display:flex;align-items:flex-start;gap:12px;animation:toastIn .35s cubic-bezier(.2,.9,.3,1);border:1px solid var(--void-3)}
+.toast.out{animation:toastOut .3s forwards}
+.toast .tic{font-size:1.4rem;line-height:1;flex-shrink:0}
+.toast .tbody{flex:1}
+.toast .tbody b{display:block;font-size:.94rem;font-weight:800;margin-bottom:2px}
+.toast .tbody p{font-size:.85rem;color:#b9c0e6;line-height:1.45}
+.toast .tbtn{margin-top:9px;background:rgba(255,255,255,.12);color:#fff;border:0;border-radius:9px;padding:8px 13px;font-size:.82rem;font-weight:700;font-family:inherit;cursor:pointer;transition:.15s}
+.toast .tbtn:hover{background:rgba(255,255,255,.2)}
+.toast .tx{background:transparent;border:0;color:#7a82ad;cursor:pointer;font-size:1rem;padding:0 2px;flex-shrink:0}
+
+/* ===== 푸터 ===== */
+footer{background:#06091c;color:#6e76a3;text-align:center;padding:38px 22px;font-size:.84rem;line-height:1.7}
+footer .mono{color:#9aa2cf}
+.app-pad{padding-bottom:0}
+
+/* ===== 애니메이션 ===== */
+@keyframes holoMove{to{background-position:220% center}}
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes spinRev{to{transform:rotate(-360deg)}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+@keyframes ripple{0%{transform:scale(1);opacity:.7}100%{transform:scale(1.18);opacity:0}}
+@keyframes toastIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+@keyframes toastOut{to{opacity:0;transform:translateY(20px)}}
+
+/* ===== 반응형 ===== */
+@media(min-width:680px){.topbar-progress{display:flex}.topbar-name{display:inline}}
+@media(max-width:900px){
+  .hero .wrap{grid-template-columns:1fr;text-align:center}
+  .hero-cta{justify-content:center}
+  .hero p.sub{margin-left:auto;margin-right:auto}
+  .holo-stage{order:-1;min-height:240px}
+  .howto,.res-grid,.lang-grid{grid-template-columns:1fr}
+  .slide-grid{grid-template-columns:1fr}
+  .combo-ex{grid-template-columns:1fr}
+  .combo-ex .cx{border-right:0;border-bottom:1px solid rgba(255,255,255,.08)}
+  .methods{grid-template-columns:1fr}
+  .submit-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:760px){
+  .nav-desktop{display:none}
+  .nav-mobile{display:block}
+  .app-pad{padding-bottom:74px}
+  .fab{bottom:84px;right:16px;padding:12px 16px 12px 14px;font-size:.86rem}
+  .toast-wrap{bottom:150px}
+}
+@media(max-width:560px){
+  .page{padding:48px 0 80px}
+  .hero{padding:46px 0 64px}
+  .panel,.welcome-card{padding:26px 22px}
+  .field-row{grid-template-columns:1fr}
+  .task{grid-template-columns:auto 1fr;gap:14px;padding:20px}
+  .check{grid-column:1;grid-row:1;justify-self:start}
+  .submit-grid{grid-template-columns:1fr}
+  .brand small{display:none}
+  .modal-hero{padding:28px 24px 24px}
+  .modal-body{padding:22px 24px 26px}
+}
+@media(prefers-reduced-motion:reduce){
+  *{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+  .fab::before{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- ===================== 상단 바 ===================== -->
+<header class="topbar">
+  <div class="wrap">
+    <div class="brand" data-view="home">
+      <span class="brand-mark"></span>
+      <span><small>AI · SCIENCE LAB · 2기</small><b>최종 과제 허브</b></span>
+    </div>
+    <nav class="nav-desktop" id="navDesktop">
+      <a data-view="home">홈</a>
+      <a data-view="tasks">과제</a>
+      <a data-view="resources">학습자료</a>
+      <a data-view="coding">코딩 기초</a>
+      <a data-view="present">발표 가이드</a>
+      <a data-view="submit">제출</a>
+    </nav>
+    <div class="topbar-status">
+      <div class="topbar-progress" id="barProgress">
+        <span class="mono" id="barPct">0%</span>
+        <span class="mini-track"><span class="mini-fill" id="barFill"></span></span>
+      </div>
+      <span class="topbar-name" id="barName"></span>
+      <button class="btn-ghost" id="barLogout" style="display:none">로그아웃</button>
+    </div>
+  </div>
+</header>
+
+<main class="app-pad">
+
+<!-- ===================== 홈 ===================== -->
+<section class="view" id="view-home">
+  <div class="hero">
+    <div class="hero-grid"></div>
+    <div class="hero-glow a"></div>
+    <div class="hero-glow b"></div>
+    <div class="wrap">
+      <div>
+        <span class="hero-badge"><span class="dot"></span>인공지능 융합 첨단과학 탐구반 · 2기</span>
+        <h1>바이브코딩으로 과학을 만드는<br><span class="holo-text">AI 메이커 프로젝트</span></h1>
+        <p class="sub">홀로그램을 코드로 띄우고, 나만의 프로그램을 만들고, AI로 발표·홍보까지. 아래 안내만 따라가면 선생님께 묻지 않아도 끝까지 완성할 수 있어요.</p>
+        <div class="hero-cta">
+          <a class="btn btn-primary" data-view="tasks">과제 4가지 보기 →</a>
+          <button class="btn btn-line" id="heroGuide">🗺️ 지금 뭐부터 할까?</button>
+        </div>
+      </div>
+      <div class="holo-stage" aria-hidden="true">
+        <svg viewBox="0 0 400 360" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="holoG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#22d3ee"/><stop offset=".4" stop-color="#8b7cff"/><stop offset=".7" stop-color="#e879f9"/><stop offset="1" stop-color="#38bdf8"/></linearGradient>
+            <radialGradient id="core" cx="50%" cy="45%" r="55%"><stop offset="0" stop-color="#fff"/><stop offset=".5" stop-color="#a5b4fc"/><stop offset="1" stop-color="#5b5bf0" stop-opacity="0"/></radialGradient>
+            <filter id="soft"><feGaussianBlur stdDeviation="3.5"/></filter>
+          </defs>
+          <path d="M200 158 L150 320 L250 320 Z" fill="url(#holoG)" opacity=".10"/>
+          <path d="M200 158 L172 320 L228 320 Z" fill="url(#holoG)" opacity=".18"/>
+          <ellipse cx="200" cy="322" rx="86" ry="17" fill="url(#holoG)" opacity=".16"/>
+          <ellipse cx="200" cy="320" rx="58" ry="11" fill="none" stroke="url(#holoG)" stroke-width="2" opacity=".55"/>
+          <ellipse cx="200" cy="320" rx="34" ry="6.5" fill="url(#holoG)" opacity=".4"/>
+          <g class="floaty">
+            <circle cx="200" cy="158" r="62" fill="url(#core)" opacity=".55" filter="url(#soft)"/>
+            <g class="spin-slow" fill="none" stroke="url(#holoG)"><ellipse cx="200" cy="158" rx="64" ry="22" stroke-width="2.2" opacity=".9"/><ellipse cx="200" cy="158" rx="48" ry="48" stroke-width="1.6" opacity=".5"/></g>
+            <g class="spin-rev" fill="none" stroke="url(#holoG)"><ellipse cx="200" cy="158" rx="22" ry="60" stroke-width="2" opacity=".75"/><ellipse cx="200" cy="158" rx="58" ry="34" stroke-width="1.4" opacity=".4"/></g>
+            <circle cx="200" cy="158" r="11" fill="#fff" opacity=".95"/>
+            <circle cx="200" cy="158" r="20" fill="none" stroke="#fff" stroke-width="1.5" opacity=".5"/>
+            <circle cx="248" cy="120" r="3" fill="#22d3ee"/><circle cx="150" cy="190" r="2.5" fill="#e879f9"/><circle cx="262" cy="186" r="2" fill="#38bdf8"/><circle cx="142" cy="138" r="2.5" fill="#8b7cff"/>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap page" style="padding-top:0;margin-top:46px">
+    <div class="howto">
+      <div class="howto-card"><div class="hn">01</div><h4>로그인하기</h4><p>반·번호·이름을 입력하면 진행상황이 내 기기에 저장돼요.</p></div>
+      <div class="howto-card"><div class="hn">02</div><h4>과제 4개 완성</h4><p>홀로그램 · 나만의 프로그램 · 발표 자료 · AI 홍보물을 하나씩 만들어요.</p></div>
+      <div class="howto-card"><div class="hn">03</div><h4>길 잃으면 🗺️</h4><p>오른쪽 아래 <b>길찾기</b> 버튼을 누르면 지금 할 일을 알려줘요.</p></div>
+    </div>
+
+    <!-- 로그인 -->
+    <div class="login-box" id="loginBox">
+      <div class="panel">
+        <h3>먼저 로그인해 주세요 🔐</h3>
+        <p class="hint">이름·반·번호를 입력하면 <b>이 기기에</b> 진행상황이 저장돼요. 다음에 다시 와도 이어서 체크할 수 있어요.</p>
+        <div class="field-row">
+          <div class="field"><label for="inClass">반</label><input id="inClass" inputmode="numeric" placeholder="예: 3" autocomplete="off"></div>
+          <div class="field"><label for="inNum">번호</label><input id="inNum" inputmode="numeric" placeholder="예: 12" autocomplete="off"></div>
+        </div>
+        <div class="field full"><label for="inName">이름</label><input id="inName" placeholder="예: 김탐구" autocomplete="off"></div>
+        <button class="btn btn-block" id="loginBtn">로그인하고 시작하기 →</button>
+        <div class="note-warn" id="warnBox"></div>
+      </div>
+    </div>
+
+    <!-- 환영 -->
+    <div class="welcome-card" id="welcomeBox">
+      <div class="who">
+        <div class="avatar" id="avatar">?</div>
+        <div><h3 id="wName">환영합니다</h3><div class="meta" id="wMeta"></div></div>
+      </div>
+      <div class="progress-wrap">
+        <div class="progress-top"><span class="label">과제 완료율</span><span class="pct" id="wPct">0%</span></div>
+        <div class="track"><span class="fill" id="wFill"></span></div>
+        <div class="progress-msg" id="wMsg"></div>
+      </div>
+      <div class="welcome-actions">
+        <button class="btn btn-primary" id="welGuide">🗺️ 지금 할 일 보기</button>
+        <a class="btn btn-line" data-view="tasks">과제 체크하기</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 과제 ===================== -->
+<section class="view" id="view-tasks">
+  <div class="wrap page">
+    <div class="page-head">
+      <span class="eyebrow">STEP 02 · 제출 목록</span>
+      <h2 class="h2">내가 완성해야 할 <span style="color:var(--indigo)">4가지</span></h2>
+      <p class="lead">각 항목을 끝낼 때마다 오른쪽 동그라미를 눌러 체크하세요. 네 개를 모두 채우면 제출 준비 완료!</p>
+    </div>
+
+    <div class="slim-prog" id="slimProg">
+      <span class="sl" id="slimLabel">0 / 4 완료</span>
+      <span class="st"><span class="sf" id="slimFill"></span></span>
+      <span class="sp" id="slimPct">0%</span>
+    </div>
+
+    <div class="tasks" id="taskList">
+      <div class="task" data-id="1">
+        <div class="task-num">01</div>
+        <div class="task-body"><h4>플로팅 홀로그램 활동 보고서 완성</h4><p><b>홀로그램 활동 페이지</b>에서 기존처럼 로그인 → 🤖 <b>바이브코딩 버전</b>으로 4면 홀로그램 만들기 → 📝 <b>활동 보고서</b> 작성 → 💾 <b>보고서 저장</b> → 📄 <b>제출</b>까지 진행합니다.</p><span class="task-tag">필수 · 홀로그램 활동</span><button class="task-more" data-more="1">📖 자세한 방법 보기</button></div>
+        <button class="check" role="checkbox" aria-checked="false" aria-label="1번 과제 완료 체크"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></button>
+      </div>
+      <div class="task" data-id="2">
+        <div class="task-num">02</div>
+        <div class="task-body"><h4>나만의 프로그램 만들기</h4><p>바이브코딩으로 <b>내가 만들고 싶은 프로그램</b>을 만듭니다. 게임, 과학 시뮬레이션, 모의 투자 계산기 등 무엇이든 좋아요. <b style="color:#c01a3a">⚠️ 생기부에 들어가니 이름·내용을 진지하게!</b> 이 프로그램이 발표 작품이 돼요.</p><span class="task-tag">필수 · 발표할 프로그램</span><button class="task-more" data-more="2">📖 자세한 방법 보기</button></div>
+        <button class="check" role="checkbox" aria-checked="false" aria-label="2번 과제 완료 체크"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></button>
+      </div>
+      <div class="task" data-id="3">
+        <div class="task-num">03</div>
+        <div class="task-body"><h4>발표 자료 만들기</h4><p>과제 2에서 만든 <b>'나만의 프로그램'</b>으로 발표 자료를 만듭니다. <b>(플로팅 홀로그램 ❌)</b> 코드 3장(HTML·CSS·JS)과 어려웠던 점 등 꼭 넣을 내용은 '발표 가이드'에 정리해 뒀어요.</p><span class="task-tag">필수 · 발표용</span><button class="task-more" data-more="3">📖 자세한 방법 보기</button></div>
+        <button class="check" role="checkbox" aria-checked="false" aria-label="3번 과제 완료 체크"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></button>
+      </div>
+      <div class="task" data-id="4">
+        <div class="task-num">04</div>
+        <div class="task-body"><h4>AI 홍보물 만들기</h4><p><b>ChatGPT(이미지 생성)</b>를 활용해 내가 만든 프로그램을 홍보하는 <b>이미지 한 장</b>을 만듭니다. 포스터처럼 사람들이 써 보고 싶게!</p><span class="task-tag tool">필수 · ChatGPT 활용</span><button class="task-more" data-more="4">📖 자세한 방법 보기</button></div>
+        <button class="check" role="checkbox" aria-checked="false" aria-label="4번 과제 완료 체크"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></button>
+      </div>
+    </div>
+
+    <div class="locked-hint" id="lockHint">🔒 진행상황을 저장하려면 <b>먼저 홈에서 로그인</b>해 주세요.</div>
+    <div class="after-cta"><button class="btn btn-indigo" id="tasksGuide">🗺️ 다음에 뭘 할지 알려줘</button></div>
+  </div>
+</section>
+
+<!-- ===================== 학습자료 ===================== -->
+<section class="view" id="view-resources">
+  <div class="wrap page">
+    <div class="page-head">
+      <span class="eyebrow">STEP 03 · 학습 자료</span>
+      <h2 class="h2">막힐 땐 여기서 도움 받기</h2>
+      <p class="lead">과제를 하다 막히면 아래 자료를 열어 보세요. 만드는 방법, 인터넷에 올리는 방법, 코딩 기초가 모두 들어 있어요.</p>
+    </div>
+    <div class="res-grid">
+      <div class="res c1" data-view="coding">
+        <div class="res-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#f5a524" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 9l-3 3 3 3M16 9l3 3-3 3M13 7l-2 10"/></svg></div>
+        <div class="kicker">코딩 기초 · 설명</div>
+        <h4>HTML · CSS · JavaScript 기초</h4>
+        <p>발표 자료에 필요한 세 가지 언어가 무엇인지, 예시와 함께 쉽게 설명해 둔 코너예요. 코드 3장을 찾기 전에 꼭 읽어봐요.</p>
+        <span class="go" style="color:var(--amber)">자료 열기 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg></span>
+      </div>
+      <a class="res c2" id="lnkHolo" href="#" target="_blank" rel="noopener">
+        <div class="res-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#22d3ee" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L4 7v10l8 5 8-5V7z"/><path d="M12 2v20M4 7l8 5 8-5"/></svg></div>
+        <div class="kicker">홀로그램 활동 · 과제 1</div>
+        <h4>플로팅 홀로그램 활동</h4>
+        <p>기존에 로그인했던 그대로 로그인 → 🤖 <b>바이브코딩 버전</b> → 📝 <b>활동 보고서</b> 작성 → 💾 <b>보고서 저장</b> → 📄 <b>제출</b> 순서로 진행하세요.</p>
+        <span class="go" style="color:var(--cyan)">활동 열기 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg></span>
+      </a>
+      <a class="res c3" id="lnkDeploy" href="#" target="_blank" rel="noopener">
+        <div class="res-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#8b7cff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 17l6-6 4 4 6-6"/><path d="M4 21h16M14 5h6v6"/></svg></div>
+        <div class="kicker">배포 매뉴얼 · GitHub</div>
+        <h4>GitHub Pages 배포하기</h4>
+        <p>내가 만든 프로그램을 인터넷 주소로 만들어 친구에게 공유하는 방법이에요. 발표·홍보할 때 꼭 필요해요.</p>
+        <span class="go" style="color:var(--violet)">매뉴얼 열기 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg></span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 코딩 기초 (HTML/CSS/JS) ===================== -->
+<section class="view" id="view-coding">
+  <div class="wrap page">
+    <div class="page-head">
+      <span class="eyebrow">코딩 기초 · HTML·CSS·JS</span>
+      <h2 class="h2">웹앱은 <span style="color:var(--indigo)">세 가지 언어</span>로 만들어요</h2>
+      <p class="lead">발표 자료에 내 코드의 HTML·CSS·JavaScript 예시를 각각 넣어야 해요. 그러려면 셋이 무슨 역할인지 알아야겠죠? 집 짓기에 비유하면 이렇게 나뉘어요.</p>
+    </div>
+
+    <div class="lang-grid">
+      <div class="lang html">
+        <div class="lang-top"><div class="lang-emoji">🦴</div><div><h4>HTML</h4><span class="tag">뼈대 · 구조</span></div></div>
+        <p>웹페이지에 <b>"무엇이 있는지"</b>를 정해요. 제목·글·버튼·이미지를 어디에 놓을지 짜는 골조예요. 사람으로 치면 <b>뼈대</b>!</p>
+        <div class="code"><span class="tag-c">&lt;button&gt;</span>눌러줘<span class="tag-c">&lt;/button&gt;</span></div>
+        <div class="lang-result"><span class="arrow">→</span>'눌러줘' 버튼이 생겨요</div>
+      </div>
+      <div class="lang css">
+        <div class="lang-top"><div class="lang-emoji">🎨</div><div><h4>CSS</h4><span class="tag">꾸미기 · 디자인</span></div></div>
+        <p>웹페이지가 <b>"어떻게 보이는지"</b>를 정해요. 색·크기·글꼴·위치·배경을 꾸며요. 사람으로 치면 <b>옷과 머리 스타일</b>!</p>
+        <div class="code">button {<br>&nbsp;&nbsp;<span class="atr">background</span>: <span class="val">violet</span>;<br>}</div>
+        <div class="lang-result"><span class="arrow">→</span>버튼이 보라색이 돼요</div>
+      </div>
+      <div class="lang js">
+        <div class="lang-top"><div class="lang-emoji">⚡</div><div><h4>JavaScript</h4><span class="tag">움직임 · 기능</span></div></div>
+        <p>버튼을 누르면 <b>"무슨 일이 일어나는지"</b>를 정해요. 클릭·계산·애니메이션처럼 살아 움직이게 해요. 사람으로 치면 <b>행동</b>!</p>
+        <div class="code">버튼.<span class="fn">onclick</span> = () =&gt; {<br>&nbsp;&nbsp;<span class="fn">alert</span>(<span class="val">'안녕!'</span>);<br>}</div>
+        <div class="lang-result"><span class="arrow">→</span>누르면 '안녕!' 창이 떠요</div>
+      </div>
+    </div>
+
+    <div class="combo"><span><span class="holo-text">HTML(뼈대)</span> + <span class="holo-text">CSS(꾸미기)</span> + <span class="holo-text">JavaScript(움직임)</span><br>이 셋이 합쳐지면 우리가 보는 웹앱이 완성돼요!</span></div>
+
+    <div class="divider"><span>셋이 합쳐지면 — 같은 버튼을 이렇게 만들어요</span></div>
+    <div class="combo-ex">
+      <div class="cx h"><div class="cl">🦴 HTML</div><pre>&lt;button id="hi"&gt;
+  눌러줘
+&lt;/button&gt;</pre></div>
+      <div class="cx c"><div class="cl">🎨 CSS</div><pre>#hi {
+  background: violet;
+  color: white;
+}</pre></div>
+      <div class="cx j"><div class="cl">⚡ JavaScript</div><pre>hi.onclick = () =&gt; {
+  alert('안녕!');
+}</pre></div>
+      <div class="res-eq"><button class="demo-btn">눌러줘</button><small>= 완성된 버튼</small></div>
+    </div>
+
+    <div class="divider"><span>내 코드에서 HTML · CSS · JS 찾기 (발표 5·6·7번)</span></div>
+    <p class="lead" style="margin-top:0">발표 자료에 코드 3장을 넣어야 하는데, 어디가 어디인지 헷갈리죠? <b>내 웹앱은 보통 파일 하나(.html) 안에 셋이 모두 들어</b> 있어요. 위치는 이렇게 정해져 있어요 👇</p>
+
+    <div class="filemap">
+      <div class="fm-bar"><span class="dot d1"></span><span class="dot d2"></span><span class="dot d3"></span><span class="fn">내프로그램.html</span></div>
+      <div class="fm-body">
+        <div class="fm-zone h"><span class="zlabel">🦴 HTML — 화면 내용</span><pre>&lt;body&gt;
+  &lt;h1&gt;내 게임&lt;/h1&gt;
+  &lt;button&gt;시작&lt;/button&gt;
+&lt;/body&gt;</pre></div>
+        <div class="fm-zone c"><span class="zlabel">🎨 CSS — &lt;style&gt; 안</span><pre>&lt;style&gt;
+  button { background: violet; }
+&lt;/style&gt;</pre></div>
+        <div class="fm-zone j"><span class="zlabel">⚡ JavaScript — &lt;script&gt; 안</span><pre>&lt;script&gt;
+  버튼.onclick = () =&gt; { ... }
+&lt;/script&gt;</pre></div>
+      </div>
+    </div>
+
+    <div class="methods">
+      <div class="method">
+        <div class="mh"><span class="mi">🔍</span><div><b>방법 1 · 직접 찾기</b><small>EDITOR</small></div></div>
+        <ol>
+          <li>내 <code>.html</code> 파일을 <b>메모장</b>(또는 코드 편집기)으로 열어요. <span style="color:var(--ink-3)">(파일 우클릭 → 연결 프로그램 → 메모장)</span></li>
+          <li><code>&lt;style&gt;</code> 와 <code>&lt;/style&gt;</code> <b>사이 = CSS</b> 🎨</li>
+          <li><code>&lt;script&gt;</code> 와 <code>&lt;/script&gt;</code> <b>사이 = JavaScript</b> ⚡</li>
+          <li>그 밖에 화면을 만드는 부분(특히 <code>&lt;body&gt;</code> 안) <b>= HTML</b> 🦴</li>
+          <li>각 부분을 <b>드래그해 캡처</b>(Win + Shift + S) 또는 복사해서 발표 자료에 붙여요.</li>
+        </ol>
+      </div>
+      <div class="method">
+        <div class="mh"><span class="mi">🤖</span><div><b>방법 2 · AI에게 물어보기</b><small>ASK AI</small></div></div>
+        <ol>
+          <li>찾기 어렵거나 헷갈리면 <b>AI에게 물어보면 돼요!</b> 막혔다고 멈추지 말기.</li>
+          <li>아래 문장을 <b>복사</b>해서 AI(Claude·ChatGPT 등) 채팅창에 붙여넣어요.</li>
+          <li>맨 끝 <span class="ph" style="color:#b58900;font-weight:700">[내 코드]</span> 자리에 내 <code>.html</code> 파일 내용을 <b>전부 붙여넣고</b> 보내요.</li>
+          <li>AI가 HTML·CSS·JS 부분과 예시, 설명을 정리해 주면 그대로 발표에 넣어요.</li>
+        </ol>
+        <div class="prompt-box">
+          <div class="pb-head"><span>🤖 그대로 복사해서 AI에게 보내기</span><button class="pb-copy">복사</button></div>
+          <pre class="pb-text">아래는 내가 만든 웹앱 코드야. 발표 자료에 넣을 거라서,
+이 코드에서 ① HTML 부분 ② CSS 부분 ③ JavaScript 부분이
+각각 어디인지 알려줘. 그리고 각각 발표에 보여주기 좋은
+짧은 예시를 한 토막씩 골라서, "이 부분은 무슨 역할인지"도
+초등학생도 알 수 있게 쉽게 설명해줘.
+
+내 코드:
+[여기에 내 .html 파일 내용을 전부 붙여넣기]</pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="after-cta"><button class="btn btn-indigo" data-view="present">이제 발표 가이드 보러 가기 →</button></div>
+  </div>
+</section>
+
+<!-- ===================== 발표 가이드 ===================== -->
+<section class="view" id="view-present">
+  <div class="wrap page">
+    <div class="page-head">
+      <span class="eyebrow">STEP 04 · 발표 가이드</span>
+      <h2 class="h2">발표 자료에 꼭 넣을 <span style="color:var(--indigo)">10가지</span></h2>
+      <p class="lead">아래 순서대로 만들면 발표 자료가 완성돼요. HTML·CSS·JavaScript가 헷갈리면 <b>'코딩 기초'</b> 탭을 먼저 보고 와요.</p>
+    </div>
+
+    <div class="present-note">
+      <span class="pi">🎯</span>
+      <p>발표하는 작품은 <b>플로팅 홀로그램이 아니라, 따로 개발한 '나만의 프로그램'</b>이에요. 과제 2번에서 만든 내 프로그램 하나를 골라 발표 자료를 만듭니다.</p>
+    </div>
+
+    <div class="warn-box">
+      <span class="wi">⚠️</span>
+      <div>
+        <div class="wt">이 프로그램은 생활기록부(생기부)에 기록돼요</div>
+        <p>그래서 프로그램 <b>이름을 장난스럽게 짓거나, 장난스러운 프로그램</b>을 만들어 넣으면 <b>본인이 불이익을 받을 수 있어요.</b> 진지하게, 자신 있게 보여줄 수 있는 작품으로 준비하세요.</p>
+      </div>
+    </div>
+
+    <div class="minfo" style="margin-top:18px">🤖 <b>5·6·7번 코드(HTML·CSS·JS) 찾기가 어렵나요?</b> <b style="cursor:pointer;text-decoration:underline" data-view="coding">'코딩 기초' 탭</b>에 ① 직접 찾는 법과 ② AI에게 물어보는 법(복사용 문장 포함)이 자세히 있어요. 혼자 막히지 말고 꼭 활용하세요!</div>
+
+    <div class="slide-grid">
+      <div class="slide"><div class="slide-head"><div class="slide-no">1</div><h4>표지</h4></div><p>프로그램 이름, 한 줄 소개, 만든 사람(반·번호·이름)을 적어요. <b>이름은 진지하게!</b></p></div>
+      <div class="slide"><div class="slide-head"><div class="slide-no">2</div><h4>이게 뭐예요?</h4></div><p>무엇을 만들었고 어떤 기능이 있는지 소개해요. 실행 화면 스크린샷을 1장 넣으면 좋아요.</p></div>
+      <div class="slide"><div class="slide-head"><div class="slide-no">3</div><h4>왜 만들었어요 + 핵심 아이디어</h4></div><p>이 프로그램을 만든 이유와 <b>어떤 아이디어·원리를 담았는지</b> 설명해요. (게임이면 규칙, 계산기면 공식 등)</p></div>
+      <div class="slide"><div class="slide-head"><div class="slide-no">4</div><h4>어떻게 만들었어요?</h4></div><p>바이브코딩 과정이에요. 어떤 AI에게 <b>어떻게 부탁(프롬프트)</b>했는지, 기억에 남는 명령 1~2개와 만든 순서를 적어요.</p></div>
+      <div class="slide is-code"><span class="slide-must code">CODE</span><div class="slide-head"><div class="slide-no">5</div><h4>내 코드 ① HTML</h4></div><p>내 코드 중 <b>HTML 부분을 캡처</b>하고 "이건 ○○를 만드는 뼈대예요"처럼 설명을 붙여요.</p></div>
+      <div class="slide is-code"><span class="slide-must code">CODE</span><div class="slide-head"><div class="slide-no">6</div><h4>내 코드 ② CSS</h4></div><p>내 코드 중 <b>CSS 부분을 캡처</b>하고 "이건 ○○를 ○색·○크기로 꾸며요"처럼 설명을 붙여요.</p></div>
+      <div class="slide is-code"><span class="slide-must code">CODE</span><div class="slide-head"><div class="slide-no">7</div><h4>내 코드 ③ JavaScript</h4></div><p>내 코드 중 <b>JavaScript 부분을 캡처</b>하고 "버튼을 누르면 ○○가 일어나요"처럼 설명을 붙여요.</p></div>
+      <div class="slide is-req"><span class="slide-must req">필수</span><div class="slide-head"><div class="slide-no">8</div><h4>어려웠던 점 & 해결 방법</h4></div><p>만들면서 막혔던 부분, AI도 한 번에 못 풀었던 것을 적고 <b>어떻게 해결했는지</b> 설명해요. (최소 1가지)</p></div>
+      <div class="slide"><div class="slide-head"><div class="slide-no">9</div><h4>완성! 시연</h4></div><p>최종 결과 스크린샷이나 짧은 영상을 보여줘요. 실행 링크·QR코드를 넣으면 친구들이 직접 써 볼 수 있어요.</p></div>
+      <div class="slide"><div class="slide-head"><div class="slide-no">10</div><h4>느낀 점 & 다음 목표</h4></div><p>이번에 배운 점과, 다음에 만들어 보고 싶은 프로그램을 적으며 마무리해요.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 제출 ===================== -->
+<section class="view" id="view-submit">
+  <div class="wrap page">
+    <div class="page-head">
+      <span class="eyebrow">STEP 05 · 마무리</span>
+      <h2 class="h2">제출 전 마지막 점검</h2>
+      <p class="lead">네 가지를 모두 준비했다면, 아래 순서로 제출하면 끝이에요.</p>
+    </div>
+    <div class="submit-grid">
+      <div class="step"><div class="n">01</div><h4>4가지 확인</h4><p>홀로그램 · 나만의 프로그램 · 발표 자료 · AI 홍보물이 모두 준비됐는지 확인해요.</p></div>
+      <div class="step"><div class="n">02</div><h4>인터넷에 올리기</h4><p>만든 프로그램은 GitHub Pages 매뉴얼대로 배포해 링크를 만들어요.</p></div>
+      <div class="step"><div class="n">03</div><h4>발표 자료 점검</h4><p>HTML·CSS·JavaScript 코드 3장과 어려웠던 점이 빠지지 않았는지 다시 봐요.</p></div>
+      <div class="step"><div class="n">04</div><h4>제출하기</h4><p>선생님이 안내한 방법(과제방·구글 클래스룸 등)으로 결과물과 링크를 제출해요.</p></div>
+    </div>
+    <div class="submit-go">
+      <div class="sg-txt"><b>준비가 끝났나요? 📤</b><span>4가지를 모두 확인했다면 아래 버튼으로 제출하세요.</span></div>
+      <a class="btn submit-big" id="btnSubmitLink" href="#" target="_blank" rel="noopener">제출하기 →</a>
+    </div>
+    <div class="final">
+      <h3>여기까지 왔다면, 너는 이제 <span class="holo-text">AI 메이커</span>야 ✨</h3>
+      <p>코드로 빛을 띄우고 나만의 프로그램을 세상에 내놓은 경험. 끝까지 완성한 스스로를 칭찬해 주세요!</p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  인공지능 융합 첨단과학 탐구반 2기 · 최종 과제 허브<br>
+  <span class="mono">made with vibe coding</span> · 진행상황은 내 기기에만 저장됩니다
+</footer>
+
+<!-- ===================== 하단 탭바(모바일) ===================== -->
+<nav class="nav-mobile" id="navMobile">
+  <div class="nav-mobile-inner">
+    <a data-view="home"><svg viewBox="0 0 24 24"><path d="M3 10l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>홈</a>
+    <a data-view="tasks"><svg viewBox="0 0 24 24"><path d="M9 11l3 3 8-8"/><path d="M21 12v7a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h11"/></svg>과제</a>
+    <a data-view="resources"><svg viewBox="0 0 24 24"><path d="M4 5a1 1 0 0 1 1-1h6v16H5a1 1 0 0 1-1-1z"/><path d="M20 5a1 1 0 0 0-1-1h-6v16h6a1 1 0 0 0 1-1z"/></svg>자료</a>
+    <a data-view="coding"><svg viewBox="0 0 24 24"><path d="M8 9l-3 3 3 3M16 9l3 3-3 3M13 7l-2 10"/></svg>기초</a>
+    <a data-view="present"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="13" rx="1"/><path d="M8 21h8M12 17v4"/></svg>발표</a>
+    <a data-view="submit"><svg viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></svg>제출</a>
+  </div>
+</nav>
+
+<!-- ===================== 길찾기 FAB ===================== -->
+<button class="fab" id="fab">
+  <span class="map-ic"><svg viewBox="0 0 24 24"><path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2-6-2z"/><path d="M9 4v14M15 6v14"/></svg></span>
+  길찾기
+  <span class="fab-badge" id="fabBadge">?</span>
+</button>
+
+<!-- ===================== 모달 / 토스트 컨테이너 ===================== -->
+<div class="overlay" id="overlay"><div class="modal" id="modal"></div></div>
+<div class="toast-wrap" id="toastWrap"></div>
+
+<script>
+/* =========================================================
+   ⚙️  CONFIG — 링크만 확인/수정하세요!
+   ========================================================= */
+const CONFIG = {
+  HOLOGRAM_URL: "https://scienceisjo.github.io/hologram/new.html",            // 플로팅 홀로그램 활동 페이지
+  DEPLOY_URL:   "https://scienceisjo.github.io/githubmanual/forstudent.html", // GitHub Pages 배포 매뉴얼
+  SUBMIT_URL:   "https://여기에-제출-링크를-넣으세요"                            // ⬅️ 최종 제출 링크(구글 폼·과제방 등)로 바꿔주세요
+};
+/* ========================================================= */
+const $ = s => document.querySelector(s);
+const $$ = s => Array.from(document.querySelectorAll(s));
+document.getElementById('lnkHolo').href   = CONFIG.HOLOGRAM_URL;
+document.getElementById('lnkDeploy').href = CONFIG.DEPLOY_URL;
+document.getElementById('btnSubmitLink').href = CONFIG.SUBMIT_URL;
+
+/* ---------- 저장소 ---------- */
+let MEM={}, storageOK=true;
+try{ localStorage.setItem('__t','1'); localStorage.removeItem('__t'); }catch(e){ storageOK=false; }
+const save=(k,v)=>{try{storageOK?localStorage.setItem(k,v):(MEM[k]=v);}catch(e){MEM[k]=v;}};
+const load=(k)=>{try{return storageOK?localStorage.getItem(k):(MEM[k]??null);}catch(e){return MEM[k]??null;}};
+const del=(k)=>{try{storageOK?localStorage.removeItem(k):(delete MEM[k]);}catch(e){delete MEM[k];}};
+
+/* ---------- 상태 ---------- */
+const TOTAL=4;
+let user=null, progress={}, micro={};
+const uKey=(c,n,name)=>('u:'+c+'-'+n+'-'+name).replace(/\s+/g,'_');
+const countDone=()=>[1,2,3,4].filter(i=>progress[i]).length;
+function loadUser(){const r=load('hub:user');if(!r)return null;try{return JSON.parse(r);}catch(e){return null;}}
+function loadProgress(k){const r=load('hub:prog:'+k);if(!r)return{};try{return JSON.parse(r)||{};}catch(e){return{};}}
+function loadMicro(k){const r=load('hub:micro:'+k);if(!r)return{};try{return JSON.parse(r)||{};}catch(e){return{};}}
+function saveProgress(){if(user)save('hub:prog:'+user.key,JSON.stringify(progress));}
+function saveMicro(){if(user)save('hub:micro:'+user.key,JSON.stringify(micro));}
+
+/* =========================================================
+   여정(길찾기) 데이터
+   ========================================================= */
+const JOURNEY=[
+  {key:'login',num:'0',title:'로그인',short:'시작 준비',emoji:'🔐',
+   desc:'먼저 로그인! 반·번호·이름을 입력하면 진행상황이 저장돼요. 홈으로 가서 로그인하면 출발할 수 있어요.',
+   steps:['홈 화면으로 가기','반·번호·이름 입력하기','로그인 버튼 누르기'],
+   tip:'로그인하면 이 화면이 "지금 할 일"을 콕 집어 알려줘요.',
+   cta:{label:'홈으로 가서 로그인',view:'home'}},
+  {key:'t1',taskId:1,num:'1',title:'홀로그램 활동 보고서',short:'과제 1',emoji:'🔮',
+   desc:'홀로그램 활동 페이지에서 4면 홀로그램을 만들고, 활동 보고서를 작성해 저장·제출해요.',
+   steps:['홀로그램 활동 열고 기존처럼 로그인 (처음이면 학년·반·번호·이름 입력)',"🤖 '바이브코딩 버전'에서 프롬프트로 4면 홀로그램 만들기","📝 '활동 보고서' 작성하기 (바이브코딩 미션까지)","💾 '보고서 저장' → 📄 '보고서 제출(인쇄·PDF)'"],
+   tip:'보고서의 시연 화면은 캡처해서 올리면 자동으로 PDF에 들어가요.',
+   cta:{label:'홀로그램 활동 열기',url:CONFIG.HOLOGRAM_URL}},
+  {key:'t2',taskId:2,num:'2',title:'나만의 프로그램',short:'과제 2',emoji:'🎮',
+   desc:'게임·시뮬레이션·계산기 등 내가 만들고 싶은 프로그램을 만들어요. 이게 바로 발표할 작품이에요!',
+   steps:['무엇을 만들지 아이디어 정하기','AI에게 설명해서 코드 받기','실행하며 원하는 대로 고치기'],
+   tip:'⚠️ 생기부에 들어가요. 이름·내용은 진지하게! 작게 시작하면 완성하기 쉬워요.',
+   cta:{label:'코딩 기초 보러 가기',view:'coding'}},
+  {key:'t3',taskId:3,num:'3',title:'발표 자료',short:'과제 3',emoji:'🎤',
+   desc:"'나만의 프로그램'으로 발표 자료를 만들어요. (플로팅 홀로그램 ❌) 꼭 넣을 10가지가 정리돼 있어요.",
+   steps:["발표할 '나만의 프로그램' 정하기 (홀로그램 ❌)",'HTML·CSS·JS 코드 3장 캡처하기','어려웠던 점·해결 방법 정리하기'],
+   tip:"⚠️ 생기부에 기록돼요. 장난스러운 이름·프로그램은 불이익을 받을 수 있어요.",
+   cta:{label:'발표 가이드 보기',view:'present'}},
+  {key:'t4',taskId:4,num:'4',title:'AI 홍보물',short:'과제 4',emoji:'🖼️',
+   desc:'ChatGPT로 내 프로그램을 홍보하는 이미지 한 장을 만들어요. (이미지에 글자는 넣지 않기!)',
+   steps:['어떤 느낌의 포스터일지 생각하기','ChatGPT에 이미지 설명해서 만들기 (글자 없이!)','마음에 들 때까지 다시 요청하기'],
+   tip:'이미지에 글자를 넣으면 깨져요. "글자 없이"로 요청하고 제목은 나중에 직접 추가!',
+   cta:{label:'AI 홍보물 만드는 법 자세히',taskGuide:'4'}},
+  {key:'done',num:'★',title:'배포 & 제출',short:'마무리',emoji:'🚀',
+   desc:'4가지를 모두 끝냈어요! 이제 인터넷에 올리고 제출만 하면 완성이에요.',
+   steps:['GitHub Pages로 배포해 링크 만들기','발표 자료 마지막으로 점검하기','선생님 안내대로 제출하기'],
+   tip:'배포 방법은 학습자료의 "GitHub Pages 배포하기"에 있어.',
+   cta:{label:'제출 방법 보기',view:'submit'}}
+];
+function currentStageKey(){
+  if(!user) return 'login';
+  for(let i=1;i<=4;i++){ if(!progress[i]) return 't'+i; }
+  return 'done';
+}
+function stageByKey(k){ return JOURNEY.find(s=>s.key===k); }
+
+/* =========================================================
+   라우터 (SPA 화면 전환)
+   ========================================================= */
+const VIEWS=['home','tasks','resources','coding','present','submit'];
+const viewSeen={};
+function showView(name,opts){
+  opts=opts||{};
+  if(!VIEWS.includes(name)) name='home';
+  $$('.view').forEach(v=>v.classList.remove('active'));
+  const el=document.getElementById('view-'+name);
+  if(el) el.classList.add('active');
+  $$('#navDesktop a, #navMobile a').forEach(a=>a.classList.toggle('active',a.dataset.view===name));
+  window.scrollTo({top:0,behavior:opts.noScroll?'auto':'smooth'});
+  if(location.hash.slice(1)!==name) history.replaceState(null,'','#'+name);
+  // 화면별 첫 방문 안내 토스트
+  if(!viewSeen[name]){ viewSeen[name]=true; viewHint(name); }
+}
+function viewHint(name){
+  if(name==='home') return;
+  const hints={
+    tasks:['📋','여기서 과제를 체크해요','동그라미를 누르면 완료! 다음 할 일은 🗺️ 길찾기로 확인해요.'],
+    resources:['📚','막히면 이 자료들을 열어봐','홀로그램 활동·배포법·코딩 기초가 다 있어요.'],
+    coding:['💻','HTML·CSS·JS가 뭔지 여기서 배워요','발표 자료의 코드 3장은 이걸 보고 찾으면 돼요.'],
+    present:['🎤','발표는 "나만의 프로그램"으로!','플로팅 홀로그램 ❌. 코드 3장 + 어려웠던 점은 필수예요.'],
+    submit:['📤','다 했으면 여기서 제출!','배포해서 링크 만들고 제출 버튼을 누르면 끝이에요.']
+  };
+  const h=hints[name]; if(h) setTimeout(()=>toast(h[0],h[1],h[2]),450);
+}
+$$('[data-view]').forEach(el=>{
+  el.style.cursor='pointer';
+  el.addEventListener('click',e=>{e.preventDefault();showView(el.dataset.view);});
+});
+window.addEventListener('hashchange',()=>{const n=location.hash.slice(1);if(VIEWS.includes(n))showView(n,{noScroll:false});});
+
+/* =========================================================
+   토스트
+   ========================================================= */
+function toast(icon,title,body,btn){
+  const wrap=$('#toastWrap');
+  const t=document.createElement('div'); t.className='toast';
+  t.innerHTML='<div class="tic">'+icon+'</div><div class="tbody"><b>'+title+'</b>'+(body?'<p>'+body+'</p>':'')+'</div>';
+  const close=()=>{t.classList.add('out');setTimeout(()=>t.remove(),300);};
+  const x=document.createElement('button'); x.className='tx'; x.innerHTML='✕'; x.onclick=close; t.appendChild(x);
+  if(btn){const b=document.createElement('button');b.className='tbtn';b.textContent=btn.label;b.onclick=()=>{btn.fn();close();};t.querySelector('.tbody').appendChild(b);}
+  wrap.appendChild(t);
+  setTimeout(close, btn?7000:4200);
+}
+
+/* =========================================================
+   모달
+   ========================================================= */
+const overlay=$('#overlay'), modal=$('#modal');
+function openModal(html){ modal.innerHTML='<button class="modal-x" onclick="closeModal()">✕</button>'+html; overlay.classList.add('on'); document.body.style.overflow='hidden'; }
+function closeModal(){ overlay.classList.remove('on'); document.body.style.overflow=''; }
+overlay.addEventListener('click',e=>{if(e.target===overlay)closeModal();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
+window.closeModal=closeModal;
+
+/* 환영(처음 들어왔을 때) */
+function welcomeModal(){
+  openModal(`
+    <div class="modal-hero">
+      <div class="emoji">👋</div>
+      <h3>여기는 우리 반 최종 과제 허브예요</h3>
+      <p>인공지능 융합 첨단과학 탐구반 2기 · 끝까지 도와줄게요!</p>
+    </div>
+    <div class="modal-body">
+      <p class="intro">이 페이지에서 뭘 하냐면요 — <b>과제 4개</b>를 하나씩 완성하고 체크하면 돼요. 순서대로 따라오면 선생님께 묻지 않아도 끝낼 수 있어요.</p>
+      <div class="steps-list">
+        <div class="step-line"><div class="si">1</div><div class="sb"><b>로그인하기</b><span>반·번호·이름 입력 → 진행상황이 저장돼요.</span></div></div>
+        <div class="step-line"><div class="si">2</div><div class="sb"><b>과제 4개 완성</b><span>홀로그램 · 나만의 프로그램 · 발표 자료 · AI 홍보물</span></div></div>
+        <div class="step-line"><div class="si">3</div><div class="sb"><b>길을 잃으면 🗺️</b><span>오른쪽 아래 <b>길찾기</b> 버튼이 지금 할 일을 알려줘요.</span></div></div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-indigo" onclick="closeModal();showView('home',{noScroll:true});setTimeout(()=>document.getElementById('inClass')&&document.getElementById('inClass').focus(),300)">로그인하러 가기 →</button>
+        <button class="btn btn-soft" onclick="closeModal()">둘러볼게요</button>
+      </div>
+    </div>`);
+}
+/* 로그인 성공 */
+function loginSuccessModal(){
+  openModal(`
+    <div class="modal-hero">
+      <div class="emoji">🎉</div>
+      <h3>${escapeHtml(user.name)}님, 환영해요!</h3>
+      <p>이제 과제를 시작해 볼까요? 뭐부터 할지 길을 알려줄게요.</p>
+    </div>
+    <div class="modal-body">
+      <p class="intro">막히거나 다음에 뭘 할지 모르겠으면 언제든 <b>🗺️ 길찾기</b>를 눌러요. 지금 너의 위치와 바로 할 일을 콕 집어줘요.</p>
+      <div class="modal-actions">
+        <button class="btn btn-indigo" onclick="closeModal();openGuide()">🗺️ 지금 할 일 보기</button>
+        <button class="btn btn-soft" onclick="closeModal();showView('tasks')">과제 보러 가기</button>
+      </div>
+    </div>`);
+}
+/* 단계 완료 축하 */
+function taskDoneModal(stageJustDone){
+  const nextKey=currentStageKey();
+  const next=stageByKey(nextKey);
+  const allDone=nextKey==='done';
+  openModal(`
+    <div class="modal-hero">
+      <div class="emoji">${allDone?'🏆':'👏'}</div>
+      <h3>${allDone?'4가지 모두 완료!':'잘했어요! 한 단계 끝!'}</h3>
+      <p>${allDone?'정말 멋져요. 이제 배포하고 제출만 남았어요.':'다음은 '+next.emoji+' <b>'+escapeHtml(next.title)+'</b> 차례예요.'}</p>
+    </div>
+    <div class="modal-body">
+      ${allDone
+        ? `<p class="intro">코드로 과학을 만들고 세상에 내놓은 진짜 메이커가 됐어요. 마지막으로 배포 & 제출 방법을 확인해요.</p>
+           <div class="modal-actions"><button class="btn btn-indigo" onclick="closeModal();showView('submit')">제출 방법 보기 →</button><button class="btn btn-soft" onclick="closeModal()">닫기</button></div>`
+        : `<p class="intro">${escapeHtml(next.desc)}</p>
+           <div class="modal-actions"><button class="btn btn-indigo" onclick="closeModal();openGuide()">🗺️ 다음 할 일 자세히</button><button class="btn btn-soft" onclick="closeModal()">계속 체크하기</button></div>`}
+    </div>`);
+}
+
+/* =========================================================
+   길찾기(지도) 가이드
+   ========================================================= */
+function openGuide(forceKey){
+  const curKey = currentStageKey();
+  const viewKey = forceKey || curKey;
+  const stage = stageByKey(viewKey);
+  const isCurrent = viewKey===curKey;
+
+  // 마이크로 단계 상태
+  const mset = micro[stage.key] || {};
+  const microHtml = stage.steps.map((s,i)=>{
+    const on = !!mset[i];
+    return `<div class="micro-item ${on?'on':''}" data-mi="${i}">
+      <span class="micro-box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span>
+      <span>${escapeHtml(s)}</span></div>`;
+  }).join('');
+
+  const allMicro = stage.steps.every((s,i)=>mset[i]);
+  let unlock='';
+  if(isCurrent && stage.taskId && allMicro && !progress[stage.taskId]){
+    unlock = `<div class="unlock-note">소단계를 다 했네요! 이제 과제 ${stage.taskId}번을 완료로 표시할까요?
+      <button onclick="completeTaskFromGuide(${stage.taskId})">✓ 과제 ${stage.taskId}번 완료하기</button></div>`;
+  }
+
+  // 로드맵 (완료=초록, 보고있는 단계=강조, 나머지=흐리게)
+  const rm = JOURNEY.map(s=>{
+    let done=false;
+    if(s.key==='login') done=!!user;
+    else if(s.taskId) done=!!progress[s.taskId];
+    const cls = done ? 'done' : (s.key===viewKey ? 'current' : 'upcoming');
+    const mark = done ? '✓' : s.num;
+    return `<div class="rm-stop ${cls}" data-stage="${s.key}">
+      <div class="rm-line"><div class="rm-dot">${mark}</div><div class="rm-bar"></div></div>
+      <div class="rm-body"><b>${escapeHtml(s.title)}</b><small>${escapeHtml(s.short)}</small></div></div>`;
+  }).join('');
+
+  openModal(`
+    <div class="modal-hero">
+      <div class="emoji">🗺️</div>
+      <h3>${isCurrent?'지금 너의 위치와 할 일':'이 단계에서 할 일'}</h3>
+      <p>${user?escapeHtml(user.name)+'님, ':''}아래 순서대로만 하면 돼요. 막히면 또 열어봐요!</p>
+    </div>
+    <div class="modal-body">
+      <div class="guide-now">
+        <span class="pin">📍 ${isCurrent?'지금 단계':'선택한 단계'}</span>
+        <h4>${stage.emoji} ${escapeHtml(stage.title)}</h4>
+        <div class="desc">${stage.desc}</div>
+        <div class="micro" id="microList">${microHtml}</div>
+        <div class="guide-tip">💡 <b>팁:</b> ${stage.tip}</div>
+        <button class="btn guide-cta" onclick="${stage.cta.url?`guideOpen('${stage.cta.url}')`:(stage.cta.taskGuide?`taskGuide('${stage.cta.taskGuide}')`:`guideGo('${stage.cta.view}')`)}">${escapeHtml(stage.cta.label)} →</button>
+        ${unlock}
+      </div>
+      <div class="roadmap-title">전체 여정 — 점을 누르면 그 단계 안내를 볼 수 있어요</div>
+      <div class="roadmap" id="roadmap">${rm}</div>
+    </div>`);
+
+  // 마이크로 체크 토글
+  $$('#microList .micro-item').forEach(it=>{
+    it.addEventListener('click',()=>{
+      const i=it.dataset.mi;
+      if(!micro[stage.key]) micro[stage.key]={};
+      micro[stage.key][i]=!micro[stage.key][i];
+      saveMicro();
+      openGuide(viewKey); // 다시 그려 unlock 반영
+    });
+  });
+  // 로드맵 점 클릭 → 해당 단계 안내
+  $$('#roadmap .rm-stop').forEach(st=>{
+    st.addEventListener('click',()=>openGuide(st.dataset.stage));
+  });
+}
+window.openGuide=openGuide;
+function guideGo(view){ closeModal(); showView(view); }
+window.guideGo=guideGo;
+function guideOpen(url){ window.open(url,'_blank','noopener'); }
+window.guideOpen=guideOpen;
+function completeTaskFromGuide(id){
+  progress[id]=true; saveProgress(); render();
+  closeModal();
+  toast('✅','과제 '+id+'번 완료!','진행상황을 저장했어요.');
+  setTimeout(()=>taskDoneModal(id),350);
+}
+window.completeTaskFromGuide=completeTaskFromGuide;
+
+/* =========================================================
+   과제별 자세한 방법 (매뉴얼 모달)
+   ========================================================= */
+function taskGuide(id){
+  id=String(id);
+  let html='';
+  if(id==='1'){
+    html=`
+    <div class="modal-hero"><div class="emoji">🔮</div><h3>① 플로팅 홀로그램 활동 보고서</h3><p>홀로그램 활동 페이지에서 만들고, 보고서를 써서 제출해요.</p></div>
+    <div class="modal-body">
+      <p class="intro">아래 순서대로 따라 하면 과제 1번이 끝나요. <b>AI에게 보낼 프롬프트는 활동 페이지 안에 이미 준비</b>돼 있으니 복사해서 쓰면 돼요.</p>
+      <div class="steps-list">
+        <div class="step-line"><div class="si">1</div><div class="sb"><b>활동 열고 로그인</b><span>'홀로그램 활동'을 열고 기존에 하던 대로 로그인해요. (처음이면 학년·반·번호·이름 입력 → 시작하기)</span></div></div>
+        <div class="step-line"><div class="si">2</div><div class="sb"><b>🤖 바이브코딩 버전</b><span>탭에서 '내가 보여주고 싶은 것' 한 줄을 정하고, 준비된 프롬프트를 복사해 AI에게 보내 4면 홀로그램을 만들어요.</span></div></div>
+        <div class="step-line"><div class="si">3</div><div class="sb"><b>📝 활동 보고서</b><span>'활동 보고서' 탭에서 후기·장치 설명·과학 원리·바이브코딩 미션 칸을 채우고, 시연 화면을 캡처해 올려요.</span></div></div>
+        <div class="step-line"><div class="si">4</div><div class="sb"><b>💾 저장 → 📄 제출</b><span>'보고서 저장'을 누른 뒤 '보고서 제출(인쇄·PDF)'까지 하면 끝!</span></div></div>
+      </div>
+      <div class="minfo">💡 막히면 멈추지 말고 AI에게 "이 부분이 잘 안 돼, 어떻게 고쳐?"라고 물어봐요. 활동 페이지에 아이디어 예시(다이아몬드·지구·하트 등)도 있어요.</div>
+      <div class="modal-actions">
+        <button class="btn btn-indigo" onclick="window.open('${CONFIG.HOLOGRAM_URL}','_blank','noopener')">홀로그램 활동 열기 →</button>
+        <button class="btn btn-soft" onclick="closeModal()">닫기</button>
+      </div>
+    </div>`;
+  } else if(id==='2'){
+    html=`
+    <div class="modal-hero"><div class="emoji">🎮</div><h3>② 나만의 프로그램 만들기</h3><p>바이브코딩으로 내 프로그램을 만들어요. 이게 발표 작품이에요!</p></div>
+    <div class="modal-body">
+      <div class="mline">⚠️ <b>생기부에 기록돼요.</b> 프로그램 이름·내용을 장난스럽게 하면 불이익을 받을 수 있어요. 진지한 주제로 만들어요.</div>
+      <div class="msub">🪜 이렇게 만들어요</div>
+      <div class="steps-list">
+        <div class="step-line"><div class="si">1</div><div class="sb"><b>아이디어 작게 정하기</b><span>"숫자 맞히기 게임", "용돈 계산기"처럼 작게 시작하면 끝까지 완성하기 쉬워요.</span></div></div>
+        <div class="step-line"><div class="si">2</div><div class="sb"><b>AI에게 첫 요청</b><span>아래 문장을 복사해 AI(Claude·ChatGPT 등)에게 보내요.</span></div></div>
+        <div class="step-line"><div class="si">3</div><div class="sb"><b>코드 저장해 실행</b><span>받은 코드를 메모장에 붙여넣고 '파일 → 다른 이름으로 저장 → <code>이름.html</code>'. 파일을 더블클릭하면 실행돼요.</span></div></div>
+        <div class="step-line"><div class="si">4</div><div class="sb"><b>수정 요청 반복</b><span>마음에 안 들면 "○○를 ○○로 바꿔줘", "○○ 기능 추가해줘"를 반복해요.</span></div></div>
+        <div class="step-line"><div class="si">5</div><div class="sb"><b>완성!</b><span>다 됐으면 과제 2번을 체크하세요.</span></div></div>
+      </div>
+      <div class="prompt-box"><div class="pb-head"><span>🤖 첫 요청 — 복사해서 보내기</span><button class="pb-copy">복사</button></div><pre class="pb-text">나는 [내 아이디어]를 만들고 싶어.
+HTML 파일 하나로 동작하는 [게임 / 계산기 / 시뮬레이션]을 만들어줘.
+중학생도 쉽게 쓸 수 있게 화면이 예쁘고 버튼이 크면 좋겠어.
+한 파일(.html) 안에 HTML·CSS·JavaScript를 모두 넣어줘.</pre></div>
+      <div class="prompt-box"><div class="pb-head"><span>🤖 고칠 때 — 복사해서 보내기</span><button class="pb-copy">복사</button></div><pre class="pb-text">좋아! 이제 [바꾸고 싶은 부분]을 [이렇게] 바꿔줘.
+그리고 [추가하고 싶은 기능]도 넣어줘.</pre></div>
+      <div class="modal-actions">
+        <button class="btn btn-indigo" onclick="closeModal();showView('coding')">코딩 기초 보기</button>
+        <button class="btn btn-soft" onclick="closeModal()">닫기</button>
+      </div>
+    </div>`;
+  } else if(id==='3'){
+    html=`
+    <div class="modal-hero"><div class="emoji">🎤</div><h3>③ 발표 자료 만들기</h3><p>'나만의 프로그램'으로 슬라이드를 만들어요. (플로팅 홀로그램 ❌)</p></div>
+    <div class="modal-body">
+      <p class="intro">발표 작품은 <b>과제 2에서 만든 내 프로그램</b>이에요. 슬라이드 10장 구성은 '발표 가이드' 탭에 그대로 있어요.</p>
+      <div class="msub">🧩 코드 3장(HTML·CSS·JS) 찾기가 어렵나요?</div>
+      <div class="minfo"><b>2가지 방법</b>이 있어요. ① 내 <code>.html</code>을 메모장으로 열어 <code>&lt;style&gt;</code>=CSS, <code>&lt;script&gt;</code>=JS, 나머지=HTML. ② 또는 <b>AI에게 물어보기</b> — 아래 문장을 복사해 코드와 함께 보내면 AI가 다 찾아줘요. (자세히는 '코딩 기초' 탭)</div>
+      <div class="prompt-box"><div class="pb-head"><span>🤖 코드 찾기 — 복사해서 보내기</span><button class="pb-copy">복사</button></div><pre class="pb-text">아래는 내가 만든 웹앱 코드야. 발표 자료에 넣을 거라서,
+이 코드에서 HTML 부분 / CSS 부분 / JavaScript 부분이
+각각 어디인지 알려주고, 각각 발표에 보여주기 좋은 짧은
+예시를 한 토막씩 골라 "무슨 역할인지" 쉽게 설명해줘.
+
+내 코드:
+[여기에 내 .html 파일 내용을 전부 붙여넣기]</pre></div>
+      <div class="msub">📊 그 다음엔</div>
+      <div class="minfo">코드 3장 + ⚠️ 어려웠던 점(필수)을 포함해 슬라이드 10장을 만들어요. 표지 이름은 진지하게!</div>
+      <div class="modal-actions">
+        <button class="btn btn-indigo" onclick="closeModal();showView('present')">발표 가이드 10장 보기</button>
+        <button class="btn btn-soft" onclick="closeModal();showView('coding')">코딩 기초 보기</button>
+      </div>
+    </div>`;
+  } else {
+    html=`
+    <div class="modal-hero"><div class="emoji">🖼️</div><h3>④ AI 홍보물(포스터) 만들기</h3><p>ChatGPT로 내 프로그램 홍보 이미지 한 장을 만들어요.</p></div>
+    <div class="modal-body">
+      <p class="intro">내 프로그램을 알리는 <b>포스터 같은 이미지 한 장</b>을 AI로 만들어요. 처음이어도 아래만 그대로 따라 하면 돼요.</p>
+      <div class="steps-list">
+        <div class="step-line"><div class="si">1</div><div class="sb"><b>로그인하기</b><span><code>chatgpt.com</code> 접속 → 구글/이메일로 로그인. 무료로도 이미지를 만들 수 있어요. (만들기 제한이 뜨면 잠시 뒤 다시, 또는 Microsoft Copilot·Google Gemini 같은 다른 이미지 AI 사용)</span></div></div>
+        <div class="step-line"><div class="si">2</div><div class="sb"><b>어떤 포스터일지 정하기</b><span>분위기·색·무엇이 그려지면 좋을지 머릿속에 그려봐요. (예: 우주 / 네온 / 귀여운 / 미래적인)</span></div></div>
+        <div class="step-line"><div class="si">3</div><div class="sb"><b>프롬프트(명령) 쓰기</b><span>공식 = <b>무엇을 + 어떤 스타일 + 분위기·색 + 구도</b>. 아래 예시를 복사해 [ ] 안만 내 프로그램에 맞게 바꿔요.</span></div></div>
+        <div class="step-line"><div class="si">4</div><div class="sb"><b>⚠️ 글자는 빼고 요청!</b><span>AI 이미지에 글자를 넣으면 깨지거나 이상하게 나와요. 프롬프트에 꼭 <b>"글자·텍스트 없이"</b>를 넣고, 제목은 나중에 직접 추가해요.</span></div></div>
+        <div class="step-line"><div class="si">5</div><div class="sb"><b>마음에 들 때까지 고치기</b><span>"색을 더 밝게", "주인공을 가운데로", "더 단순하게"처럼 다시 요청을 반복하면 점점 좋아져요.</span></div></div>
+        <div class="step-line"><div class="si">6</div><div class="sb"><b>저장하기</b><span>이미지 위에서 우클릭 → '이미지 저장'(폰은 길게 눌러 저장). 이름을 알아보기 쉽게 (예: 내프로그램_홍보.png).</span></div></div>
+        <div class="step-line"><div class="si">7</div><div class="sb"><b>(선택) 글자 얹기</b><span>미리캔버스·Canva·파워포인트로 프로그램 이름·한 줄 소개를 직접 올리면 완성도가 올라가요.</span></div></div>
+      </div>
+      <div class="mline">⚠️ <b>가장 중요!</b> 이미지 <b>안에 글자를 넣지 마세요.</b> AI는 글자를 잘 못 그려서 깨져 보여요. 글자는 이미지를 만든 뒤 내가 직접 넣는 게 깔끔해요.</div>
+      <div class="prompt-box"><div class="pb-head"><span>🤖 그대로 복사해서 보내기 (예시)</span><button class="pb-copy">복사</button></div><pre class="pb-text">[우주를 탐험하는 슈팅 게임]을 홍보하는 포스터 이미지를 만들어줘.
+스타일: [네온 색감의 미래적인 느낌]
+분위기·색: [별과 우주선이 보이는 어두운 우주, 파랑·보라색]
+구도: 화면 가운데가 시원하게 비어 있는 포스터 구도.
+중요: 글자나 텍스트는 절대 넣지 말고, 그림만 그려줘.</pre></div>
+      <div class="minfo">💡 한국어로 써도 되고, 영어로 쓰면 더 잘 나올 때도 있어요. <b>[ ] 안</b>만 내 프로그램에 맞게 바꾸면 돼요.</div>
+      <div class="modal-actions">
+        <button class="btn btn-indigo" onclick="window.open('https://chatgpt.com','_blank','noopener')">ChatGPT 열기 →</button>
+        <button class="btn btn-soft" onclick="closeModal()">닫기</button>
+      </div>
+    </div>`;
+  }
+  openModal(html);
+}
+window.taskGuide=taskGuide;
+
+/* 프롬프트 복사 (모달 내 위임 처리) */
+function fallbackCopy(text,cb){try{const ta=document.createElement('textarea');ta.value=text;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.focus();ta.select();document.execCommand('copy');document.body.removeChild(ta);cb&&cb();}catch(e){}}
+modal.addEventListener('click',e=>{
+  const b=e.target.closest('.pb-copy'); if(!b) return;
+  const pre=b.closest('.prompt-box') && b.closest('.prompt-box').querySelector('.pb-text');
+  const txt=pre?pre.textContent:'';
+  const done=()=>{const o=b.dataset.o||b.textContent; b.dataset.o=o; b.textContent='✓ 복사됐어요!'; setTimeout(()=>{b.textContent=o;},1500);};
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(done).catch(()=>fallbackCopy(txt,done));}
+  else fallbackCopy(txt,done);
+});
+
+/* =========================================================
+   렌더
+   ========================================================= */
+function render(){
+  const done=countDone(); const pct=Math.round(done/TOTAL*100);
+  $$('.task').forEach(t=>{const on=!!progress[t.dataset.id];t.classList.toggle('done',on);t.querySelector('.check').setAttribute('aria-checked',on);});
+
+  // FAB 배지 = 남은 과제 수 (로그인 전엔 ?)
+  $('#fabBadge').textContent = user ? (TOTAL-done>0?(TOTAL-done):'★') : '?';
+
+  if(user){
+    $('#loginBox').style.display='none';
+    $('#welcomeBox').classList.add('on');
+    $('#wName').textContent=user.name+'님, 환영해요!';
+    $('#wMeta').textContent=user.cls+'반 '+user.num+'번';
+    $('#avatar').textContent=(user.name||'?').trim().charAt(0)||'?';
+    $('#wPct').textContent=pct+'%'; $('#wFill').style.width=pct+'%';
+    $('#wMsg').textContent = done===0?'아직 시작 전이에요. 🗺️ 길찾기로 첫 단계를 확인해 볼까요?'
+      : done===TOTAL?'🎉 4가지 모두 완료! 제출만 남았어요!'
+      : '좋아요! '+done+'개 완료 — '+(TOTAL-done)+'개 남았어요. 조금만 더!';
+    $('#barProgress').style.display='flex';
+    $('#barName').textContent=user.name; $('#barName').style.display='inline';
+    $('#barLogout').style.display='inline-block';
+    $('#barPct').textContent=pct+'%'; $('#barFill').style.width=pct+'%';
+    $('#slimProg').classList.add('on');
+    $('#slimLabel').textContent=done+' / 4 완료';
+    $('#slimPct').textContent=pct+'%'; $('#slimFill').style.width=pct+'%';
+    $('#lockHint').classList.remove('on');
+  }else{
+    $('#loginBox').style.display='';
+    $('#welcomeBox').classList.remove('on');
+    $('#barProgress').style.display='none';
+    $('#barName').style.display='none';
+    $('#barLogout').style.display='none';
+    $('#slimProg').classList.remove('on');
+    $('#lockHint').classList.add('on');
+  }
+}
+
+/* =========================================================
+   로그인
+   ========================================================= */
+function showWarn(m){const w=$('#warnBox');w.textContent=m;w.style.display='block';}
+function doLogin(){
+  const cls=$('#inClass').value.trim(), num=$('#inNum').value.trim(), name=$('#inName').value.trim();
+  if(!cls||!num||!name){showWarn('반·번호·이름을 모두 입력해 주세요.');return;}
+  user={cls,num,name,key:uKey(cls,num,name)};
+  save('hub:user',JSON.stringify(user));
+  progress=loadProgress(user.key); micro=loadMicro(user.key);
+  $('#warnBox').style.display='none';
+  if(!storageOK) showWarn('⚠️ 이 브라우저는 자동 저장이 막혀 있어요. 깃헙에 올린 페이지나 파일을 직접 열면 저장돼요.');
+  render(); loginSuccessModal();
+}
+function doLogout(){
+  del('hub:user'); user=null; progress={}; micro={};
+  render(); showView('home');
+  toast('👋','로그아웃했어요','진행상황은 그대로 저장돼 있어요. 다시 로그인하면 이어서 할 수 있어요.');
+}
+
+/* =========================================================
+   과제 체크
+   ========================================================= */
+function toggleTask(t){
+  if(!user){
+    toast('🔐','먼저 로그인이 필요해요','홈에서 로그인하면 진행상황을 저장할 수 있어요.',{label:'로그인하러 가기',fn:()=>{showView('home',{noScroll:true});setTimeout(()=>$('#inClass')&&$('#inClass').focus(),300);}});
+    return;
+  }
+  const id=t.dataset.id; const wasDone=!!progress[id];
+  progress[id]=!progress[id]; saveProgress(); render();
+  if(!wasDone && progress[id]){
+    // 방금 완료 → 축하 + 다음 안내
+    const remain=TOTAL-countDone();
+    if(remain===0){ setTimeout(()=>taskDoneModal(id),320); }
+    else { taskDoneModal(id); }
+  }
+}
+
+/* =========================================================
+   이벤트 연결
+   ========================================================= */
+$('#loginBtn').addEventListener('click',doLogin);
+['inClass','inNum','inName'].forEach(id=>$('#'+id).addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();}));
+$('#barLogout').addEventListener('click',doLogout);
+$$('.task').forEach(t=>t.querySelector('.check').addEventListener('click',e=>{e.stopPropagation();toggleTask(t);}));
+$('#fab').addEventListener('click',()=>openGuide());
+$('#heroGuide').addEventListener('click',()=>openGuide());
+$('#welGuide').addEventListener('click',()=>openGuide());
+$('#tasksGuide').addEventListener('click',()=>openGuide());
+$$('.task-more').forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();taskGuide(b.dataset.more);}));
+
+/* 유틸 */
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+
+/* =========================================================
+   시작
+   ========================================================= */
+user=loadUser();
+if(user){ progress=loadProgress(user.key); micro=loadMicro(user.key); }
+render();
+// 시작 화면(해시 있으면 그 화면)
+const startHash=location.hash.slice(1);
+showView(VIEWS.includes(startHash)?startHash:'home',{noScroll:true});
+// 환영 팝업: 로그인 전이면 환영, 로그인 상태면 돌아온 인사 토스트
+setTimeout(()=>{
+  if(!user){ welcomeModal(); }
+  else{ toast('🙌','다시 왔네요, '+user.name+'님!','이어서 해볼까요? 남은 과제는 '+(TOTAL-countDone())+'개. 🗺️ 길찾기로 확인해요.',{label:'지금 할 일 보기',fn:openGuide}); }
+}, 600);
+</script>
+</body>
+</html>
