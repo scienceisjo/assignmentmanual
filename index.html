@@ -1662,14 +1662,14 @@ async function submitAll(){
       if(pendingFiles[n]){
         const f=pendingFiles[n];
         if(f.size > 45*1024*1024) throw new Error(n+'번 파일이 너무 커요(45MB↑). 링크로 제출해 보세요.');
-        const safe=f.name.replace(/[^\w.\-가-힣]/g,'_');
-        const keySafe=user.key.replace(/[^\w\-]/g,'_');
-        const path=keySafe+'/task'+n+'_'+Date.now()+'_'+safe;
-        const up=await sb.storage.from(SUPABASE.BUCKET).upload(path, f, {upsert:true, cacheControl:'3600'});
+        const ext=(f.name.match(/\.[A-Za-z0-9]+$/)||[''])[0].toLowerCase(); // 확장자만 (.png 등)
+        const keySafe=(user.key.replace(/[^A-Za-z0-9_-]/g,'_'))||'user';   // 키에는 영문·숫자·_·-만 (한글 금지)
+        const path=keySafe+'/task'+n+'_'+Date.now()+ext;
+        const up=await sb.storage.from(SUPABASE.BUCKET).upload(path, f, {upsert:true, cacheControl:'3600', contentType:f.type||undefined});
         if(up.error) throw up.error;
         const pub=sb.storage.from(SUPABASE.BUCKET).getPublicUrl(path);
         row['task'+n+'_file']=pub.data.publicUrl;
-        row['task'+n+'_name']=f.name;
+        row['task'+n+'_name']=f.name; // 원래 파일명(한글 포함)은 DB에 따로 저장 — 표시용
       } else {
         row['task'+n+'_file']=submission['task'+n+'_file']||null;
         row['task'+n+'_name']=submission['task'+n+'_name']||null;
