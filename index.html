@@ -54,8 +54,8 @@ a{color:inherit;text-decoration:none}
 /* ===== 하단 탭바(모바일) ===== */
 .nav-mobile{display:none;position:fixed;left:0;right:0;bottom:0;z-index:48;background:rgba(255,255,255,.96);backdrop-filter:blur(12px);border-top:1px solid var(--line);padding:7px 4px calc(7px + env(safe-area-inset-bottom))}
 .nav-mobile-inner{display:flex;justify-content:space-around;max-width:560px;margin:0 auto}
-.nav-mobile a{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:.64rem;font-weight:600;color:var(--ink-3);padding:4px 3px;border-radius:10px;flex:1;text-align:center}
-.nav-mobile a svg{width:20px;height:20px;stroke:var(--ink-3);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.nav-mobile a{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:.61rem;font-weight:600;color:var(--ink-3);padding:4px 2px;border-radius:9px;flex:1;text-align:center}
+.nav-mobile a svg{width:19px;height:19px;stroke:var(--ink-3);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .nav-mobile a.active{color:var(--indigo)}
 .nav-mobile a.active svg{stroke:var(--indigo)}
 
@@ -263,6 +263,113 @@ a{color:inherit;text-decoration:none}
 .submit-go .sg-txt span{font-size:.92rem;color:var(--ink-2)}
 .submit-big{background:var(--indigo);color:#fff;font-size:1.05rem;padding:16px 30px;box-shadow:0 10px 26px rgba(91,91,240,.35);flex-shrink:0}
 .submit-big:hover{background:var(--indigo-d);transform:translateY(-2px);box-shadow:0 16px 34px rgba(91,91,240,.45)}
+.submit-big:disabled{opacity:.7;cursor:default;transform:none}
+/* 제출 센터 */
+.sub-notice{background:#fff7e8;border:1.5px solid #f6e0b0;border-left:5px solid var(--amber);border-radius:14px;padding:18px 20px;font-size:.92rem;color:#7a5b10;line-height:1.6;margin-bottom:18px}
+.sub-notice code{font-family:"JetBrains Mono",monospace;background:#fff;border:1px solid #f0d9a0;border-radius:5px;padding:1px 6px;font-size:.88em}
+.sub-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:8px}
+.sub-card{background:var(--paper-2);border:1.5px solid var(--line);border-radius:16px;padding:20px 22px;box-shadow:var(--shadow-sm);transition:border-color .2s,background .2s}
+.sub-card.done{border-color:#bfeede;background:#f4fdf9}
+.sub-head{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.sub-ic{width:42px;height:42px;border-radius:11px;background:#eef0fb;display:grid;place-items:center;font-size:1.3rem;flex-shrink:0}
+.sub-card.done .sub-ic{background:#d6f6ea}
+.sub-meta{flex:1;min-width:0}
+.sub-meta b{display:block;font-size:1rem;font-weight:800}
+.sub-meta small{font-size:.78rem;color:var(--ink-3)}
+.sub-status{font-family:"JetBrains Mono",monospace;font-size:.7rem;font-weight:700;color:var(--ink-3);white-space:nowrap;background:#f0f1f8;padding:5px 9px;border-radius:8px}
+.sub-card.done .sub-status{color:#fff;background:var(--mint)}
+.sub-inputs{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.sub-file{flex:1;min-width:130px}
+.sub-file input[type=file]{display:none}
+.ff-label{display:flex;align-items:center;justify-content:center;gap:6px;font-size:.85rem;font-weight:700;color:var(--indigo);background:#eef0fb;border:1.5px dashed #c9cef0;border-radius:10px;padding:11px 12px;cursor:pointer;transition:.15s;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ff-label:hover{background:#e3e6f7}
+.ff-label.has{background:#f0fdf8;border-color:#bfeede;border-style:solid;color:var(--mint-d)}
+.sub-or{font-size:.78rem;color:var(--ink-3);font-weight:600;flex-shrink:0}
+.sub-link{flex:2;min-width:150px;font-family:inherit;font-size:.9rem;padding:11px 13px;border:1.5px solid var(--line);border-radius:10px;background:#fbfbfe;color:var(--ink)}
+.sub-link:focus{outline:none;border-color:var(--indigo);background:#fff;box-shadow:0 0 0 3px rgba(91,91,240,.12)}
+.sub-current{margin-top:11px;font-size:.83rem;color:var(--ink-2);display:none;line-height:1.5}
+.sub-current.on{display:block}
+.sub-current a{color:var(--indigo);font-weight:700;text-decoration:underline;word-break:break-all}
+/* 교사 대시보드 */
+.tch-gate{max-width:420px;margin:30px auto 0;background:var(--paper-2);border:1.5px solid var(--line);border-radius:18px;padding:30px;box-shadow:var(--shadow);text-align:center}
+.tch-gate .lock{font-size:2rem;margin-bottom:10px}
+.tch-gate h3{font-size:1.2rem;font-weight:800;margin-bottom:6px}
+.tch-gate p{color:var(--ink-3);font-size:.9rem;margin-bottom:18px}
+.tch-gate input{width:100%;font-family:inherit;font-size:1rem;padding:13px 15px;border:1.5px solid var(--line);border-radius:12px;text-align:center;letter-spacing:.08em;margin-bottom:12px}
+.tch-gate input:focus{outline:none;border-color:var(--indigo);box-shadow:0 0 0 4px rgba(91,91,240,.12)}
+.tch-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin:22px 0}
+.tch-stat{background:var(--paper-2);border:1.5px solid var(--line);border-radius:14px;padding:16px 18px;box-shadow:var(--shadow-sm)}
+.tch-stat .v{font-family:"JetBrains Mono",monospace;font-size:1.7rem;font-weight:800;color:var(--indigo);line-height:1}
+.tch-stat .l{font-size:.8rem;color:var(--ink-3);font-weight:600;margin-top:6px}
+.tch-toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:16px}
+.tch-toolbar select,.tch-toolbar input{font-family:inherit;font-size:.9rem;padding:9px 12px;border:1.5px solid var(--line);border-radius:10px;background:#fbfbfe;color:var(--ink)}
+.tch-toolbar input{flex:1;min-width:140px}
+.tch-toolbar input:focus,.tch-toolbar select:focus{outline:none;border-color:var(--indigo)}
+.tch-btn{font-family:inherit;font-size:.86rem;font-weight:700;padding:9px 15px;border-radius:10px;border:0;cursor:pointer;background:var(--indigo);color:#fff;transition:.15s}
+.tch-btn:hover{background:var(--indigo-d)}
+.tch-btn.ghost{background:#eef0f8;color:var(--ink-2)}
+.tch-btn.ghost:hover{background:#e3e6f2}
+.tch-table-wrap{overflow-x:auto;border:1.5px solid var(--line);border-radius:14px;box-shadow:var(--shadow-sm)}
+table.tch{width:100%;border-collapse:collapse;font-size:.88rem;min-width:700px;background:var(--paper-2)}
+table.tch th,table.tch td{padding:11px 12px;text-align:left;border-bottom:1px solid var(--line-2);white-space:nowrap}
+table.tch th{background:#f4f5fb;font-weight:800;font-size:.76rem;color:var(--ink-2);position:sticky;top:0}
+table.tch td.c{text-align:center}
+table.tch tr:hover td{background:#fafbff}
+table.tch th.sortable{cursor:pointer;user-select:none}
+table.tch th.sortable:hover{background:#e9ebf5;color:var(--indigo-d)}
+table.tch th.active{color:var(--indigo)}
+.cell-ok{color:var(--mint-d);font-weight:700}
+.cell-no{color:var(--ink-3)}
+.cell-links{margin-top:2px}
+.cell-links a{display:inline-block;font-size:.76rem;color:var(--indigo);text-decoration:underline;margin:0 3px}
+.tch-empty{text-align:center;color:var(--ink-3);padding:40px;background:var(--paper-2);border:1.5px dashed var(--line);border-radius:14px}
+.tch-sec-note{font-size:.8rem;color:var(--ink-3);margin-top:14px;line-height:1.55}
+.foot-teacher{display:inline-block;margin-top:14px;font-size:.78rem;color:#5a6390;border:1px solid #232b52;border-radius:8px;padding:5px 13px;cursor:pointer;transition:.15s}
+.foot-teacher:hover{color:#aab1d6;border-color:#3a4470}
+/* 작품 아카이브 (패들렛 스타일 벽) */
+.arc-hero{background:linear-gradient(120deg,#11152f,#211a52);color:#fff;border-radius:20px;padding:26px 28px;margin-bottom:22px;position:relative;overflow:hidden}
+.arc-hero::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 12% 0%,rgba(34,211,238,.3),transparent 45%),radial-gradient(circle at 88% 100%,rgba(232,121,249,.28),transparent 45%);pointer-events:none}
+.arc-hero h3{position:relative;font-size:1.3rem;font-weight:800;margin-bottom:6px}
+.arc-hero p{position:relative;color:#bfc6f0;font-size:.92rem;line-height:1.5}
+.arc-toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:18px}
+.arc-toolbar select,.arc-toolbar input{font-family:inherit;font-size:.9rem;padding:9px 12px;border:1.5px solid var(--line);border-radius:10px;background:#fbfbfe;color:var(--ink)}
+.arc-toolbar select:focus,.arc-toolbar input:focus{outline:none;border-color:var(--indigo)}
+.arc-count{font-size:.86rem;color:var(--ink-3);font-weight:700;margin-right:auto}
+.arc-count b{color:var(--indigo);font-family:"JetBrains Mono",monospace}
+.arc-wall{columns:3 260px;column-gap:16px}
+.arc-card{break-inside:avoid;margin-bottom:16px;background:var(--paper-2);border:1.5px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:var(--shadow-sm);transition:transform .2s,box-shadow .2s;animation:cardPop .45s cubic-bezier(.2,.85,.3,1) both}
+.arc-card:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+.arc-poster{display:block;width:100%;background:#eef0f8;cursor:zoom-in}
+.arc-poster img{display:block;width:100%;height:auto}
+.arc-noposter{height:120px;display:grid;place-items:center;font-size:2.6rem;color:#fff}
+.arc-body{padding:15px 17px}
+.arc-name{font-size:1.05rem;font-weight:800;letter-spacing:-.01em;display:flex;align-items:center;gap:7px}
+.arc-name .who{margin-left:auto;font-family:"JetBrains Mono",monospace;font-size:.72rem;color:var(--ink-3);font-weight:600}
+.arc-chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:11px}
+.arc-chip{display:inline-flex;align-items:center;gap:5px;font-size:.78rem;font-weight:700;padding:6px 11px;border-radius:9px;background:#eef0fb;color:var(--indigo-d);text-decoration:none;transition:.15s}
+.arc-chip:hover{background:var(--indigo);color:#fff}
+.arc-chip.prog{background:#e7f0ff;color:#1d4ed8}.arc-chip.prog:hover{background:#1d4ed8;color:#fff}
+.arc-chip.pres{background:#fde9f6;color:#be1e8a}.arc-chip.pres:hover{background:#be1e8a;color:#fff}
+.arc-chip.holo{background:#e0f7fb;color:#0e8aa0}.arc-chip.holo:hover{background:#0e8aa0;color:#fff}
+.arc-time{margin-top:11px;font-size:.74rem;color:var(--ink-3);font-family:"JetBrains Mono",monospace}
+.arc-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:13px}
+.arc-foot .arc-time{margin-top:0}
+.arc-like{display:inline-flex;align-items:center;gap:6px;font-family:inherit;font-size:.82rem;font-weight:800;padding:6px 13px;border-radius:20px;border:1.5px solid var(--line);background:#fff;color:var(--ink-2);cursor:pointer;transition:.15s;flex-shrink:0}
+.arc-like:hover{border-color:#fda4c0;background:#fff1f5;color:#e11d6b}
+.arc-like.liked{background:#ffe4ec;border-color:#fb7199;color:#e11d6b}
+.arc-like .heart{font-size:.98rem;line-height:1}
+.arc-like .lc{font-variant-numeric:tabular-nums;min-width:9px;text-align:center}
+.arc-like.pop .heart{animation:likePop .4s cubic-bezier(.2,.9,.3,1.3)}
+@keyframes likePop{0%{transform:scale(1)}35%{transform:scale(1.5)}100%{transform:scale(1)}}
+.cell-like{font-weight:800;color:#e11d6b;font-variant-numeric:tabular-nums}
+.arc-badge{position:absolute;top:10px;right:10px;background:rgba(8,11,30,.72);color:#fff;font-size:.68rem;font-weight:700;padding:4px 9px;border-radius:8px;backdrop-filter:blur(4px)}
+.arc-postwrap{position:relative}
+.arc-empty{text-align:center;color:var(--ink-3);padding:50px 20px;background:var(--paper-2);border:1.5px dashed var(--line);border-radius:16px;font-size:.95rem;line-height:1.6}
+@keyframes cardPop{from{opacity:0;transform:translateY(14px) scale(.98)}to{opacity:1;transform:none}}
+/* 이미지 라이트박스 */
+.lightbox{position:fixed;inset:0;z-index:100;background:rgba(8,11,30,.9);display:none;align-items:center;justify-content:center;padding:24px;cursor:zoom-out}
+.lightbox.on{display:flex}
+.lightbox img{max-width:96vw;max-height:92vh;border-radius:12px;box-shadow:0 30px 80px rgba(0,0,0,.5)}
 .final::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 15% 0%,rgba(34,211,238,.22),transparent 50%),radial-gradient(circle at 85% 100%,rgba(232,121,249,.2),transparent 50%)}
 .final h3{position:relative;font-size:clamp(1.3rem,3.6vw,1.85rem);font-weight:800;margin-bottom:12px}
 .final p{position:relative;color:#aab1d6;max-width:48ch;margin:0 auto}
@@ -426,6 +533,7 @@ footer .mono{color:#9aa2cf}
   .combo-ex .cx{border-right:0;border-bottom:1px solid rgba(255,255,255,.08)}
   .methods{grid-template-columns:1fr}
   .note-row,.glossary{grid-template-columns:1fr}
+  .sub-grid{grid-template-columns:1fr}
   .submit-grid{grid-template-columns:1fr 1fr}
 }
 @media(max-width:760px){
@@ -467,8 +575,9 @@ footer .mono{color:#9aa2cf}
       <a data-view="tasks">과제</a>
       <a data-view="resources">학습자료</a>
       <a data-view="coding">코딩 기초</a>
-      <a data-view="present">발표 가이드</a>
+      <a data-view="present">발표</a>
       <a data-view="submit">제출</a>
+      <a data-view="archive">아카이브</a>
     </nav>
     <div class="topbar-status">
       <div class="topbar-progress" id="barProgress">
@@ -526,7 +635,7 @@ footer .mono{color:#9aa2cf}
 
   <div class="wrap page" style="padding-top:0;margin-top:46px">
     <div class="howto">
-      <div class="howto-card"><div class="hn">01</div><h4>로그인하기</h4><p>반·번호·이름을 입력하면 진행상황이 내 기기에 저장돼요.</p></div>
+      <div class="howto-card"><div class="hn">01</div><h4>로그인하기</h4><p>학번·이름을 입력하면 진행상황이 내 기기에 저장돼요.</p></div>
       <div class="howto-card"><div class="hn">02</div><h4>과제 4개 완성</h4><p>홀로그램 · 나만의 프로그램 · 발표 자료 · AI 홍보물을 하나씩 만들어요.</p></div>
       <div class="howto-card"><div class="hn">03</div><h4>길 잃으면 🗺️</h4><p>오른쪽 아래 <b>길찾기</b> 버튼을 누르면 지금 할 일을 알려줘요.</p></div>
     </div>
@@ -536,12 +645,11 @@ footer .mono{color:#9aa2cf}
     <div class="login-box" id="loginBox">
       <div class="panel">
         <h3>먼저 로그인해 주세요 🔐</h3>
-        <p class="hint">이름·반·번호를 입력하면 <b>이 기기에</b> 진행상황이 저장돼요. 다음에 다시 와도 이어서 체크할 수 있어요.</p>
+        <p class="hint">학번·이름을 입력하면 <b>이 기기에</b> 진행상황이 저장되고, 제출·전시도 학번·이름으로 올라가요.</p>
         <div class="field-row">
-          <div class="field"><label for="inClass">반</label><input id="inClass" inputmode="numeric" placeholder="예: 3" autocomplete="off"></div>
-          <div class="field"><label for="inNum">번호</label><input id="inNum" inputmode="numeric" placeholder="예: 12" autocomplete="off"></div>
+          <div class="field"><label for="inId">학번</label><input id="inId" inputmode="numeric" placeholder="예: 10312" autocomplete="off"></div>
+          <div class="field"><label for="inName">이름</label><input id="inName" placeholder="예: 김탐구" autocomplete="off"></div>
         </div>
-        <div class="field full"><label for="inName">이름</label><input id="inName" placeholder="예: 김탐구" autocomplete="off"></div>
         <button class="btn btn-block" id="loginBtn">로그인하고 시작하기 →</button>
         <div class="note-warn" id="warnBox"></div>
       </div>
@@ -584,7 +692,7 @@ footer .mono{color:#9aa2cf}
     <div class="tasks" id="taskList">
       <div class="task" data-id="1">
         <div class="task-num">01</div>
-        <div class="task-body"><h4>플로팅 홀로그램 활동 보고서 완성</h4><p><b>홀로그램 활동 페이지</b>에서 기존처럼 로그인 → 🤖 <b>바이브코딩 버전</b>으로 4면 홀로그램 만들기 → 📝 <b>활동 보고서</b> 작성 → 💾 <b>보고서 저장</b> → 📄 <b>보고서를 PDF로 내보내기</b>. <b>이 PDF는 마지막 '제출' 단계에서 일괄 제출 링크에 올려요.</b></p><span class="task-tag">필수 · 홀로그램 활동</span><button class="task-more" data-more="1">📖 자세한 방법 보기</button></div>
+        <div class="task-body"><h4>플로팅 홀로그램 활동 보고서 완성</h4><p><b>홀로그램 활동 페이지</b>에서 기존처럼 로그인 → 🤖 <b>바이브코딩 버전</b>으로 4면 홀로그램 만들기 → 📝 <b>활동 보고서</b> 작성 → 💾 <b>보고서 저장</b> → 📄 <b>보고서를 PDF로 내보내기</b>. <b>이 PDF는 '제출' 탭에서 직접 올려요.</b></p><span class="task-tag">필수 · 홀로그램 활동</span><button class="task-more" data-more="1">📖 자세한 방법 보기</button></div>
         <button class="check" role="checkbox" aria-checked="false" aria-label="1번 과제 완료 체크"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></button>
       </div>
       <div class="task" data-id="2">
@@ -629,7 +737,7 @@ footer .mono{color:#9aa2cf}
         <div class="res-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#22d3ee" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L4 7v10l8 5 8-5V7z"/><path d="M12 2v20M4 7l8 5 8-5"/></svg></div>
         <div class="kicker">홀로그램 활동 · 과제 1</div>
         <h4>플로팅 홀로그램 활동</h4>
-        <p>기존에 로그인했던 그대로 로그인 → 🤖 <b>바이브코딩 버전</b> → 📝 <b>활동 보고서</b> 작성 → 💾 <b>보고서 저장</b> → 📄 <b>보고서를 PDF로 내보내기</b>. <b>제출은 '제출' 탭의 일괄 링크에서!</b></p>
+        <p>기존에 로그인했던 그대로 로그인 → 🤖 <b>바이브코딩 버전</b> → 📝 <b>활동 보고서</b> 작성 → 💾 <b>보고서 저장</b> → 📄 <b>보고서를 PDF로 내보내기</b>. <b>제출은 '제출' 탭에서 파일로 올려요!</b></p>
         <span class="go" style="color:var(--cyan)">활동 열기 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg></span>
       </a>
       <a class="res c3" id="lnkDeploy" href="#" target="_blank" rel="noopener">
@@ -813,7 +921,7 @@ footer .mono{color:#9aa2cf}
     <div class="minfo" style="margin-top:18px">🤖 <b>5·6·7번 코드(HTML·CSS·JS) 찾기가 어렵나요?</b> <b style="cursor:pointer;text-decoration:underline" data-view="coding">'코딩 기초' 탭</b>에 ① 직접 찾는 법과 ② AI에게 물어보는 법(복사용 문장 포함)이 자세히 있어요. 혼자 막히지 말고 꼭 활용하세요!</div>
 
     <div class="slide-grid">
-      <div class="slide"><div class="slide-head"><div class="slide-no">1</div><h4>표지</h4></div><p>프로그램 이름, 한 줄 소개, 만든 사람(반·번호·이름)을 적어요. <b>이름은 진지하게!</b></p></div>
+      <div class="slide"><div class="slide-head"><div class="slide-no">1</div><h4>표지</h4></div><p>프로그램 이름, 한 줄 소개, 만든 사람(학번·이름)을 적어요. <b>이름은 진지하게!</b></p></div>
       <div class="slide"><div class="slide-head"><div class="slide-no">2</div><h4>이게 뭐예요?</h4></div><p>무엇을 만들었고 어떤 기능이 있는지 소개해요. 실행 화면 스크린샷을 1장 넣으면 좋아요.</p></div>
       <div class="slide"><div class="slide-head"><div class="slide-no">3</div><h4>왜 만들었어요 + 핵심 아이디어</h4></div><p>이 프로그램을 만든 이유와 <b>어떤 아이디어·원리를 담았는지</b> 설명해요. (게임이면 규칙, 계산기면 공식 등)</p></div>
       <div class="slide"><div class="slide-head"><div class="slide-no">4</div><h4>어떻게 만들었어요?</h4></div><p>바이브코딩 과정이에요. 어떤 AI에게 <b>어떻게 부탁(프롬프트)</b>했는지, 기억에 남는 명령 1~2개와 만든 순서를 적어요.</p></div>
@@ -831,31 +939,69 @@ footer .mono{color:#9aa2cf}
 <section class="view" id="view-submit">
   <div class="wrap page">
     <div class="page-head">
-      <span class="eyebrow">STEP 05 · 마무리</span>
-      <h2 class="h2">제출 전 마지막 점검</h2>
-      <p class="lead">네 가지를 모두 준비했다면, 아래 순서로 제출하면 끝이에요.</p>
-    </div>
-    <div class="submit-grid">
-      <div class="step"><div class="n">01</div><h4>4가지 확인</h4><p>홀로그램 · 나만의 프로그램 · 발표 자료 · AI 홍보물이 모두 준비됐는지 확인해요.</p></div>
-      <div class="step"><div class="n">02</div><h4>인터넷에 올리기</h4><p>만든 프로그램은 GitHub Pages 매뉴얼대로 배포해 링크를 만들어요.</p></div>
-      <div class="step"><div class="n">03</div><h4>발표 자료 점검</h4><p>HTML·CSS·JavaScript 코드 3장과 어려웠던 점이 빠지지 않았는지 다시 봐요.</p></div>
-      <div class="step"><div class="n">04</div><h4>일괄 제출하기</h4><p>아래 <b>제출하기 링크 한 곳</b>에 4가지(홀로그램 보고서 PDF 포함)를 모두 올려요.</p></div>
+      <span class="eyebrow">STEP 05 · 과제 제출</span>
+      <h2 class="h2">여기서 <span style="color:var(--indigo)">4가지</span>를 직접 제출해요</h2>
+      <p class="lead">파일을 올리거나 링크를 붙여넣고 <b>제출하기</b>를 누르면 끝! 다 못 했어도 먼저 낸 뒤 나중에 이어서 제출할 수 있어요.</p>
     </div>
 
-    <div class="note-row">
-      <div class="note-soft">
-        <b>📦 무엇을 내나요?</b>
-        <p>① 홀로그램 보고서(활동 페이지에서 PDF로 내보낸 것) · ② 나만의 프로그램(<code>.html</code> 파일 또는 배포 링크) · ③ 발표 자료 · ④ AI 홍보물 이미지(PNG). <b>정확한 형식은 선생님 안내를 우선</b>해요.</p>
-      </div>
-      <div class="note-soft">
-        <b>📍 어디에 제출해요?</b>
-        <p><b>4가지 모두</b> 아래 <b>제출하기</b> 버튼(일괄 제출 링크) <b>한 곳에</b> 올려요. <b>홀로그램 보고서도</b> 활동 페이지에서 PDF로 만든 뒤 <b>여기 같이</b> 제출해요. (활동 페이지 안에서 따로 제출 ❌)</p>
-      </div>
+    <div class="sub-notice" id="subNotice" style="display:none">
+      ⚠️ <b>제출 시스템이 아직 연결되지 않았어요.</b> (선생님께) 코드 상단 <code>SUPABASE</code> 설정의 <code>URL</code>·<code>anon key</code>를 채우고, 함께 드린 <code>supabase-설정.sql</code>을 Supabase에서 한 번 실행해 주세요.
     </div>
 
-    <div class="submit-go">
-      <div class="sg-txt"><b>준비가 끝났나요? 📤</b><span>4가지를 모두 여기 <b>한 곳에</b> 제출해요. (홀로그램 보고서 PDF 포함)</span></div>
-      <a class="btn submit-big" id="btnSubmitLink" href="#" target="_blank" rel="noopener">일괄 제출하기 →</a>
+    <div class="locked-hint" id="subLogin">🔒 제출하려면 <b>먼저 홈에서 로그인</b>해 주세요.</div>
+
+    <div id="subArea" style="display:none">
+      <div class="slim-prog on" id="subProg" style="margin-bottom:22px">
+        <span class="sl" id="subProgLabel">0 / 4 제출됨</span>
+        <span class="st"><span class="sf" id="subProgFill"></span></span>
+        <span class="sp" id="subProgPct">0%</span>
+      </div>
+
+      <div class="sub-grid">
+        <div class="sub-card" data-task="1">
+          <div class="sub-head"><div class="sub-ic">📄</div><div class="sub-meta"><b>① 홀로그램 보고서</b><small>활동 페이지에서 만든 PDF</small></div><span class="sub-status" id="st1">⬜ 미제출</span></div>
+          <div class="sub-inputs">
+            <label class="sub-file"><input type="file" id="file1" accept=".pdf"><span class="ff-label" id="fl1">📎 파일 선택</span></label>
+            <span class="sub-or">또는</span>
+            <input type="url" class="sub-link" id="link1" placeholder="🔗 링크 붙여넣기">
+          </div>
+          <div class="sub-current" id="cur1"></div>
+        </div>
+        <div class="sub-card" data-task="2">
+          <div class="sub-head"><div class="sub-ic">🎮</div><div class="sub-meta"><b>② 나만의 프로그램</b><small>배포 링크 추천 · 또는 .html 파일</small></div><span class="sub-status" id="st2">⬜ 미제출</span></div>
+          <div class="sub-inputs">
+            <label class="sub-file"><input type="file" id="file2" accept=".html,.htm"><span class="ff-label" id="fl2">📎 파일 선택</span></label>
+            <span class="sub-or">또는</span>
+            <input type="url" class="sub-link" id="link2" placeholder="🔗 배포 링크 붙여넣기">
+          </div>
+          <div class="sub-current" id="cur2"></div>
+        </div>
+        <div class="sub-card" data-task="3">
+          <div class="sub-head"><div class="sub-ic">🎤</div><div class="sub-meta"><b>③ 발표 자료</b><small>PPT 또는 PDF 파일</small></div><span class="sub-status" id="st3">⬜ 미제출</span></div>
+          <div class="sub-inputs">
+            <label class="sub-file"><input type="file" id="file3" accept=".pdf,.ppt,.pptx,.key"><span class="ff-label" id="fl3">📎 파일 선택</span></label>
+            <span class="sub-or">또는</span>
+            <input type="url" class="sub-link" id="link3" placeholder="🔗 링크 붙여넣기">
+          </div>
+          <div class="sub-current" id="cur3"></div>
+        </div>
+        <div class="sub-card" data-task="4">
+          <div class="sub-head"><div class="sub-ic">🖼️</div><div class="sub-meta"><b>④ AI 홍보물</b><small>이미지 파일(PNG·JPG)</small></div><span class="sub-status" id="st4">⬜ 미제출</span></div>
+          <div class="sub-inputs">
+            <label class="sub-file"><input type="file" id="file4" accept="image/*"><span class="ff-label" id="fl4">📎 파일 선택</span></label>
+            <span class="sub-or">또는</span>
+            <input type="url" class="sub-link" id="link4" placeholder="🔗 링크 붙여넣기">
+          </div>
+          <div class="sub-current" id="cur4"></div>
+        </div>
+      </div>
+
+      <div class="note-soft" style="margin-top:18px">💡 <b>나만의 프로그램</b>은 GitHub Pages로 <b>배포해 링크</b>로 내는 걸 추천해요. (방법은 학습자료 → GitHub Pages) 파일(<code>.html</code>)로 내도 괜찮아요. 파일은 한 개당 45MB 이하로!</div>
+
+      <div class="submit-go" style="margin-top:22px">
+        <div class="sg-txt"><b>준비됐으면 제출! 📤</b><span id="subStatusLine">파일·링크를 넣고 제출하기를 눌러요.</span></div>
+        <button class="btn submit-big" id="subSubmitBtn">제출하기 →</button>
+      </div>
     </div>
     <div class="final">
       <h3>여기까지 왔다면, 너는 이제 <span class="holo-text">AI 메이커</span>야 ✨</h3>
@@ -864,11 +1010,73 @@ footer .mono{color:#9aa2cf}
   </div>
 </section>
 
+<!-- ===================== 작품 아카이브 (전시관) ===================== -->
+<section class="view" id="view-archive">
+  <div class="wrap page">
+    <div class="page-head">
+      <span class="eyebrow">전시관 · 우리 반 작품</span>
+      <h2 class="h2">친구들의 <span style="color:var(--indigo)">작품 아카이브</span> 🖼️</h2>
+      <p class="lead">제출하면 여기에 작품이 전시돼요. 친구들이 만든 프로그램과 홍보물을 구경하고 직접 실행해 봐요. 마음에 들면 <b>❤️ 좋아요</b>도 눌러요!</p>
+    </div>
+
+    <div class="sub-notice" id="arcNotice" style="display:none">⚠️ 제출 시스템이 아직 연결되지 않았어요. (선생님 설정 필요)</div>
+
+    <div id="arcWrap" style="display:none">
+      <div class="arc-toolbar">
+        <span class="arc-count" id="arcCount">작품 <b>0</b>개</span>
+        <select id="arcSort">
+          <option value="new">🕒 최신순</option>
+          <option value="old">📜 오래된순</option>
+          <option value="name">🔤 이름순</option>
+          <option value="id">🎓 학번순</option>
+        </select>
+        <input id="arcSearch" placeholder="🔎 이름·학번 검색" style="max-width:200px">
+        <button class="tch-btn ghost" id="arcRefresh">↻ 새로고침</button>
+      </div>
+      <div id="arcBody"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 교사 대시보드 (학생 네비에 노출 안 됨) ===================== -->
+<section class="view" id="view-teacher">
+  <div class="wrap page">
+    <div class="page-head">
+      <span class="eyebrow">교사용 · 과제 수합</span>
+      <h2 class="h2">제출 현황 대시보드</h2>
+      <p class="lead">학생들의 제출 상태를 한눈에 보고, 파일·링크를 열거나 CSV로 내려받을 수 있어요.</p>
+    </div>
+
+    <div class="sub-notice" id="tchNotice" style="display:none">⚠️ 먼저 Supabase 설정을 완료해 주세요. (상단 <code>SUPABASE</code> 설정 + <code>supabase-설정.sql</code> 실행)</div>
+
+    <div class="tch-gate" id="tchGate" style="display:none">
+      <div class="lock">🔒</div>
+      <h3>교사 확인</h3>
+      <p>대시보드 비밀번호를 입력하세요.</p>
+      <input type="password" id="tchPin" placeholder="비밀번호" autocomplete="off">
+      <button class="btn btn-block" id="tchEnter" style="margin-top:0">대시보드 열기 →</button>
+      <div class="note-warn" id="tchPinWarn" style="display:none"></div>
+    </div>
+
+    <div id="tchDash" style="display:none">
+      <div class="tch-stats" id="tchStats"></div>
+      <div class="tch-toolbar">
+        <input id="tchSearch" placeholder="🔎 학번·이름 검색">
+        <button class="tch-btn ghost" id="tchRefresh">↻ 새로고침</button>
+        <button class="tch-btn" id="tchCsv">⬇ CSV 내려받기</button>
+      </div>
+      <div id="tchBody"></div>
+      <div class="tch-sec-note">🔒 이 화면은 간단한 비밀번호로만 가립니다(완전한 보안은 아니에요). 민감정보는 제출받지 마세요. 더 엄격한 보호가 필요하면 Supabase Auth 도입을 권장해요.</div>
+    </div>
+  </div>
+</section>
+
 </main>
 
 <footer>
   인공지능 융합 첨단과학 탐구반 2기 · 최종 과제 허브<br>
-  <span class="mono">made with vibe coding</span> · 진행상황은 내 기기에만 저장됩니다
+  <span class="mono">made with vibe coding</span> · 진행 체크는 내 기기에, 제출물은 안전하게 서버에 저장돼요
+  <br><span class="foot-teacher" data-view="teacher">🧑‍🏫 교사용 대시보드</span>
 </footer>
 
 <!-- ===================== 하단 탭바(모바일) ===================== -->
@@ -880,6 +1088,7 @@ footer .mono{color:#9aa2cf}
     <a data-view="coding"><svg viewBox="0 0 24 24"><path d="M8 9l-3 3 3 3M16 9l3 3-3 3M13 7l-2 10"/></svg>기초</a>
     <a data-view="present"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="13" rx="1"/><path d="M8 21h8M12 17v4"/></svg>발표</a>
     <a data-view="submit"><svg viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></svg>제출</a>
+    <a data-view="archive"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>전시</a>
   </div>
 </nav>
 
@@ -893,22 +1102,38 @@ footer .mono{color:#9aa2cf}
 <!-- ===================== 모달 / 토스트 컨테이너 ===================== -->
 <div class="overlay" id="overlay"><div class="modal" id="modal"></div></div>
 <div class="toast-wrap" id="toastWrap"></div>
+<div class="lightbox" id="lightbox"><img id="lightboxImg" src="" alt="작품 이미지"></div>
+
+<!-- 과제 제출(수합)용 Supabase 라이브러리 -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
 /* =========================================================
-   ⚙️  CONFIG — 링크만 확인/수정하세요!
+   ⚙️  CONFIG — 링크 & 제출(Supabase) 설정
    ========================================================= */
 const CONFIG = {
   HOLOGRAM_URL: "https://scienceisjo.github.io/hologram/new.html",            // 플로팅 홀로그램 활동 페이지
   DEPLOY_URL:   "https://scienceisjo.github.io/githubmanual/forstudent.html", // GitHub Pages 배포 매뉴얼
-  SUBMIT_URL:   "https://여기에-제출-링크를-넣으세요"                            // ⬅️ 일괄 제출 링크(4가지 전부 제출, 구글 폼·과제방 등)로 바꿔주세요
+  TEACHER_PIN:  "teacher1234"                                                 // ⬅️ 교사 대시보드 비밀번호 — 꼭 바꿔주세요!
+};
+
+// ▼▼▼ 과제 제출(수합)용 Supabase 설정 — 2곳만 채우면 제출 기능이 켜져요 ▼▼▼
+// (함께 드린 "supabase-설정.sql"을 Supabase SQL Editor에 한 번 실행해 주세요)
+const SUPABASE = {
+  URL:    "https://hmzklbrksfdhzsgwzfyg.supabase.co",  // Supabase 프로젝트 URL
+  ANON:   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhtemtsYnJrc2ZkaHpzZ3d6ZnlnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk1MTY4NDcsImV4cCI6MjA5NTA5Mjg0N30.LuTEeJyu-mtkNzUTNaA8IigmdtWPWXS2ucVgXDeevPA",
+  TABLE:  "submissions",                               // 과제가 저장될 테이블 이름
+  BUCKET: "submissions"                                // 파일이 저장될 Storage 버킷 이름
 };
 /* ========================================================= */
 const $ = s => document.querySelector(s);
 const $$ = s => Array.from(document.querySelectorAll(s));
 document.getElementById('lnkHolo').href   = CONFIG.HOLOGRAM_URL;
 document.getElementById('lnkDeploy').href = CONFIG.DEPLOY_URL;
-document.getElementById('btnSubmitLink').href = CONFIG.SUBMIT_URL;
+
+// Supabase 클라이언트 (설정이 채워졌고 라이브러리가 로드됐을 때만)
+const SB_READY = !SUPABASE.URL.includes('여기에') && !SUPABASE.ANON.includes('여기에') && typeof window.supabase!=='undefined';
+const sb = SB_READY ? window.supabase.createClient(SUPABASE.URL, SUPABASE.ANON) : null;
 
 /* ---------- 저장소 ---------- */
 let MEM={}, storageOK=true;
@@ -920,7 +1145,7 @@ const del=(k)=>{try{storageOK?localStorage.removeItem(k):(delete MEM[k]);}catch(
 /* ---------- 상태 ---------- */
 const TOTAL=4;
 let user=null, progress={}, micro={};
-const uKey=(c,n,name)=>('u:'+c+'-'+n+'-'+name).replace(/\s+/g,'_');
+const uKey=(id,name)=>('u:'+id+'-'+name).replace(/\s+/g,'_');
 const countDone=()=>[1,2,3,4].filter(i=>progress[i]).length;
 function loadUser(){const r=load('hub:user');if(!r)return null;try{return JSON.parse(r);}catch(e){return null;}}
 function loadProgress(k){const r=load('hub:prog:'+k);if(!r)return{};try{return JSON.parse(r)||{};}catch(e){return{};}}
@@ -933,14 +1158,14 @@ function saveMicro(){if(user)save('hub:micro:'+user.key,JSON.stringify(micro));}
    ========================================================= */
 const JOURNEY=[
   {key:'login',num:'0',title:'로그인',short:'시작 준비',emoji:'🔐',
-   desc:'먼저 로그인! 반·번호·이름을 입력하면 진행상황이 저장돼요. 홈으로 가서 로그인하면 출발할 수 있어요.',
-   steps:['홈 화면으로 가기','반·번호·이름 입력하기','로그인 버튼 누르기'],
+   desc:'먼저 로그인! 학번·이름을 입력하면 진행상황이 저장돼요. 홈으로 가서 로그인하면 출발할 수 있어요.',
+   steps:['홈 화면으로 가기','학번·이름 입력하기','로그인 버튼 누르기'],
    tip:'로그인하면 이 화면이 "지금 할 일"을 콕 집어 알려줘요.',
    cta:{label:'홈으로 가서 로그인',view:'home'}},
   {key:'t1',taskId:1,num:'1',title:'홀로그램 활동 보고서',short:'과제 1',emoji:'🔮',
    desc:'홀로그램 활동 페이지에서 4면 홀로그램을 만들고, 활동 보고서를 작성해 저장·제출해요.',
    steps:['홀로그램 활동 열고 기존처럼 로그인 (처음이면 학년·반·번호·이름 입력)',"🤖 '바이브코딩 버전'에서 프롬프트로 4면 홀로그램 만들기","📝 '활동 보고서' 작성하기 (바이브코딩 미션까지)","💾 '보고서 저장' → 📄 '보고서 제출(인쇄·PDF)'로 PDF 만들기"],
-   tip:'만든 PDF는 마지막 \'제출\' 탭의 일괄 링크에 다른 3가지와 함께 올려요.',
+   tip:'만든 PDF는 \'제출\' 탭에서 다른 3가지와 함께 직접 올려요.',
    cta:{label:'홀로그램 활동 열기',url:CONFIG.HOLOGRAM_URL}},
   {key:'t2',taskId:2,num:'2',title:'나만의 프로그램',short:'과제 2',emoji:'🎮',
    desc:'게임·시뮬레이션·계산기 등 내가 만들고 싶은 프로그램을 만들어요. 이게 바로 발표할 작품이에요!',
@@ -959,8 +1184,8 @@ const JOURNEY=[
    cta:{label:'AI 홍보물 만드는 법 자세히',taskGuide:'4'}},
   {key:'done',num:'★',title:'배포 & 제출',short:'마무리',emoji:'🚀',
    desc:'4가지를 모두 끝냈어요! 이제 인터넷에 올리고 제출만 하면 완성이에요.',
-   steps:['GitHub Pages로 배포해 링크 만들기 (나만의 프로그램)','홀로그램 보고서를 PDF로 내보내기','제출 링크 한 곳에 4가지 모두 올리기'],
-   tip:'홀로그램 보고서를 포함한 4가지 전부를 \'제출\' 탭의 일괄 링크 하나에 올려요.',
+   steps:['GitHub Pages로 배포해 링크 만들기 (나만의 프로그램)','홀로그램 보고서를 PDF로 내보내기',"'제출' 탭에서 4가지 모두 올리기"],
+   tip:"'제출' 탭에서 파일을 올리거나 링크를 붙여넣어 4가지를 직접 제출해요.",
    cta:{label:'제출 방법 보기',view:'submit'}}
 ];
 function currentStageKey(){
@@ -973,7 +1198,7 @@ function stageByKey(k){ return JOURNEY.find(s=>s.key===k); }
 /* =========================================================
    라우터 (SPA 화면 전환)
    ========================================================= */
-const VIEWS=['home','tasks','resources','coding','present','submit'];
+const VIEWS=['home','tasks','resources','coding','present','submit','archive','teacher'];
 const viewSeen={};
 function showView(name,opts){
   opts=opts||{};
@@ -986,6 +1211,9 @@ function showView(name,opts){
   if(location.hash.slice(1)!==name) history.replaceState(null,'','#'+name);
   // 화면별 첫 방문 안내 토스트
   if(!viewSeen[name]){ viewSeen[name]=true; viewHint(name); }
+  if(name==='submit') enterSubmit();
+  if(name==='archive') enterArchive();
+  if(name==='teacher') enterTeacher();
 }
 function viewHint(name){
   if(name==='home') return;
@@ -994,7 +1222,8 @@ function viewHint(name){
     resources:['📚','막히면 이 자료들을 열어봐','홀로그램 활동·배포법·코딩 기초가 다 있어요.'],
     coding:['💻','HTML·CSS·JS가 뭔지 여기서 배워요','발표 자료의 코드 3장은 이걸 보고 찾으면 돼요.'],
     present:['🎤','발표는 "나만의 프로그램"으로!','플로팅 홀로그램 ❌. 코드 3장 + 어려웠던 점은 필수예요.'],
-    submit:['📤','다 했으면 여기서 제출!','배포해서 링크 만들고 제출 버튼을 누르면 끝이에요.']
+    submit:['📤','여기서 4가지를 직접 제출!','파일을 올리거나 링크를 붙여넣고 제출하기를 누르면 끝.'],
+    archive:['🖼️','친구들 작품 전시관이에요','제출하면 여기 떠요. 카드를 눌러 직접 실행해 봐요!']
   };
   const h=hints[name]; if(h) setTimeout(()=>toast(h[0],h[1],h[2]),450);
 }
@@ -1039,12 +1268,12 @@ function welcomeModal(){
     <div class="modal-body">
       <p class="intro">이 페이지에서 뭘 하냐면요 — <b>과제 4개</b>를 하나씩 완성하고 체크하면 돼요. 순서대로 따라오면 선생님께 묻지 않아도 끝낼 수 있어요.</p>
       <div class="steps-list">
-        <div class="step-line"><div class="si">1</div><div class="sb"><b>로그인하기</b><span>반·번호·이름 입력 → 진행상황이 저장돼요.</span></div></div>
+        <div class="step-line"><div class="si">1</div><div class="sb"><b>로그인하기</b><span>학번·이름 입력 → 진행상황이 저장돼요.</span></div></div>
         <div class="step-line"><div class="si">2</div><div class="sb"><b>과제 4개 완성</b><span>홀로그램 · 나만의 프로그램 · 발표 자료 · AI 홍보물</span></div></div>
         <div class="step-line"><div class="si">3</div><div class="sb"><b>길을 잃으면 🗺️</b><span>오른쪽 아래 <b>길찾기</b> 버튼이 지금 할 일을 알려줘요.</span></div></div>
       </div>
       <div class="modal-actions">
-        <button class="btn btn-indigo" onclick="closeModal();showView('home',{noScroll:true});setTimeout(()=>document.getElementById('inClass')&&document.getElementById('inClass').focus(),300)">로그인하러 가기 →</button>
+        <button class="btn btn-indigo" onclick="closeModal();showView('home',{noScroll:true});setTimeout(()=>document.getElementById('inId')&&document.getElementById('inId').focus(),300)">로그인하러 가기 →</button>
         <button class="btn btn-soft" onclick="closeModal()">둘러볼게요</button>
       </div>
     </div>`);
@@ -1187,7 +1416,7 @@ function taskGuide(id){
         <div class="step-line"><div class="si">3</div><div class="sb"><b>📝 활동 보고서</b><span>'활동 보고서' 탭에서 후기·장치 설명·과학 원리·바이브코딩 미션 칸을 채우고, 시연 화면을 캡처해 올려요.</span></div></div>
         <div class="step-line"><div class="si">4</div><div class="sb"><b>💾 저장 → 📄 PDF 만들기</b><span>'보고서 저장'을 누른 뒤 '보고서 제출(인쇄·PDF)'을 눌러 보고서를 <b>PDF 파일로 저장</b>해요.</span></div></div>
       </div>
-      <div class="mline">📤 <b>제출은 여기서가 아니에요!</b> 이 보고서 PDF는 활동 페이지가 아니라, <b>'제출' 탭의 일괄 제출 링크</b>에 다른 3가지(나만의 프로그램·발표 자료·홍보물)와 <b>함께</b> 올려요.</div>
+      <div class="mline">📤 <b>제출은 여기서가 아니에요!</b> 이 보고서 PDF는 활동 페이지가 아니라, <b>'제출' 탭에서 파일로 직접</b> 올려요. (다른 3가지도 거기서 함께!)</div>
       <div class="minfo">💡 막히면 멈추지 말고 AI에게 "이 부분이 잘 안 돼, 어떻게 고쳐?"라고 물어봐요. 활동 페이지에 아이디어 예시(다이아몬드·지구·하트 등)도 있어요.</div>
       <div class="modal-actions">
         <button class="btn btn-indigo" onclick="window.open('${CONFIG.HOLOGRAM_URL}','_blank','noopener')">홀로그램 활동 열기 →</button>
@@ -1295,7 +1524,7 @@ function render(){
     $('#loginBox').style.display='none';
     $('#welcomeBox').classList.add('on');
     $('#wName').textContent=user.name+'님, 환영해요!';
-    $('#wMeta').textContent=user.cls+'반 '+user.num+'번';
+    $('#wMeta').textContent='학번 '+user.studentId;
     $('#avatar').textContent=(user.name||'?').trim().charAt(0)||'?';
     $('#wPct').textContent=pct+'%'; $('#wFill').style.width=pct+'%';
     $('#wMsg').textContent = done===0?'아직 시작 전이에요. 🗺️ 길찾기로 첫 단계를 확인해 볼까요?'
@@ -1325,9 +1554,9 @@ function render(){
    ========================================================= */
 function showWarn(m){const w=$('#warnBox');w.textContent=m;w.style.display='block';}
 function doLogin(){
-  const cls=$('#inClass').value.trim(), num=$('#inNum').value.trim(), name=$('#inName').value.trim();
-  if(!cls||!num||!name){showWarn('반·번호·이름을 모두 입력해 주세요.');return;}
-  user={cls,num,name,key:uKey(cls,num,name)};
+  const studentId=$('#inId').value.trim(), name=$('#inName').value.trim();
+  if(!studentId||!name){showWarn('학번·이름을 모두 입력해 주세요.');return;}
+  user={studentId,name,key:uKey(studentId,name)};
   save('hub:user',JSON.stringify(user));
   progress=loadProgress(user.key); micro=loadMicro(user.key);
   $('#warnBox').style.display='none';
@@ -1335,8 +1564,8 @@ function doLogin(){
   render(); loginSuccessModal();
 }
 function doLogout(){
-  del('hub:user'); user=null; progress={}; micro={};
-  render(); showView('home');
+  del('hub:user'); user=null; progress={}; micro={}; submission={}; pendingFiles={};
+  render(); renderSubmit(); showView('home');
   toast('👋','로그아웃했어요','진행상황은 그대로 저장돼 있어요. 다시 로그인하면 이어서 할 수 있어요.');
 }
 
@@ -1345,7 +1574,7 @@ function doLogout(){
    ========================================================= */
 function toggleTask(t){
   if(!user){
-    toast('🔐','먼저 로그인이 필요해요','홈에서 로그인하면 진행상황을 저장할 수 있어요.',{label:'로그인하러 가기',fn:()=>{showView('home',{noScroll:true});setTimeout(()=>$('#inClass')&&$('#inClass').focus(),300);}});
+    toast('🔐','먼저 로그인이 필요해요','홈에서 로그인하면 진행상황을 저장할 수 있어요.',{label:'로그인하러 가기',fn:()=>{showView('home',{noScroll:true});setTimeout(()=>$('#inId')&&$('#inId').focus(),300);}});
     return;
   }
   const id=t.dataset.id; const wasDone=!!progress[id];
@@ -1359,10 +1588,366 @@ function toggleTask(t){
 }
 
 /* =========================================================
+   과제 제출 (Supabase 수합)
+   ========================================================= */
+let submission = {};   // DB에 저장된 내 제출 행
+let pendingFiles = {}; // 업로드 대기 파일 {1:File,...}
+
+function fmtTime(iso){ try{ const d=new Date(iso); return (d.getMonth()+1)+'월 '+d.getDate()+'일 '+String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0'); }catch(e){ return ''; } }
+function subHas(n){ return !!(submission['task'+n+'_url'] || submission['task'+n+'_file']); }
+
+function enterSubmit(){
+  renderSubmit();
+  if(SB_READY && user) fetchSubmission();
+}
+
+async function fetchSubmission(){
+  if(!SB_READY || !user) return;
+  try{
+    const res = await sb.from(SUPABASE.TABLE).select('*').eq('student_key', user.key).maybeSingle();
+    submission = res.data || {};
+  }catch(e){ /* RLS·네트워크 등은 무시하고 빈 상태 유지 */ }
+  // 링크 입력칸은 여기서만 초기화 (렌더 때마다 덮어쓰지 않도록)
+  for(let n=1;n<=4;n++){ const el=$('#link'+n); if(el) el.value = submission['task'+n+'_url'] || ''; }
+  pendingFiles = {};
+  renderSubmit();
+}
+
+function renderSubmit(){
+  const notice=$('#subNotice'), loginHint=$('#subLogin'), area=$('#subArea');
+  if(!notice) return; // 제출 뷰가 아직 없는 경우 방어
+  if(!SB_READY){ notice.style.display='block'; area.style.display='none'; loginHint.classList.remove('on'); return; }
+  notice.style.display='none';
+  if(!user){ loginHint.classList.add('on'); area.style.display='none'; return; }
+  loginHint.classList.remove('on');
+  area.style.display='block';
+
+  let done=0;
+  for(let n=1;n<=4;n++){
+    const card=document.querySelector('.sub-card[data-task="'+n+'"]');
+    const fl=$('#fl'+n), cur=$('#cur'+n);
+    // 대기 파일 라벨
+    if(pendingFiles[n]){ fl.textContent='📎 '+pendingFiles[n].name; fl.classList.add('has'); }
+    else { fl.textContent='📎 파일 선택'; fl.classList.remove('has'); }
+    // 제출됨 여부 (DB 기준)
+    const has=subHas(n);
+    if(has){ card.classList.add('done'); $('#st'+n).textContent='✅ 제출됨'; done++; }
+    else { card.classList.remove('done'); $('#st'+n).textContent='⬜ 미제출'; }
+    // 이미 제출한 내용 표시
+    let h='';
+    const fu=submission['task'+n+'_file'], fn=submission['task'+n+'_name'], lu=submission['task'+n+'_url'];
+    if(fu) h+='제출한 파일: <a href="'+fu+'" target="_blank" rel="noopener">'+escapeHtml(fn||'열기')+'</a>';
+    if(fu && lu) h+=' &nbsp;·&nbsp; ';
+    if(lu) h+='제출한 링크: <a href="'+lu+'" target="_blank" rel="noopener">열기</a>';
+    if(h){ cur.innerHTML=h; cur.classList.add('on'); } else { cur.innerHTML=''; cur.classList.remove('on'); }
+  }
+  const pct=Math.round(done/4*100);
+  $('#subProgLabel').textContent = done+' / 4 제출됨';
+  $('#subProgPct').textContent = pct+'%';
+  $('#subProgFill').style.width = pct+'%';
+  $('#subStatusLine').textContent = submission.updated_at ? ('마지막 제출: '+fmtTime(submission.updated_at)) : '파일·링크를 넣고 제출하기를 눌러요.';
+}
+
+async function submitAll(){
+  if(!user){ toast('🔐','먼저 로그인이 필요해요','홈에서 로그인한 뒤 제출할 수 있어요.',{label:'로그인하러 가기',fn:()=>{showView('home',{noScroll:true});setTimeout(()=>$('#inId')&&$('#inId').focus(),300);}}); return; }
+  if(!SB_READY){ toast('⚠️','제출 시스템 준비 중','선생님이 Supabase 설정을 마치면 제출할 수 있어요.'); return; }
+  const btn=$('#subSubmitBtn'); const orig=btn.textContent; btn.disabled=true; btn.textContent='제출 중... ⏳';
+  try{
+    const row={ student_key:user.key, student_id:user.studentId, name:user.name, updated_at:new Date().toISOString() };
+    for(let n=1;n<=4;n++){
+      // 링크
+      const linkVal=(($('#link'+n).value)||'').trim();
+      row['task'+n+'_url'] = linkVal || submission['task'+n+'_url'] || null;
+      // 파일
+      if(pendingFiles[n]){
+        const f=pendingFiles[n];
+        if(f.size > 45*1024*1024) throw new Error(n+'번 파일이 너무 커요(45MB↑). 링크로 제출해 보세요.');
+        const safe=f.name.replace(/[^\w.\-가-힣]/g,'_');
+        const keySafe=user.key.replace(/[^\w\-]/g,'_');
+        const path=keySafe+'/task'+n+'_'+Date.now()+'_'+safe;
+        const up=await sb.storage.from(SUPABASE.BUCKET).upload(path, f, {upsert:true, cacheControl:'3600'});
+        if(up.error) throw up.error;
+        const pub=sb.storage.from(SUPABASE.BUCKET).getPublicUrl(path);
+        row['task'+n+'_file']=pub.data.publicUrl;
+        row['task'+n+'_name']=f.name;
+      } else {
+        row['task'+n+'_file']=submission['task'+n+'_file']||null;
+        row['task'+n+'_name']=submission['task'+n+'_name']||null;
+      }
+    }
+    const res=await sb.from(SUPABASE.TABLE).upsert(row,{onConflict:'student_key'}).select().maybeSingle();
+    if(res.error) throw res.error;
+    submission = res.data || row;
+    pendingFiles={};
+    // 제출한 과제는 진행 체크도 자동 완료
+    for(let n=1;n<=4;n++){ if(subHas(n)) progress[n]=true; }
+    saveProgress(); render(); renderSubmit();
+    const done=[1,2,3,4].filter(n=>subHas(n)).length;
+    toast('✅','제출 완료!', done+'개 제출됐어요'+(done<4?' — 남은 건 이어서 제출하면 돼요.':' 🎉'), {label:'🖼️ 전시관에서 보기',fn:()=>showView('archive')});
+    if(done===4) setTimeout(allSubmittedModal,350);
+  }catch(err){
+    const msg=(err&&err.message)?String(err.message):'';
+    toast('⚠️','제출 실패', msg ? msg.slice(0,130) : '잠시 후 다시 시도하거나 선생님께 알려주세요.');
+  }finally{
+    btn.disabled=false; btn.textContent=orig;
+  }
+}
+
+function allSubmittedModal(){
+  openModal('<div class="modal-hero"><div class="emoji">🎉</div><h3>4가지 모두 제출 완료!</h3><p>정말 수고했어요. 작품이 전시관에 올라갔어요.</p></div><div class="modal-body"><p class="intro">고치고 싶으면 언제든 다시 제출하면 최신 내용으로 바뀌어요. 친구들 작품도 구경해 볼까요? 👏</p><div class="modal-actions"><button class="btn btn-indigo" onclick="closeModal();showView(\'archive\')">🖼️ 전시관 보기</button><button class="btn btn-soft" onclick="closeModal()">좋아요!</button></div></div>');
+}
+
+/* =========================================================
+   교사 대시보드 (과제 수합 현황)
+   ========================================================= */
+let teacherAuthed=false, teacherRows=[];
+function tSub(r,n){ return !!(r['task'+n+'_url'] || r['task'+n+'_file']); }
+
+function enterTeacher(){
+  const notice=$('#tchNotice'), gate=$('#tchGate'), dash=$('#tchDash');
+  if(!notice) return;
+  if(!SB_READY){ notice.style.display='block'; gate.style.display='none'; dash.style.display='none'; return; }
+  notice.style.display='none';
+  if(!teacherAuthed){ gate.style.display='block'; dash.style.display='none'; setTimeout(()=>$('#tchPin')&&$('#tchPin').focus(),200); return; }
+  gate.style.display='none'; dash.style.display='block';
+  loadTeacher();
+}
+function teacherTryPin(){
+  const v=(($('#tchPin').value)||'').trim();
+  if(v && v===CONFIG.TEACHER_PIN){ teacherAuthed=true; $('#tchPin').value=''; $('#tchPinWarn').style.display='none'; enterTeacher(); }
+  else { const w=$('#tchPinWarn'); w.textContent='비밀번호가 올바르지 않아요. 다시 확인해 주세요.'; w.style.display='block'; }
+}
+async function loadTeacher(){
+  const body=$('#tchBody'); body.innerHTML='<div class="tch-empty">불러오는 중… ⏳</div>';
+  try{
+    const res=await sb.from(SUPABASE.TABLE).select('*');
+    if(res.error) throw res.error;
+    teacherRows=(res.data||[]).slice().sort((a,b)=>{
+      const ia=parseInt(a.student_id), ib=parseInt(b.student_id);
+      if(!isNaN(ia)&&!isNaN(ib)&&ia!==ib) return ia-ib;
+      return String(a.student_id||'').localeCompare(String(b.student_id||''))||((a.name||'').localeCompare(b.name||''));
+    });
+    await loadLikes();
+    renderTeacher();
+  }catch(e){ body.innerHTML='<div class="tch-empty">불러오기 실패: '+escapeHtml(String((e&&e.message)||e)).slice(0,140)+'</div>'; }
+}
+function teacherFiltered(){
+  const q=(($('#tchSearch').value)||'').trim().toLowerCase();
+  return teacherRows.filter(r=> !q || (r.name||'').toLowerCase().includes(q) || String(r.student_id||'').toLowerCase().includes(q) );
+}
+let tchSort={key:'student_id',dir:'asc'};
+function tchVal(r,key){
+  if(key==='student_id'){ const n=parseInt(r.student_id); return isNaN(n)?{t:'s',v:String(r.student_id||'')}:{t:'n',v:n}; }
+  if(key==='name') return {t:'s',v:(r.name||'')};
+  if(key==='updated_at') return {t:'n',v:r.updated_at?new Date(r.updated_at).getTime():0};
+  if(key==='likes') return {t:'n',v:likeCounts[r.student_key]||0};
+  if(/^task[1-4]$/.test(key)) return {t:'n',v:tSub(r,+key.slice(4))?1:0};
+  return {t:'s',v:''};
+}
+function teacherSorted(rows){
+  const s=tchSort.dir==='asc'?1:-1;
+  return rows.slice().sort((a,b)=>{
+    const A=tchVal(a,tchSort.key), B=tchVal(b,tchSort.key);
+    let c = A.t==='n' ? (A.v-B.v) : String(A.v).localeCompare(String(B.v));
+    if(c!==0) return c*s;
+    const ai=parseInt(a.student_id), bi=parseInt(b.student_id); // 동점이면 학번→이름 오름차순
+    let t=(!isNaN(ai)&&!isNaN(bi))?ai-bi:String(a.student_id||'').localeCompare(String(b.student_id||''));
+    return t||((a.name||'').localeCompare(b.name||''));
+  });
+}
+function tHead(key,label,center){
+  const active=tchSort.key===key;
+  const arrow=active?(tchSort.dir==='asc'?' ▲':' ▼'):'';
+  return '<th class="sortable'+(center?' c':'')+(active?' active':'')+'" data-sort="'+key+'">'+label+arrow+'</th>';
+}
+function tStat(v,l){ return '<div class="tch-stat"><div class="v">'+v+'</div><div class="l">'+l+'</div></div>'; }
+function tCell(r,n){
+  const fu=r['task'+n+'_file'], lu=r['task'+n+'_url'];
+  if(!fu && !lu) return '<td class="c cell-no">⬜</td>';
+  let links='';
+  if(fu) links+='<a href="'+escapeHtml(fu)+'" target="_blank" rel="noopener">파일</a>';
+  if(lu) links+='<a href="'+escapeHtml(lu)+'" target="_blank" rel="noopener">링크</a>';
+  return '<td class="c"><span class="cell-ok">✅</span><div class="cell-links">'+links+'</div></td>';
+}
+function renderTeacher(){
+  const total=teacherRows.length;
+  const full=teacherRows.filter(r=>[1,2,3,4].every(n=>tSub(r,n))).length;
+  const per=[1,2,3,4].map(n=>teacherRows.filter(r=>tSub(r,n)).length);
+  $('#tchStats').innerHTML = tStat(total,'제출 학생')+tStat(full,'4/4 완료')+tStat(per[0],'① 홀로그램')+tStat(per[1],'② 프로그램')+tStat(per[2],'③ 발표')+tStat(per[3],'④ 홍보물');
+  const rows=teacherSorted(teacherFiltered());
+  if(!rows.length){ $('#tchBody').innerHTML='<div class="tch-empty">아직 제출한 학생이 없어요.</div>'; return; }
+  let h='<div class="tch-table-wrap"><table class="tch"><thead><tr>'
+    +tHead('student_id','학번')+tHead('name','이름')
+    +tHead('task1','① 홀로그램',true)+tHead('task2','② 프로그램',true)+tHead('task3','③ 발표',true)+tHead('task4','④ 홍보물',true)
+    +tHead('likes','❤️',true)+tHead('updated_at','제출시각')+'</tr></thead><tbody>';
+  rows.forEach(r=>{
+    h+='<tr><td>'+escapeHtml(r.student_id||'')+'</td><td>'+escapeHtml(r.name||'')+'</td>'
+      +tCell(r,1)+tCell(r,2)+tCell(r,3)+tCell(r,4)
+      +'<td class="c cell-like">'+(likeCounts[r.student_key]||0)+'</td>'
+      +'<td>'+(r.updated_at?fmtTime(r.updated_at):'-')+'</td></tr>';
+  });
+  h+='</tbody></table></div>';
+  $('#tchBody').innerHTML=h;
+}
+function tchHeaderClick(e){
+  const th=e.target.closest('th[data-sort]'); if(!th) return;
+  const k=th.dataset.sort;
+  if(tchSort.key===k){ tchSort.dir = tchSort.dir==='asc'?'desc':'asc'; }
+  else { tchSort.key=k; tchSort.dir = (k==='updated_at'||/^task/.test(k)) ? 'desc' : 'asc'; } // 제출시각·완료여부는 내림차순부터
+  renderTeacher();
+}
+function csvCell(v){ v=(v==null?'':String(v)); return /[",\n]/.test(v) ? '"'+v.replace(/"/g,'""')+'"' : v; }
+function teacherCsv(){
+  const rows=teacherFiltered();
+  const head=['학번','이름','홀로그램_파일','홀로그램_링크','프로그램_파일','프로그램_링크','발표_파일','발표_링크','홍보물_파일','홍보물_링크','좋아요','제출시각'];
+  const lines=[head.map(csvCell).join(',')];
+  rows.forEach(r=>{
+    lines.push([r.student_id,r.name,r.task1_file,r.task1_url,r.task2_file,r.task2_url,r.task3_file,r.task3_url,r.task4_file,r.task4_url,likeCounts[r.student_key]||0,r.updated_at?fmtTime(r.updated_at):''].map(csvCell).join(','));
+  });
+  const blob=new Blob(['\ufeff'+lines.join('\n')],{type:'text/csv;charset=utf-8;'});
+  const url=URL.createObjectURL(blob); const a=document.createElement('a');
+  a.href=url; a.download='과제수합_'+new Date().toISOString().slice(0,10)+'.csv'; document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+
+/* =========================================================
+   작품 아카이브 (전시관 · 패들렛 스타일)
+   ========================================================= */
+let archiveRows=[];
+const ARC_COLORS=['#5b5bf0','#e879f9','#22d3ee','#f59e0b','#34d399','#fb7185','#8b5cf6','#0ea5e9'];
+function arcHasAny(r){ return [1,2,3,4].some(n=>r['task'+n+'_url']||r['task'+n+'_file']); }
+
+/* ❤️ 좋아요 */
+let likeCounts={}, likedByMe=new Set();
+async function loadLikes(){
+  likeCounts={}; likedByMe=new Set();
+  try{
+    const lr=await sb.from('likes').select('work_key,voter_id');
+    if(lr.error) throw lr.error;
+    (lr.data||[]).forEach(l=>{ likeCounts[l.work_key]=(likeCounts[l.work_key]||0)+1; if(user && String(l.voter_id)===String(user.studentId)) likedByMe.add(l.work_key); });
+  }catch(e){ /* likes 미설정/권한 없음 → 0 처리 */ }
+}
+function updateLikeBtn(btn,wk,liked){
+  if(!btn) return;
+  btn.classList.toggle('liked',liked);
+  const h=btn.querySelector('.heart'); if(h) h.textContent=liked?'❤️':'🤍';
+  const c=btn.querySelector('.lc'); if(c) c.textContent=likeCounts[wk]||0;
+  if(liked){ btn.classList.remove('pop'); void btn.offsetWidth; btn.classList.add('pop'); }
+}
+function refreshLikeButtons(){
+  document.querySelectorAll('#arcBody .arc-like').forEach(btn=>{ updateLikeBtn(btn, btn.dataset.wk, likedByMe.has(btn.dataset.wk)); });
+}
+async function toggleLike(wk,btn){
+  if(!user){ toast('🔐','로그인이 필요해요','로그인하면 친구 작품에 좋아요를 누를 수 있어요.',{label:'로그인하러 가기',fn:()=>{showView('home',{noScroll:true});setTimeout(()=>$('#inId')&&$('#inId').focus(),300);}}); return; }
+  if(!SB_READY) return;
+  const liked=likedByMe.has(wk);
+  if(liked){ likedByMe.delete(wk); likeCounts[wk]=Math.max(0,(likeCounts[wk]||1)-1); }
+  else { likedByMe.add(wk); likeCounts[wk]=(likeCounts[wk]||0)+1; }
+  updateLikeBtn(btn,wk,!liked); // 낙관적 업데이트
+  try{
+    if(liked){ const r=await sb.from('likes').delete().eq('work_key',wk).eq('voter_id',String(user.studentId)); if(r.error) throw r.error; }
+    else { const r=await sb.from('likes').insert({work_key:wk,voter_id:String(user.studentId)}); if(r.error) throw r.error; }
+  }catch(e){ // 실패 시 되돌리기
+    if(liked){ likedByMe.add(wk); likeCounts[wk]=(likeCounts[wk]||0)+1; }
+    else { likedByMe.delete(wk); likeCounts[wk]=Math.max(0,(likeCounts[wk]||1)-1); }
+    updateLikeBtn(btn,wk,liked);
+    toast('⚠️','좋아요 실패','잠시 후 다시 눌러봐요. (선생님: likes 설정 SQL 확인)');
+  }
+}
+
+function enterArchive(){
+  const notice=$('#arcNotice'), wrap=$('#arcWrap');
+  if(!notice) return;
+  if(!SB_READY){ notice.style.display='block'; wrap.style.display='none'; return; }
+  notice.style.display='none'; wrap.style.display='block';
+  loadArchive();
+}
+async function loadArchive(){
+  const body=$('#arcBody'); if(!archiveRows.length) body.innerHTML='<div class="arc-empty">불러오는 중… ⏳</div>';
+  try{
+    const res=await sb.from(SUPABASE.TABLE).select('*');
+    if(res.error) throw res.error;
+    archiveRows=(res.data||[]).filter(arcHasAny).sort((a,b)=> new Date(b.updated_at||0)-new Date(a.updated_at||0)); // 최신 먼저
+    await loadLikes();
+    renderArchive();
+  }catch(e){ body.innerHTML='<div class="arc-empty">불러오기 실패: '+escapeHtml(String((e&&e.message)||e)).slice(0,120)+'</div>'; }
+}
+function archiveFiltered(){
+  const q=(($('#arcSearch')&&$('#arcSearch').value)||'').trim().toLowerCase();
+  return archiveRows.filter(r=> !q || (r.name||'').toLowerCase().includes(q) || String(r.student_id||'').toLowerCase().includes(q) );
+}
+function archiveSorted(rows){
+  const v=($('#arcSort')&&$('#arcSort').value)||'new';
+  const r=rows.slice();
+  if(v==='old') r.sort((a,b)=> new Date(a.updated_at||0)-new Date(b.updated_at||0));
+  else if(v==='name') r.sort((a,b)=> (a.name||'').localeCompare(b.name||''));
+  else if(v==='id') r.sort((a,b)=>{ const ai=parseInt(a.student_id),bi=parseInt(b.student_id); return (!isNaN(ai)&&!isNaN(bi))?ai-bi:String(a.student_id||'').localeCompare(String(b.student_id||'')); });
+  else r.sort((a,b)=> new Date(b.updated_at||0)-new Date(a.updated_at||0)); // new (기본)
+  return r;
+}
+function arcCard(r,idx){
+  const img=r.task4_file;
+  const color=ARC_COLORS[idx % ARC_COLORS.length];
+  const initial=escapeHtml((r.name||'?').trim().charAt(0)||'?');
+  const wk=r.student_key, liked=likedByMe.has(wk), cnt=likeCounts[wk]||0;
+  let poster;
+  if(img){
+    poster='<div class="arc-postwrap"><div class="arc-poster" data-img="'+escapeHtml(img)+'"><img src="'+escapeHtml(img)+'" alt="홍보물" loading="lazy"></div><span class="arc-badge">🖼️ 홍보물</span></div>';
+  } else {
+    poster='<div class="arc-noposter" style="background:linear-gradient(135deg,'+color+',#11152f)">'+initial+'</div>';
+  }
+  const prog=r.task2_url||r.task2_file, pres=r.task3_url||r.task3_file, holo=r.task1_url||r.task1_file;
+  const promo=r.task4_url; // 홍보물을 '링크'로 낸 경우 (이미지 파일이 아니면 칩으로)
+  let chips='';
+  if(prog) chips+='<a class="arc-chip prog" href="'+escapeHtml(prog)+'" target="_blank" rel="noopener">🎮 프로그램</a>';
+  if(pres) chips+='<a class="arc-chip pres" href="'+escapeHtml(pres)+'" target="_blank" rel="noopener">🎤 발표</a>';
+  if(holo) chips+='<a class="arc-chip holo" href="'+escapeHtml(holo)+'" target="_blank" rel="noopener">🔮 보고서</a>';
+  if(promo && !img) chips+='<a class="arc-chip" href="'+escapeHtml(promo)+'" target="_blank" rel="noopener">🖼️ 홍보물</a>';
+  const likeBtn='<button class="arc-like'+(liked?' liked':'')+'" data-wk="'+escapeHtml(wk)+'" title="좋아요"><span class="heart">'+(liked?'❤️':'🤍')+'</span><span class="lc">'+cnt+'</span></button>';
+  return '<div class="arc-card">'+poster+'<div class="arc-body"><div class="arc-name">'+escapeHtml(r.name||'이름 없음')+'<span class="who">🎓 '+escapeHtml(r.student_id||'')+'</span></div>'
+    +(chips?'<div class="arc-chips">'+chips+'</div>':'')
+    +'<div class="arc-foot">'+(r.updated_at?'<span class="arc-time">🕒 '+fmtTime(r.updated_at)+'</span>':'<span></span>')+likeBtn+'</div>'
+    +'</div></div>';
+}
+function renderArchive(){
+  const rows=archiveSorted(archiveFiltered());
+  $('#arcCount').innerHTML='작품 <b>'+rows.length+'</b>개';
+  const body=$('#arcBody');
+  if(!rows.length){ body.innerHTML='<div class="arc-empty">아직 전시된 작품이 없어요.<br>가장 먼저 제출해서 1등으로 전시해 볼까요? 🚀</div>'; return; }
+  body.innerHTML='<div class="arc-wall">'+rows.map((r,i)=>arcCard(r,i)).join('')+'</div>';
+}
+function openLightbox(src){ $('#lightboxImg').src=src; $('#lightbox').classList.add('on'); }
+window.openLightbox=openLightbox;
+
+/* 실시간: 누가 제출하면 전시관/대시보드 자동 갱신 */
+let rtChannel=null;
+function subscribeRealtime(){
+  if(!SB_READY || rtChannel) return;
+  try{
+    rtChannel = sb.channel('subs-rt')
+      .on('postgres_changes',{event:'*',schema:'public',table:SUPABASE.TABLE},()=>{
+        const av=document.getElementById('view-archive');
+        const tv=document.getElementById('view-teacher');
+        if(av && av.classList.contains('active')) loadArchive();
+        if(tv && tv.classList.contains('active') && teacherAuthed) loadTeacher();
+      })
+      .on('postgres_changes',{event:'*',schema:'public',table:'likes'},()=>{
+        const av=document.getElementById('view-archive');
+        const tv=document.getElementById('view-teacher');
+        if(av && av.classList.contains('active')) loadLikes().then(refreshLikeButtons);
+        if(tv && tv.classList.contains('active') && teacherAuthed) loadTeacher();
+      })
+      .subscribe();
+  }catch(e){}
+}
+
+
+
+/* =========================================================
    이벤트 연결
    ========================================================= */
 $('#loginBtn').addEventListener('click',doLogin);
-['inClass','inNum','inName'].forEach(id=>$('#'+id).addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();}));
+['inId','inName'].forEach(id=>$('#'+id).addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();}));
 $('#barLogout').addEventListener('click',doLogout);
 $$('.task').forEach(t=>t.querySelector('.check').addEventListener('click',e=>{e.stopPropagation();toggleTask(t);}));
 $('#fab').addEventListener('click',()=>openGuide());
@@ -1370,6 +1955,29 @@ $('#heroGuide').addEventListener('click',()=>openGuide());
 $('#welGuide').addEventListener('click',()=>openGuide());
 $('#tasksGuide').addEventListener('click',()=>openGuide());
 $$('.task-more').forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();taskGuide(b.dataset.more);}));
+// 제출 센터: 파일 선택 + 제출 버튼
+[1,2,3,4].forEach(n=>{
+  const fi=$('#file'+n);
+  if(fi) fi.addEventListener('change',e=>{ const f=e.target.files&&e.target.files[0]; if(f){ pendingFiles[n]=f; } else { delete pendingFiles[n]; } renderSubmit(); });
+});
+if($('#subSubmitBtn')) $('#subSubmitBtn').addEventListener('click',submitAll);
+// 교사 대시보드
+if($('#tchEnter')) $('#tchEnter').addEventListener('click',teacherTryPin);
+if($('#tchPin')) $('#tchPin').addEventListener('keydown',e=>{if(e.key==='Enter')teacherTryPin();});
+if($('#tchSearch')) $('#tchSearch').addEventListener('input',renderTeacher);
+if($('#tchBody')) $('#tchBody').addEventListener('click',tchHeaderClick);
+if($('#tchRefresh')) $('#tchRefresh').addEventListener('click',loadTeacher);
+if($('#tchCsv')) $('#tchCsv').addEventListener('click',teacherCsv);
+// 작품 아카이브
+if($('#arcSort')) $('#arcSort').addEventListener('change',renderArchive);
+if($('#arcSearch')) $('#arcSearch').addEventListener('input',renderArchive);
+if($('#arcRefresh')) $('#arcRefresh').addEventListener('click',loadArchive);
+if($('#arcBody')) $('#arcBody').addEventListener('click',e=>{
+  const like=e.target.closest('.arc-like'); if(like){ toggleLike(like.dataset.wk, like); return; }
+  const p=e.target.closest('.arc-poster'); if(p&&p.dataset.img) openLightbox(p.dataset.img);
+});
+if($('#lightbox')) $('#lightbox').addEventListener('click',()=>{ $('#lightbox').classList.remove('on'); $('#lightboxImg').src=''; });
+document.addEventListener('keydown',e=>{ if(e.key==='Escape' && $('#lightbox').classList.contains('on')){ $('#lightbox').classList.remove('on'); $('#lightboxImg').src=''; } });
 
 /* 유틸 */
 function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
@@ -1380,6 +1988,7 @@ function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':
 user=loadUser();
 if(user){ progress=loadProgress(user.key); micro=loadMicro(user.key); }
 render();
+subscribeRealtime();
 // 시작 화면(해시 있으면 그 화면)
 const startHash=location.hash.slice(1);
 showView(VIEWS.includes(startHash)?startHash:'home',{noScroll:true});
