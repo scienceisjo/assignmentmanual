@@ -290,6 +290,21 @@ a{color:inherit;text-decoration:none}
 .sub-current{margin-top:11px;font-size:.83rem;color:var(--ink-2);display:none;line-height:1.5}
 .sub-current.on{display:block}
 .sub-current a{color:var(--indigo);font-weight:700;text-decoration:underline;word-break:break-all}
+/* 제출 안내 · 대기 배너 */
+.submit-help{background:#eef0fb;border:1.5px solid #dde0f3;border-left:5px solid var(--indigo);border-radius:14px;padding:18px 20px;margin-bottom:18px}
+.submit-help b.t{display:block;font-size:1.02rem;font-weight:800;color:var(--indigo-d);margin-bottom:10px}
+.submit-help ol{margin:0 0 12px;padding-left:22px}
+.submit-help ol li{font-size:.93rem;color:var(--ink-2);line-height:1.7;margin-bottom:3px}
+.submit-help ol li b{color:var(--ink)}
+.submit-help .warn-h{background:#ffe4e6;color:#c01a3a;font-weight:800;border-radius:6px;padding:1px 7px}
+.submit-help .fine{font-size:.89rem;color:var(--ink-2);line-height:1.75;margin:0}
+.submit-help .fine b{color:var(--indigo-d)}
+.sub-pending{display:none;align-items:center;gap:12px;background:#fff7e8;border:1.5px solid #f6e0b0;border-left:5px solid var(--amber);border-radius:13px;padding:14px 18px;margin-top:18px;font-size:.92rem;color:#7a5b10;font-weight:700;line-height:1.5}
+.sub-pending.on{display:flex}
+.sub-pending .pb-emoji{font-size:1.5rem;flex-shrink:0;animation:pulse 1.6s infinite}
+.sub-card.pending{border-color:#f6e0b0;background:#fffdf6}
+.sub-card.pending .sub-ic{background:#fdeecb}
+.sub-card.pending .sub-status{color:#fff;background:var(--amber)}
 /* 교사 대시보드 */
 .tch-gate{max-width:420px;margin:30px auto 0;background:var(--paper-2);border:1.5px solid var(--line);border-radius:18px;padding:30px;box-shadow:var(--shadow);text-align:center}
 .tch-gate .lock{font-size:2rem;margin-bottom:10px}
@@ -309,6 +324,8 @@ a{color:inherit;text-decoration:none}
 .tch-btn:hover{background:var(--indigo-d)}
 .tch-btn.ghost{background:#eef0f8;color:var(--ink-2)}
 .tch-btn.ghost:hover{background:#e3e6f2}
+.tch-del{font-family:inherit;font-size:.78rem;font-weight:700;padding:6px 11px;border-radius:8px;border:1.5px solid #fbcdd2;background:#fff5f5;color:#c01a3a;cursor:pointer;transition:.15s;white-space:nowrap}
+.tch-del:hover{background:#e0395a;border-color:#e0395a;color:#fff}
 .tch-table-wrap{overflow-x:auto;border:1.5px solid var(--line);border-radius:14px;box-shadow:var(--shadow-sm)}
 table.tch{width:100%;border-collapse:collapse;font-size:.88rem;min-width:700px;background:var(--paper-2)}
 table.tch th,table.tch td{padding:11px 12px;text-align:left;border-bottom:1px solid var(--line-2);white-space:nowrap}
@@ -645,7 +662,7 @@ footer .mono{color:#9aa2cf}
     <div class="login-box" id="loginBox">
       <div class="panel">
         <h3>먼저 로그인해 주세요 🔐</h3>
-        <p class="hint">학번·이름을 입력하면 <b>이 기기에</b> 진행상황이 저장되고, 제출·전시도 학번·이름으로 올라가요.</p>
+        <p class="hint">학번·이름을 입력하면 <b>이 기기에</b> 진행상황이 저장되고, 제출·전시도 학번·이름으로 올라가요.<br><b style="color:#c01a3a">⚠️ 매번 똑같은 학번·이름</b>으로 로그인하세요. 다르게 적으면 <b>다른 사람</b>으로 인식돼 먼저 낸 과제가 안 보여요.</p>
         <div class="field-row">
           <div class="field"><label for="inId">학번</label><input id="inId" inputmode="numeric" placeholder="예: 10312" autocomplete="off"></div>
           <div class="field"><label for="inName">이름</label><input id="inName" placeholder="예: 김탐구" autocomplete="off"></div>
@@ -957,6 +974,18 @@ footer .mono{color:#9aa2cf}
         <span class="sp" id="subProgPct">0%</span>
       </div>
 
+      <div class="submit-help">
+        <b class="t">📌 제출은 이렇게 해요 — 3단계</b>
+        <ol>
+          <li><b>파일 선택</b> <u>또는</u> <b>링크 붙여넣기</b> (둘 중 <b>하나만</b>!) — 준비된 칸부터 채워요.</li>
+          <li>맨 아래 <b>「제출하기 →」 버튼을 꼭 눌러요.</b> <span class="warn-h">파일만 골라두면 아직 제출 안 된 거예요!</span></li>
+          <li>칸이 <b>✅ 제출됨</b>으로 바뀌면 성공! (안 바뀌었으면 아직이에요.)</li>
+        </ol>
+        <p class="fine">· 4가지를 다 못 했어도 <b>먼저 낸 뒤 나중에 이어서</b> 제출할 수 있어요.<br>
+        · 파일은 <b>한 개당 45MB 이하</b>. 용량 큰 프로그램은 <b>배포 링크</b>로 내는 걸 추천해요.<br>
+        · 고치고 싶으면 <b>다시 제출</b>하면 최신 내용으로 덮어써져요. (예전 것 걱정 X)</p>
+      </div>
+
       <div class="sub-grid">
         <div class="sub-card" data-task="1">
           <div class="sub-head"><div class="sub-ic">📄</div><div class="sub-meta"><b>① 홀로그램 보고서</b><small>활동 페이지에서 만든 PDF</small></div><span class="sub-status" id="st1">⬜ 미제출</span></div>
@@ -997,6 +1026,8 @@ footer .mono{color:#9aa2cf}
       </div>
 
       <div class="note-soft" style="margin-top:18px">💡 <b>나만의 프로그램</b>은 GitHub Pages로 <b>배포해 링크</b>로 내는 걸 추천해요. (방법은 학습자료 → GitHub Pages) 파일(<code>.html</code>)로 내도 괜찮아요. 파일은 한 개당 45MB 이하로!</div>
+
+      <div class="sub-pending" id="subPending"><span class="pb-emoji">📎</span><span id="subPendingTxt"></span></div>
 
       <div class="submit-go" style="margin-top:22px">
         <div class="sg-txt"><b>준비됐으면 제출! 📤</b><span id="subStatusLine">파일·링크를 넣고 제출하기를 눌러요.</span></div>
@@ -1622,17 +1653,22 @@ function renderSubmit(){
   loginHint.classList.remove('on');
   area.style.display='block';
 
-  let done=0;
+  let done=0, pendCount=0;
   for(let n=1;n<=4;n++){
     const card=document.querySelector('.sub-card[data-task="'+n+'"]');
     const fl=$('#fl'+n), cur=$('#cur'+n);
     // 대기 파일 라벨
     if(pendingFiles[n]){ fl.textContent='📎 '+pendingFiles[n].name; fl.classList.add('has'); }
     else { fl.textContent='📎 파일 선택'; fl.classList.remove('has'); }
-    // 제출됨 여부 (DB 기준)
+    // 제출됨 여부 (DB 기준) · 아직 안 낸 대기 여부
     const has=subHas(n);
-    if(has){ card.classList.add('done'); $('#st'+n).textContent='✅ 제출됨'; done++; }
-    else { card.classList.remove('done'); $('#st'+n).textContent='⬜ 미제출'; }
+    const linkEl=$('#link'+n); const linkVal=linkEl?linkEl.value.trim():'';
+    const pend = !!pendingFiles[n] || (!!linkVal && linkVal!==(submission['task'+n+'_url']||''));
+    card.classList.remove('done','pending');
+    if(has) done++;
+    if(pend){ card.classList.add('pending'); $('#st'+n).textContent='🟡 제출 전'; pendCount++; }
+    else if(has){ card.classList.add('done'); $('#st'+n).textContent='✅ 제출됨'; }
+    else { $('#st'+n).textContent='⬜ 미제출'; }
     // 이미 제출한 내용 표시
     let h='';
     const fu=submission['task'+n+'_file'], fn=submission['task'+n+'_name'], lu=submission['task'+n+'_url'];
@@ -1645,7 +1681,15 @@ function renderSubmit(){
   $('#subProgLabel').textContent = done+' / 4 제출됨';
   $('#subProgPct').textContent = pct+'%';
   $('#subProgFill').style.width = pct+'%';
-  $('#subStatusLine').textContent = submission.updated_at ? ('마지막 제출: '+fmtTime(submission.updated_at)) : '파일·링크를 넣고 제출하기를 눌러요.';
+  // 아직 제출 안 한 대기 항목 배너
+  const pb=$('#subPending');
+  if(pb){
+    pb.classList.toggle('on', pendCount>0);
+    if(pendCount>0) $('#subPendingTxt').innerHTML='선택한 <b>'+pendCount+'개</b>가 아직 제출되지 않았어요 — 맨 아래 <b>「제출하기 →」</b>를 눌러야 저장돼요!';
+  }
+  if(submission.updated_at) $('#subStatusLine').textContent = '마지막 제출: '+fmtTime(submission.updated_at);
+  else if(pendCount>0) $('#subStatusLine').textContent = '아직 제출 전이에요. 「제출하기 →」를 눌러 저장하세요!';
+  else $('#subStatusLine').textContent = '파일·링크를 넣고 제출하기를 눌러요.';
 }
 
 async function submitAll(){
@@ -1779,12 +1823,13 @@ function renderTeacher(){
   let h='<div class="tch-table-wrap"><table class="tch"><thead><tr>'
     +tHead('student_id','학번')+tHead('name','이름')
     +tHead('task1','① 홀로그램',true)+tHead('task2','② 프로그램',true)+tHead('task3','③ 발표',true)+tHead('task4','④ 홍보물',true)
-    +tHead('likes','❤️',true)+tHead('updated_at','제출시각')+'</tr></thead><tbody>';
+    +tHead('likes','❤️',true)+tHead('updated_at','제출시각')+'<th class="c">관리</th></tr></thead><tbody>';
   rows.forEach(r=>{
     h+='<tr><td>'+escapeHtml(r.student_id||'')+'</td><td>'+escapeHtml(r.name||'')+'</td>'
       +tCell(r,1)+tCell(r,2)+tCell(r,3)+tCell(r,4)
       +'<td class="c cell-like">'+(likeCounts[r.student_key]||0)+'</td>'
-      +'<td>'+(r.updated_at?fmtTime(r.updated_at):'-')+'</td></tr>';
+      +'<td>'+(r.updated_at?fmtTime(r.updated_at):'-')+'</td>'
+      +'<td class="c"><button class="tch-del" data-del="'+escapeHtml(r.student_key||'')+'" title="이 학생 제출물 삭제">🗑️ 삭제</button></td></tr>';
   });
   h+='</tbody></table></div>';
   $('#tchBody').innerHTML=h;
@@ -1808,6 +1853,40 @@ function teacherCsv(){
   const url=URL.createObjectURL(blob); const a=document.createElement('a');
   a.href=url; a.download='과제수합_'+new Date().toISOString().slice(0,10)+'.csv'; document.body.appendChild(a); a.click(); a.remove();
   setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+/* 제출물 삭제 — 스토리지 파일 + 좋아요 + 제출 레코드 */
+function storagePathFromUrl(u){
+  if(!u) return null;
+  const marker='/object/public/'+SUPABASE.BUCKET+'/';
+  const i=u.indexOf(marker); if(i<0) return null;
+  try{ return decodeURIComponent(u.slice(i+marker.length)); }catch(e){ return u.slice(i+marker.length); }
+}
+async function deleteSubmission(key){
+  const r=teacherRows.find(x=>x.student_key===key);
+  if(!r) return;
+  const label=((r.student_id||'')+' '+(r.name||'')).trim()||'이 학생';
+  if(!confirm('정말 [ '+label+' ] 학생의 제출물을 삭제할까요?\n제출한 파일·링크·좋아요가 모두 지워지며 되돌릴 수 없어요.')) return;
+  const btn=document.querySelector('.tch-del[data-del="'+(window.CSS&&CSS.escape?CSS.escape(key):key)+'"]');
+  if(btn){ btn.disabled=true; btn.textContent='삭제 중…'; }
+  try{
+    // 1) 스토리지에 올린 파일 삭제
+    const paths=[];
+    for(let n=1;n<=4;n++){ const p=storagePathFromUrl(r['task'+n+'_file']); if(p) paths.push(p); }
+    if(paths.length){ try{ await sb.storage.from(SUPABASE.BUCKET).remove(paths); }catch(e){} }
+    // 2) 이 작품에 달린 좋아요 삭제
+    try{ await sb.from('likes').delete().eq('work_key',key); }catch(e){}
+    // 3) 제출 레코드 삭제
+    const res=await sb.from(SUPABASE.TABLE).delete().eq('student_key',key);
+    if(res.error) throw res.error;
+    teacherRows=teacherRows.filter(x=>x.student_key!==key);
+    delete likeCounts[key];
+    renderTeacher();
+    toast('🗑️','삭제 완료',(r.name||'학생')+'의 제출물을 지웠어요.');
+  }catch(e){
+    if(btn){ btn.disabled=false; btn.textContent='🗑️ 삭제'; }
+    const msg=String((e&&e.message)||e);
+    toast('⚠️','삭제 실패', /permission|policy|row-level|RLS/i.test(msg) ? '권한이 없어요. Supabase에 삭제(DELETE) 정책을 추가해야 해요.' : msg.slice(0,130));
+  }
 }
 
 /* =========================================================
@@ -1958,14 +2037,33 @@ $$('.task-more').forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();t
 // 제출 센터: 파일 선택 + 제출 버튼
 [1,2,3,4].forEach(n=>{
   const fi=$('#file'+n);
-  if(fi) fi.addEventListener('change',e=>{ const f=e.target.files&&e.target.files[0]; if(f){ pendingFiles[n]=f; } else { delete pendingFiles[n]; } renderSubmit(); });
+  if(fi) fi.addEventListener('change',e=>{
+    const f=e.target.files&&e.target.files[0];
+    if(f && f.size>45*1024*1024){ // 45MB 초과는 고르는 즉시 안내 (제출 순간 전체 실패 방지)
+      toast('⚠️','파일이 너무 커요','"'+f.name+'"은 45MB를 넘어요. 배포 링크로 내거나 파일 크기를 줄여 보세요.');
+      e.target.value=''; delete pendingFiles[n]; renderSubmit(); return;
+    }
+    if(f){ pendingFiles[n]=f; } else { delete pendingFiles[n]; }
+    renderSubmit();
+  });
+  // 링크 입력도 실시간으로 '제출 전' 상태에 반영
+  const li=$('#link'+n);
+  if(li) li.addEventListener('input',renderSubmit);
 });
 if($('#subSubmitBtn')) $('#subSubmitBtn').addEventListener('click',submitAll);
+// 선택만 하고 제출 안 한 채 페이지를 닫으려 하면 경고
+window.addEventListener('beforeunload',e=>{
+  if(!user || !SB_READY) return;
+  let unsaved=false;
+  for(let n=1;n<=4;n++){ if(pendingFiles[n]){ unsaved=true; break; } const el=$('#link'+n); const v=el?el.value.trim():''; if(v && v!==(submission['task'+n+'_url']||'')){ unsaved=true; break; } }
+  if(unsaved){ e.preventDefault(); e.returnValue=''; }
+});
 // 교사 대시보드
 if($('#tchEnter')) $('#tchEnter').addEventListener('click',teacherTryPin);
 if($('#tchPin')) $('#tchPin').addEventListener('keydown',e=>{if(e.key==='Enter')teacherTryPin();});
 if($('#tchSearch')) $('#tchSearch').addEventListener('input',renderTeacher);
 if($('#tchBody')) $('#tchBody').addEventListener('click',tchHeaderClick);
+if($('#tchBody')) $('#tchBody').addEventListener('click',e=>{ const b=e.target.closest('.tch-del'); if(b&&b.dataset.del) deleteSubmission(b.dataset.del); });
 if($('#tchRefresh')) $('#tchRefresh').addEventListener('click',loadTeacher);
 if($('#tchCsv')) $('#tchCsv').addEventListener('click',teacherCsv);
 // 작품 아카이브
