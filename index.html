@@ -1095,6 +1095,7 @@ footer .mono{color:#9aa2cf}
         <input id="tchSearch" placeholder="🔎 학번·이름 검색">
         <button class="tch-btn ghost" id="tchRefresh">↻ 새로고침</button>
         <button class="tch-btn" id="tchCsv">⬇ CSV 내려받기</button>
+        <button class="tch-btn" id="tchBundle" title="학생별 생기부 입력 묶음(.md) + 파일 일괄 다운로드 스크립트">🤖 생기부 번들</button>
       </div>
       <div id="tchBody"></div>
       <div class="tch-sec-note">🔒 이 화면은 간단한 비밀번호로만 가립니다(완전한 보안은 아니에요). 민감정보는 제출받지 마세요. 더 엄격한 보호가 필요하면 Supabase Auth 도입을 권장해요.</div>
@@ -1145,7 +1146,8 @@ footer .mono{color:#9aa2cf}
 const CONFIG = {
   HOLOGRAM_URL: "https://scienceisjo.github.io/hologram/new.html",            // 플로팅 홀로그램 활동 페이지
   DEPLOY_URL:   "https://scienceisjo.github.io/githubmanual/forstudent.html", // GitHub Pages 배포 매뉴얼
-  TEACHER_PIN:  "teacher1234"                                                 // ⬅️ 교사 대시보드 비밀번호 — 꼭 바꿔주세요!
+  TEACHER_PIN:  "teacher1234",                                                // ⬅️ 교사 대시보드 비밀번호 — 꼭 바꿔주세요!
+  ARCHIVE_ANON: true                                                          // 전시관(공개)에서 학생 이름을 '김○○'로 가림 — 미성년 개인정보 보호. 실명 노출 원하면 false
 };
 
 // ▼▼▼ 과제 제출(수합)용 Supabase 설정 — 2곳만 채우면 제출 기능이 켜져요 ▼▼▼
@@ -1854,6 +1856,61 @@ function teacherCsv(){
   a.href=url; a.download='과제수합_'+new Date().toISOString().slice(0,10)+'.csv'; document.body.appendChild(a); a.click(); a.remove();
   setTimeout(()=>URL.revokeObjectURL(url),1000);
 }
+/* 🤖 생기부 자동생성 입력 번들(.md) — 학생별로 정렬 + 규칙 헤더 + 파일 일괄 다운로드 스크립트 */
+function coreLevel(r){
+  const core=[1,2,3].filter(n=>tSub(r,n)).length; // 핵심3: ①홀로그램 보고서 ②나만의 프로그램 ③발표 (④홍보물은 제외)
+  const promo=tSub(r,4);
+  if(core>=3) return {core,promo,grade:'A',byte:'≈750'};
+  if(core===2) return {core,promo,grade:'B',byte:'400~550'};
+  if(core===1) return {core,promo,grade:'C',byte:'250~350'};
+  return {core:0,promo,grade:'-',byte:'명단 대조 필요'};
+}
+function safeFileBase(r){
+  const b=((r.student_id||'')+'_'+(r.name||'')).replace(/[^0-9A-Za-z가-힣_-]/g,'').slice(0,40);
+  return b||(r.student_key||'student');
+}
+function extOf(u){ const m=String(u||'').match(/\.[A-Za-z0-9]{1,5}(?=($|\?))/); return m?m[0].toLowerCase():''; }
+function teacherBundle(){
+  const rows=teacherSorted(teacherFiltered());
+  if(!rows.length){ toast('📭','내보낼 학생이 없어요','제출한 학생이 있어야 번들을 만들 수 있어요.'); return; }
+  const today=new Date().toISOString().slice(0,10);
+  let md='# 인공지능 융합 첨단과학 탐구반 2기 — 생기부 자동생성 입력 ('+today+')\n\n';
+  md+='> 이 파일을 Claude에게 그대로 주고 "학생별 생기부를 써줘"라고 하세요. 한 번에 10~20명씩 나눠 주면 안정적입니다.\n\n';
+  md+='## ✅ 생기부 작성 규칙 (모든 학생 공통)\n';
+  md+='- 명사형 종결(~함/~임)만. **학생 감정·주관 서술 금지** — 교사가 관찰 가능한 사실/탐구 행동만.\n';
+  md+='- 한글 **최대 250자(= NEIS 750byte)**. 활동 나열보다 **탐구의 깊이** 위주.\n';
+  md+='- **2022 개정 과학 성취기준** 개념 반영(빛의 반사·상 맺힘 [9과10] 등).\n';
+  md+='- 수준(참고용 소프트 기준): **A**(핵심3 완료) ≈750B / **B**(2개) 400~550B / **C**(1개) 250~350B. *깊이 있으면 상향 가능.*\n';
+  md+='- 개인화는 아래 **보고서·발표 파일**과 **프로그램 링크 소스**를 실제로 읽어 그 학생만의 디테일(프로그램 주제, 활용한 빛 반사·상 원리, 자기 코드의 html/css/js)을 뽑되, **코드에서 유추한 구체 서술은 사실 확인 후** 사용.\n';
+  md+='- 🖼️ 홍보물(④)은 이미지라 탐구 신호가 약함 → **본문에 억지로 넣지 말 것**(수준 계산에서도 제외).\n\n---\n\n';
+  const dl=[];
+  rows.forEach((r,i)=>{
+    const L=coreLevel(r);
+    const base=safeFileBase(r);
+    md+='## ['+(i+1)+'] '+(r.student_id||'')+' '+(r.name||'')+' · 수준 '+L.grade+' (핵심 '+L.core+'/3'+(L.promo?', 홍보물 O':'')+') · 목표 '+L.byte+'byte\n';
+    const line=(emoji,label,fileU,linkU,note)=>{
+      const u=linkU||fileU;
+      if(!u) return '- '+emoji+' '+label+': (미제출)\n';
+      return '- '+emoji+' '+label+': '+u+(note||'')+'\n';
+    };
+    md+=line('🔮','홀로그램 보고서', r.task1_file, r.task1_url, r.task1_name?('  (원본: '+r.task1_name+')'):'');
+    md+=line('🎮','나만의 프로그램', r.task2_file, r.task2_url, '  ← 소스 읽어 개인화');
+    md+=line('🎤','발표자료', r.task3_file, r.task3_url, r.task3_name?('  (원본: '+r.task3_name+')'):'');
+    md+=line('🖼️','홍보물(참고, 본문 강제삽입 금지)', r.task4_file, r.task4_url, '');
+    md+='- 🕒 제출시각: '+(r.updated_at?fmtTime(r.updated_at):'-')+'\n\n';
+    [1,2,3,4].forEach(n=>{ const fu=r['task'+n+'_file']; if(fu) dl.push({url:fu, out:base+'_task'+n+extOf(r['task'+n+'_name']||fu)}); });
+  });
+  md+='---\n\n## 📥 제출 파일 일괄 다운로드 (PowerShell)\n';
+  md+='아래를 복사 → PowerShell에 붙여넣으면 현재 폴더의 `생기부_파일_'+today+'`에 학생 이름표가 붙은 파일로 저장됩니다. (프로그램은 링크라 위 URL로 직접 확인)\n\n';
+  md+='```powershell\n$dir = "생기부_파일_'+today+'"; New-Item -ItemType Directory -Force $dir | Out-Null\n';
+  dl.forEach(d=>{ md+='Invoke-WebRequest -Uri "'+d.url+'" -OutFile "$dir/'+d.out+'"\n'; });
+  md+='Write-Host "완료: $dir 폴더 확인"\n```\n';
+  const blob=new Blob([md],{type:'text/markdown;charset=utf-8;'});
+  const url=URL.createObjectURL(blob); const a=document.createElement('a');
+  a.href=url; a.download='생기부입력_'+today+'.md'; document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),1000);
+  toast('🤖','생기부 번들 생성 완료', rows.length+'명 · 이 .md를 Claude에게 주면 학생별 생기부가 나와요.');
+}
 /* 제출물 삭제 — 스토리지 파일 + 좋아요 + 제출 레코드 */
 function storagePathFromUrl(u){
   if(!u) return null;
@@ -1964,6 +2021,13 @@ function archiveSorted(rows){
   else r.sort((a,b)=> new Date(b.updated_at||0)-new Date(a.updated_at||0)); // new (기본)
   return r;
 }
+function maskName(n){
+  n=(n||'').trim();
+  if(!n) return '이름 없음';
+  if(n.length<=1) return '○';
+  return escapeHtml(n.charAt(0))+'○'.repeat(n.length-1);
+}
+function arcName(r){ return CONFIG.ARCHIVE_ANON ? maskName(r.name) : escapeHtml(r.name||'이름 없음'); }
 function arcCard(r,idx){
   const img=r.task4_file;
   const color=ARC_COLORS[idx % ARC_COLORS.length];
@@ -1983,7 +2047,7 @@ function arcCard(r,idx){
   if(holo) chips+='<a class="arc-chip holo" href="'+escapeHtml(holo)+'" target="_blank" rel="noopener">🔮 보고서</a>';
   if(promo && !img) chips+='<a class="arc-chip" href="'+escapeHtml(promo)+'" target="_blank" rel="noopener">🖼️ 홍보물</a>';
   const likeBtn='<button class="arc-like'+(liked?' liked':'')+'" data-wk="'+escapeHtml(wk)+'" title="좋아요"><span class="heart">'+(liked?'❤️':'🤍')+'</span><span class="lc">'+cnt+'</span></button>';
-  return '<div class="arc-card">'+poster+'<div class="arc-body"><div class="arc-name">'+escapeHtml(r.name||'이름 없음')+'<span class="who">🎓 '+escapeHtml(r.student_id||'')+'</span></div>'
+  return '<div class="arc-card">'+poster+'<div class="arc-body"><div class="arc-name">'+arcName(r)+'<span class="who">🎓 '+escapeHtml(r.student_id||'')+'</span></div>'
     +(chips?'<div class="arc-chips">'+chips+'</div>':'')
     +'<div class="arc-foot">'+(r.updated_at?'<span class="arc-time">🕒 '+fmtTime(r.updated_at)+'</span>':'<span></span>')+likeBtn+'</div>'
     +'</div></div>';
@@ -2066,6 +2130,7 @@ if($('#tchBody')) $('#tchBody').addEventListener('click',tchHeaderClick);
 if($('#tchBody')) $('#tchBody').addEventListener('click',e=>{ const b=e.target.closest('.tch-del'); if(b&&b.dataset.del) deleteSubmission(b.dataset.del); });
 if($('#tchRefresh')) $('#tchRefresh').addEventListener('click',loadTeacher);
 if($('#tchCsv')) $('#tchCsv').addEventListener('click',teacherCsv);
+if($('#tchBundle')) $('#tchBundle').addEventListener('click',teacherBundle);
 // 작품 아카이브
 if($('#arcSort')) $('#arcSort').addEventListener('change',renderArchive);
 if($('#arcSearch')) $('#arcSearch').addEventListener('input',renderArchive);
