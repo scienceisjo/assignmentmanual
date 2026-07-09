@@ -332,6 +332,25 @@ a{color:inherit;text-decoration:none}
 .tcell-tog.mark{color:var(--mint-d);border-color:#bfeede;background:#f0fdf8}
 .tcell-tog.mark:hover{background:var(--mint);border-color:var(--mint);color:#fff}
 .cell-ok sup{font-size:.6em;color:var(--mint-d);font-weight:700;margin-left:1px}
+.tch-eval{font-family:inherit;font-size:.78rem;font-weight:700;padding:6px 10px;border-radius:8px;border:1.5px solid #dde0f3;background:#eef0fb;color:var(--indigo-d);cursor:pointer;transition:.15s}
+.tch-eval:hover{background:var(--indigo);border-color:var(--indigo);color:#fff}
+.ev-badge{display:inline-block;font-size:.66rem;font-weight:800;padding:1px 5px;border-radius:5px;margin-left:2px;vertical-align:middle}
+.ev-badge.hi{background:#d6f6ea;color:#0fa178}
+.ev-badge.mid{background:#fff3d6;color:#a36a00}
+.ev-badge.lo{background:#fde2e2;color:#c01a3a}
+.ev-hint{background:#eef0fb;border:1px solid #dde0f3;border-left:4px solid var(--indigo);border-radius:10px;padding:11px 14px;font-size:.86rem;color:var(--ink-2);line-height:1.55;margin-bottom:16px}
+.ev-hint b{color:var(--indigo-d)}
+.ev-grid{display:flex;flex-direction:column;gap:9px;margin-bottom:16px}
+.ev-row{display:grid;grid-template-columns:1fr auto auto;align-items:center;gap:10px;background:#f7f8fc;border:1.5px solid var(--line);border-radius:11px;padding:10px 13px}
+.ev-row>label{font-size:.9rem;font-weight:700;color:var(--ink)}
+.ev-sel{font-family:inherit;font-size:.9rem;padding:7px 10px;border:1.5px solid var(--line);border-radius:9px;background:#fff;color:var(--ink)}
+.ev-sel:focus{outline:none;border-color:var(--indigo)}
+.ev-lk{font-size:.8rem;font-weight:700;color:var(--indigo);white-space:nowrap}
+.ev-lk a{text-decoration:underline}
+.ev-field{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+.ev-field label{font-size:.85rem;font-weight:700;color:var(--ink-2)}
+.ev-field input,.ev-field textarea{font-family:inherit;font-size:.95rem;padding:11px 13px;border:1.5px solid var(--line);border-radius:11px;background:#fbfbfe;color:var(--ink);resize:vertical}
+.ev-field input:focus,.ev-field textarea:focus{outline:none;border-color:var(--indigo);background:#fff;box-shadow:0 0 0 3px rgba(91,91,240,.12)}
 .tch-table-wrap{overflow-x:auto;border:1.5px solid var(--line);border-radius:14px;box-shadow:var(--shadow-sm)}
 table.tch{width:100%;border-collapse:collapse;font-size:.88rem;min-width:700px;background:var(--paper-2)}
 table.tch th,table.tch td{padding:11px 12px;text-align:left;border-bottom:1px solid var(--line-2);white-space:nowrap}
@@ -1816,27 +1835,27 @@ function tHead(key,label,center){
   return '<th class="sortable'+(center?' c':'')+(active?' active':'')+'" data-sort="'+key+'">'+label+arrow+'</th>';
 }
 function tStat(v,l){ return '<div class="tch-stat"><div class="v">'+v+'</div><div class="l">'+l+'</div></div>'; }
-function tCell(r,n){
+function tCell(r,n,ev){
   const fu=r['task'+n+'_file'], lu=r['task'+n+'_url'];
   const key=escapeHtml(r.student_key||'');
   const manual = lu===MANUAL_MARK;
-  // 미제출: ⬜ + '수동 제출처리' 버튼
+  const gb=gradeBadge((ev||{})['t'+n]); // 상/중/하 배지
+  let body, tog;
   if(!fu && !lu){
-    return '<td class="c"><span class="cell-no">⬜</span> '
-      +'<button class="tcell-tog mark" data-tog="'+key+'" data-task="'+n+'" data-act="mark" title="제출됨으로 수동 표시">＋제출</button></td>';
-  }
-  // 제출됨(파일/링크 또는 수동): 상태 + '제출취소' 버튼
-  let body;
-  if(manual){
-    body='<span class="cell-ok" title="교사가 수동으로 제출 표시함">✅<sup>수동</sup></span>';
+    body='<span class="cell-no">⬜</span>';
+    tog='<button class="tcell-tog mark" data-tog="'+key+'" data-task="'+n+'" data-act="mark" title="제출됨으로 수동 표시">＋제출</button>';
   } else {
-    let links='';
-    if(realUrl(fu)) links+='<a href="'+escapeHtml(fu)+'" target="_blank" rel="noopener">파일</a>';
-    if(realUrl(lu)) links+='<a href="'+escapeHtml(lu)+'" target="_blank" rel="noopener">링크</a>';
-    body='<span class="cell-ok">✅</span><div class="cell-links">'+links+'</div>';
+    if(manual){
+      body='<span class="cell-ok" title="교사가 수동으로 제출 표시함">✅<sup>수동</sup></span>';
+    } else {
+      let links='';
+      if(realUrl(fu)) links+='<a href="'+escapeHtml(fu)+'" target="_blank" rel="noopener">파일</a>';
+      if(realUrl(lu)) links+='<a href="'+escapeHtml(lu)+'" target="_blank" rel="noopener">링크</a>';
+      body='<span class="cell-ok">✅</span><div class="cell-links">'+links+'</div>';
+    }
+    tog='<button class="tcell-tog clear" data-tog="'+key+'" data-task="'+n+'" data-act="clear" title="이 과제 제출취소(올린 파일 삭제·미제출로)">✕취소</button>';
   }
-  return '<td class="c">'+body
-    +'<button class="tcell-tog clear" data-tog="'+key+'" data-task="'+n+'" data-act="clear" title="이 과제 제출취소(올린 파일 삭제·미제출로)">✕취소</button></td>';
+  return '<td class="c">'+body+gb+' '+tog+'</td>';
 }
 function renderTeacher(){
   const total=teacherRows.length;
@@ -1850,11 +1869,15 @@ function renderTeacher(){
     +tHead('task1','① 홀로그램',true)+tHead('task2','② 프로그램',true)+tHead('task3','③ 발표',true)+tHead('task4','④ 홍보물',true)
     +tHead('likes','❤️',true)+tHead('updated_at','제출시각')+'<th class="c">관리</th></tr></thead><tbody>';
   rows.forEach(r=>{
+    const ev=loadEval(r.student_key);
+    const evd=!!(ev.t1||ev.t2||ev.t3||ev.t4||(ev.pname||'').trim()||(ev.poverview||'').trim());
+    const key=escapeHtml(r.student_key||'');
     h+='<tr><td>'+escapeHtml(r.student_id||'')+'</td><td>'+escapeHtml(r.name||'')+'</td>'
-      +tCell(r,1)+tCell(r,2)+tCell(r,3)+tCell(r,4)
+      +tCell(r,1,ev)+tCell(r,2,ev)+tCell(r,3,ev)+tCell(r,4,ev)
       +'<td class="c cell-like">'+(likeCounts[r.student_key]||0)+'</td>'
       +'<td>'+(r.updated_at?fmtTime(r.updated_at):'-')+'</td>'
-      +'<td class="c"><button class="tch-del" data-del="'+escapeHtml(r.student_key||'')+'" title="이 학생 제출물 삭제">🗑️ 삭제</button></td></tr>';
+      +'<td class="c" style="white-space:nowrap"><button class="tch-eval" data-eval="'+key+'" title="상중하·프로그램명·개요 평가">📝 평가'+(evd?' ✓':'')+'</button> '
+      +'<button class="tch-del" data-del="'+key+'" title="이 학생 제출물 삭제">🗑️</button></td></tr>';
   });
   h+='</tbody></table></div>';
   $('#tchBody').innerHTML=h;
@@ -1869,10 +1892,19 @@ function tchHeaderClick(e){
 function csvCell(v){ v=(v==null?'':String(v)); return /[",\n]/.test(v) ? '"'+v.replace(/"/g,'""')+'"' : v; }
 function teacherCsv(){
   const rows=teacherFiltered();
-  const head=['학번','이름','홀로그램_파일','홀로그램_링크','프로그램_파일','프로그램_링크','발표_파일','발표_링크','홍보물_파일','홍보물_링크','좋아요','제출시각'];
+  const head=['학번','이름','수준',
+    '홀로그램_상중하','프로그램_상중하','발표_상중하','홍보물_상중하',
+    '프로그램명','프로그램개요',
+    '홀로그램_파일','홀로그램_링크','프로그램_파일','프로그램_링크','발표_파일','발표_링크','홍보물_파일','홍보물_링크',
+    '좋아요','제출시각'];
   const lines=[head.map(csvCell).join(',')];
   rows.forEach(r=>{
-    lines.push([r.student_id,r.name,r.task1_file,muLabel(r.task1_url),r.task2_file,muLabel(r.task2_url),r.task3_file,muLabel(r.task3_url),r.task4_file,muLabel(r.task4_url),likeCounts[r.student_key]||0,r.updated_at?fmtTime(r.updated_at):''].map(csvCell).join(','));
+    const ev=loadEval(r.student_key)||{}; const L=coreLevel(r);
+    lines.push([r.student_id,r.name,L.grade,
+      ev.t1||'',ev.t2||'',ev.t3||'',ev.t4||'',
+      ev.pname||'',ev.poverview||'',
+      r.task1_file,muLabel(r.task1_url),r.task2_file,muLabel(r.task2_url),r.task3_file,muLabel(r.task3_url),r.task4_file,muLabel(r.task4_url),
+      likeCounts[r.student_key]||0,r.updated_at?fmtTime(r.updated_at):''].map(csvCell).join(','));
   });
   const blob=new Blob(['\ufeff'+lines.join('\n')],{type:'text/csv;charset=utf-8;'});
   const url=URL.createObjectURL(blob); const a=document.createElement('a');
@@ -1905,7 +1937,8 @@ function teacherBundle(){
   md+='- **2022 개정 과학 성취기준** 개념 반영(빛의 반사·상 맺힘 [9과10] 등).\n';
   md+='- 수준(참고용 소프트 기준): **A**(핵심3 완료) ≈750B / **B**(2개) 400~550B / **C**(1개) 250~350B. *깊이 있으면 상향 가능.*\n';
   md+='- 개인화는 아래 **보고서·발표 파일**과 **프로그램 링크 소스**를 실제로 읽어 그 학생만의 디테일(프로그램 주제, 활용한 빛 반사·상 원리, 자기 코드의 html/css/js)을 뽑되, **코드에서 유추한 구체 서술은 사실 확인 후** 사용.\n';
-  md+='- 🖼️ 홍보물(④)은 이미지라 탐구 신호가 약함 → **본문에 억지로 넣지 말 것**(수준 계산에서도 제외).\n\n---\n\n';
+  md+='- 🖼️ 홍보물(④)은 이미지라 탐구 신호가 약함 → **본문에 억지로 넣지 말 것**(수준 계산에서도 제외).\n';
+  md+='- 🏅 **교사평가 상/중/하**가 있으면 반영: **상**=개발 동기·과정이 잘 드러나고 자기 코드(HTML·CSS·JS)를 잘 찾음 → 탐구 깊이를 상세히 서술 / **중**=핵심 활동 중심 / **하**=간결히. **프로그램명·개요(교사 메모)**를 개인화의 우선 근거로 사용.\n\n---\n\n';
   const dl=[];
   rows.forEach((r,i)=>{
     const L=coreLevel(r);
@@ -1921,6 +1954,10 @@ function teacherBundle(){
     md+=line('🎮','나만의 프로그램', r.task2_file, r.task2_url, '  ← 소스 읽어 개인화');
     md+=line('🎤','발표자료', r.task3_file, r.task3_url, r.task3_name?('  (원본: '+r.task3_name+')'):'');
     md+=line('🖼️','홍보물(참고, 본문 강제삽입 금지)', r.task4_file, r.task4_url, '');
+    const ev=loadEval(r.student_key)||{};
+    if(ev.t1||ev.t2||ev.t3||ev.t4) md+='- 🏅 교사평가(상/중/하): 홀로그램 '+(ev.t1||'-')+' · 프로그램 '+(ev.t2||'-')+' · 발표 '+(ev.t3||'-')+' · 홍보물 '+(ev.t4||'-')+'\n';
+    if((ev.pname||'').trim()) md+='- 📌 프로그램명: '+ev.pname+'\n';
+    if((ev.poverview||'').trim()) md+='- 📝 프로그램 개요(교사 메모): '+ev.poverview+'\n';
     md+='- 🕒 제출시각: '+(r.updated_at?fmtTime(r.updated_at):'-')+'\n\n';
     [1,2,3,4].forEach(n=>{ const fu=r['task'+n+'_file']; if(fu) dl.push({url:fu, out:base+'_task'+n+extOf(r['task'+n+'_name']||fu)}); });
   });
@@ -1998,6 +2035,43 @@ async function setTaskStatus(key,n,act){
     }catch(e){ toast('⚠️','변경 실패', tchErr(e)); }
   }
 }
+/* 교사 수기 평가(상중하 + 프로그램명·개요) — 이 브라우저(localStorage)에만 저장. 학생에겐 안 보임 */
+let evalKey=null;
+function loadEval(key){ try{ return JSON.parse(load('hub:eval:'+key))||{}; }catch(e){ return {}; } }
+function saveEvalObj(key,obj){ save('hub:eval:'+key, JSON.stringify(obj)); }
+function gradeCls(g){ return {'상':'hi','중':'mid','하':'lo'}[g]||''; }
+function gradeBadge(g){ return g?(' <span class="ev-badge '+gradeCls(g)+'">'+g+'</span>'):''; }
+function openEval(key){
+  const r=teacherRows.find(x=>x.student_key===key); if(!r) return;
+  evalKey=key;
+  const e=loadEval(key);
+  const who=escapeHtml(((r.student_id||'')+' '+(r.name||'')).trim());
+  const gsel=(id,val)=>{ let o=''; [['','—'],['상','상'],['중','중'],['하','하']].forEach(a=>{ o+='<option value="'+a[0]+'"'+(val===a[0]?' selected':'')+'>'+a[1]+'</option>'; }); return '<select id="'+id+'" class="ev-sel">'+o+'</select>'; };
+  const lnk=(n,label)=>{ const u=realUrl(r['task'+n+'_url'])||r['task'+n+'_file']; return u?('<a href="'+escapeHtml(u)+'" target="_blank" rel="noopener">'+label+' ↗</a>'):('<span style="color:var(--ink-3)">미제출</span>'); };
+  openModal(
+    '<div class="modal-hero"><div class="emoji">📝</div><h3>'+who+' 평가</h3><p>상/중/하와 프로그램 정보를 입력하면 CSV·번들에 함께 나가 생기부에 반영돼요.</p></div>'+
+    '<div class="modal-body">'+
+      '<div class="ev-hint">💡 <b>\'상\'</b> 기준: 개발 동기·과정이 잘 드러나고, <b>자기 코드의 HTML·CSS·JS를 잘 찾아</b> 설명·제출한 경우.</div>'+
+      '<div class="ev-grid">'+
+        '<div class="ev-row"><label>① 홀로그램 보고서</label>'+gsel('ev1',e.t1)+'<span class="ev-lk">'+lnk(1,'보고서')+'</span></div>'+
+        '<div class="ev-row"><label>② 나만의 프로그램</label>'+gsel('ev2',e.t2)+'<span class="ev-lk">'+lnk(2,'프로그램')+'</span></div>'+
+        '<div class="ev-row"><label>③ 발표 자료</label>'+gsel('ev3',e.t3)+'<span class="ev-lk">'+lnk(3,'발표')+'</span></div>'+
+        '<div class="ev-row"><label>④ AI 홍보물</label>'+gsel('ev4',e.t4)+'<span class="ev-lk">'+lnk(4,'홍보물')+'</span></div>'+
+      '</div>'+
+      '<div class="ev-field"><label>프로그램명</label><input id="evName" type="text" value="'+escapeHtml(e.pname||'')+'" placeholder="예: 중력 시뮬레이터"></div>'+
+      '<div class="ev-field"><label>프로그램 개요 — 무엇을·어떻게 만들었나 (개발 동기·과정)</label><textarea id="evOv" rows="3" placeholder="예: 행성 간 중력을 조절해 궤도를 관찰하는 시뮬레이터. 충돌이 겹치는 문제를 좌표 재계산으로 스스로 해결함.">'+escapeHtml(e.poverview||'')+'</textarea></div>'+
+      '<div class="modal-actions"><button class="btn btn-indigo" onclick="saveEvalFromModal()">저장</button><button class="btn btn-soft" onclick="closeModal()">닫기</button></div>'+
+    '</div>'
+  );
+}
+window.saveEvalFromModal=function(){
+  if(!evalKey) return;
+  const gv=id=>{ const el=$('#'+id); return el?el.value:''; };
+  const tv=id=>{ const el=$('#'+id); return el?(el.value||'').trim():''; };
+  saveEvalObj(evalKey,{ t1:gv('ev1'),t2:gv('ev2'),t3:gv('ev3'),t4:gv('ev4'), pname:tv('evName'), poverview:tv('evOv') });
+  closeModal(); renderTeacher();
+  toast('📝','평가 저장','이 기기에 저장됐어요. CSV(또는 🤖 번들)로 내려받아 생기부에 쓰세요.');
+};
 
 /* =========================================================
    작품 아카이브 (전시관 · 패들렛 스타일)
@@ -2182,6 +2256,7 @@ if($('#tchSearch')) $('#tchSearch').addEventListener('input',renderTeacher);
 if($('#tchBody')) $('#tchBody').addEventListener('click',tchHeaderClick);
 if($('#tchBody')) $('#tchBody').addEventListener('click',e=>{ const b=e.target.closest('.tch-del'); if(b&&b.dataset.del) deleteSubmission(b.dataset.del); });
 if($('#tchBody')) $('#tchBody').addEventListener('click',e=>{ const b=e.target.closest('.tcell-tog'); if(b&&b.dataset.tog) setTaskStatus(b.dataset.tog, +b.dataset.task, b.dataset.act); });
+if($('#tchBody')) $('#tchBody').addEventListener('click',e=>{ const b=e.target.closest('.tch-eval'); if(b&&b.dataset.eval) openEval(b.dataset.eval); });
 if($('#tchRefresh')) $('#tchRefresh').addEventListener('click',loadTeacher);
 if($('#tchCsv')) $('#tchCsv').addEventListener('click',teacherCsv);
 if($('#tchBundle')) $('#tchBundle').addEventListener('click',teacherBundle);
